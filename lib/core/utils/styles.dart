@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const mainColor = Color(0xff0075FF);
 
@@ -25,4 +26,10 @@ abstract class Styles {
     fontSize: 16,
     fontWeight: FontWeight.w500,
   );
+  static var textStyle60 = GoogleFonts.poppins(
+      textStyle: const TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 22,
+    color: Colors.white,
+  ));
 }
