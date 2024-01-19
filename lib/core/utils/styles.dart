@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const mainColor = Color(0xff0075FF);
+
 abstract class Styles {
   static const textStyle18 = TextStyle(
     fontSize: 18,
