@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lakini_gp/features/register/views/forget_password_screen.dart';
-
+import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
+import 'package:lakini_gp/features/register/presentation/views/forget_password_screen.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -11,6 +11,7 @@ import '../onboarding_models/onboarding_model.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
+  static String id = 'SplashScreen';
 
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
@@ -55,7 +56,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         ),
         child: Stack(
           children: [
-            
             Builder(builder: (ctx1) {
               return PageView(
                 controller: _controller,
@@ -102,12 +102,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 right: width * 0.03,
                 top: height * 0.05,
                 child: GestureDetector(
-                  onTap: ()=> Navigator.pushNamed(context, ForgetPasswordScreen.fpId),
-                  child:Text(
-                          "SKIP",
-                          style: Styles.textStyle60
-                              .copyWith(decoration: TextDecoration.underline),
-                        ),
+                  onTap: () => Navigator.pushNamed(context, LoginScreen.id),
+                  child: Text(
+                    "SKIP",
+                    style: Styles.textStyle60
+                        .copyWith(decoration: TextDecoration.underline),
+                  ),
                 ),
               );
             }),

@@ -32,8 +32,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
+                Color(0xff011730),
+                Color(0xff00070F),
                 Color(0xff00070F),
                 Color(0xff000205),
+                Color(0xff000205),
+                Color(0xff011730),
               ]),
         ),
         child: Form(
@@ -58,7 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Username',
                         style: Styles.textStyle18,
                       ),
@@ -73,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                       ),
-                      const Text(
+                      Text(
                         'Email',
                         style: Styles.textStyle18,
                       ),
@@ -88,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                       ),
-                      const Text(
+                      Text(
                         'Location',
                         style: Styles.textStyle18,
                       ),
@@ -102,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return null;
                           },
                           textController: locationController),
-                      const Text(
+                      Text(
                         'Password',
                         style: Styles.textStyle18,
                       ),
@@ -119,7 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                       ),
-                      const Text(
+                      Text(
                         'Confirm Password',
                         style: Styles.textStyle18,
                       ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lakini_gp/features/register/views/create_password_screen.dart';
+import 'package:lakini_gp/features/register/presentation/views/create_password_screen.dart';
 
-import '../../../core/utils/styles.dart';
-import '../wedgits/custom_button.dart';
-import '../wedgits/otp_txt_field.dart';
+import '../../../../core/utils/styles.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/otp_txt_field.dart';
 
 class OtpVerification extends StatelessWidget {
   static const String otp = "OTPScreen";
@@ -70,21 +70,20 @@ class OtpVerification extends StatelessWidget {
                   OtpVerificationRow(
                     txtController: txtControllers,
                     validator: (val) {
-                            if (val!.isEmpty) {
-                              return "Empty Field!";
-                            }
-                            return null;
-                          },
+                      if (val!.isEmpty) {
+                        return "Empty Field!";
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: height * 0.03),
                   MyButton(
                     label: 'Verify',
                     onTap: () {
                       if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
-                            Navigator.pushNamed(
-                                context, CreatePasswordScreen.cpId);
+                        return;
+                      }
+                      Navigator.pushNamed(context, CreatePasswordScreen.cpId);
                     },
                   )
                 ]),

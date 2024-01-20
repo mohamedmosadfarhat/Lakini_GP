@@ -5,6 +5,8 @@ import 'package:lakini_gp/features/register/validation.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
 import 'package:lakini_gp/features/register/widgets/custom_textfield.dart';
 
+import 'forget_password_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   static String id = 'LoginScreen';
@@ -75,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                       ),
-                      const Text(
+                      Text(
                         'Password',
                         style: Styles.textStyle18,
                       ),
@@ -104,12 +106,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           const Text('Remember me'),
                           const Spacer(),
-                          Text(
-                            'Forget Password?',
-                            style: Styles.textStyle14.copyWith(
-                              color: mainColor,
-                              decoration: TextDecoration.underline,
-                              decorationColor: mainColor,
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, ForgetPasswordScreen.fpId);
+                            },
+                            child: Text(
+                              'Forget Password?',
+                              style: Styles.textStyle14.copyWith(
+                                color: mainColor,
+                                decoration: TextDecoration.underline,
+                                decorationColor: mainColor,
+                              ),
                             ),
                           ),
                         ],

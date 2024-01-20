@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lakini_gp/features/register/views/otp_verification_screen.dart';
+import 'package:lakini_gp/features/register/presentation/views/otp_verification_screen.dart';
 
-import '../../../core/utils/styles.dart';
-import '../wedgits/Input_Field.dart';
-import '../wedgits/custom_button.dart';
+import '../../../../core/utils/styles.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/input_field.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   static const String fpId = "ForgetPasswordId";
@@ -14,7 +14,6 @@ class ForgetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    
 
     return Scaffold(
       body: Container(
@@ -78,8 +77,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                           if (!_formKey.currentState!.validate()) {
                             return;
                           }
-                          Navigator.pushNamed(
-                              context, OtpVerification.otp);
+                          Navigator.pushNamed(context, OtpVerification.otp);
                         },
                       )
                     ]),
