@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const mainColor = Color(0xff0075FF);
+const darkGreenColor = Color(0xff00A123);
 
 abstract class Styles {
   static const textStyle18 = TextStyle(
