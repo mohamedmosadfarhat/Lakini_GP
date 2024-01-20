@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lakini/core/utils/styles.dart';
+
 import 'package:page_transition/page_transition.dart';
 
+import '../../../../core/utils/styles.dart';
 import '../../../onboarding/presentation/views/onboarding_screen.dart';
 
 

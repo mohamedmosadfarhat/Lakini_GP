@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lakini/core/utils/styles.dart';
+import 'package:lakini_gp/features/register/views/forget_password_screen.dart';
+
+
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../../core/utils/styles.dart';
 import '../onboarding_models/onboarding_model.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -45,13 +48,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               Color.fromRGBO(0, 7, 15, 1),
               Color.fromRGBO(0, 2, 5, 1),
               Color.fromRGBO(1, 23, 48, 1),
-              /* Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 7, 55, 1), */
             ],
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -59,24 +55,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         ),
         child: Stack(
           children: [
-            Positioned(
-              right: width * 0.03,
-              top: height * 0.05,
-              child: TextButton(
-                onPressed: (){},
-                 child: Text("SKIP",style: Styles.textStyle60.copyWith(decoration: TextDecoration.underline),)
-                 )),
+            
             Builder(builder: (ctx1) {
               return PageView(
                 controller: _controller,
                 onPageChanged: (val) {
                   setState(() {
                     _currentIndex = val;
-                    print(_currentIndex);
-                 /* if (_currentIndex == 3) {
-                      Future.delayed(const Duration(seconds: 2),
-                          () => Navigator.of(ctx1).pushNamed('/a'));
-                    }*/
                   });
                 },
                 children: myData
@@ -85,38 +70,60 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                               SizedBox(height: height*0.1,),
-                              Image.asset(item.imageUrl,height: height*0.35,fit: BoxFit.cover,),
-                               SizedBox(height: height*0.06,),
+                              SizedBox(
+                                height: height * 0.1,
+                              ),
+                              Image.asset(
+                                item.imageUrl,
+                                height: height * 0.35,
+                                fit: BoxFit.cover,
+                              ),
+                              SizedBox(
+                                height: height * 0.06,
+                              ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 32),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 32),
                                 child: Text(item.description,
                                     textAlign: TextAlign.center,
                                     style: Styles.textStyle60),
                               ),
-                               SizedBox(
-                                height: height*0.1,
+                              SizedBox(
+                                height: height * 0.1,
                               ),
-                              
                             ],
                           ),
                         ))
                     .toList(),
               );
             }),
+            Builder(builder: (context) {
+              return Positioned(
+                right: width * 0.03,
+                top: height * 0.05,
+                child: GestureDetector(
+                  onTap: ()=> Navigator.pushNamed(context, ForgetPasswordScreen.fpId),
+                  child:Text(
+                          "SKIP",
+                          style: Styles.textStyle60
+                              .copyWith(decoration: TextDecoration.underline),
+                        ),
+                ),
+              );
+            }),
             Align(
               alignment: const Alignment(0, 0.85),
               child: SmoothPageIndicator(
-                  controller: _controller,
-                  count: myData.length,
-                  effect: const JumpingDotEffect(
-                      verticalOffset: 20,
-                      jumpScale: 1.6,
-                      dotColor: Colors.white,
-                      activeDotColor: Color.fromRGBO(1, 20, 165, 1),
-                      dotWidth: 16,
-                      dotHeight: 4),
-                ),
+                controller: _controller,
+                count: myData.length,
+                effect: const JumpingDotEffect(
+                    verticalOffset: 20,
+                    jumpScale: 1.6,
+                    dotColor: Colors.white,
+                    activeDotColor: Color.fromRGBO(1, 20, 165, 1),
+                    dotWidth: 16,
+                    dotHeight: 4),
+              ),
             ),
           ],
         ),
