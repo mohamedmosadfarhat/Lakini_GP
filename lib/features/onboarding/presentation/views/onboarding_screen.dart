@@ -1,15 +1,16 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:lakini_gp/core/utils/styles.dart';
-import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
-import 'package:lakini_gp/features/splash/presentation/views/splash_screen.dart';
+import 'package:lakini_gp/features/register/views/forget_password_screen.dart';
+
+
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../../core/utils/styles.dart';
 import '../onboarding_models/onboarding_model.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
-  static String id = 'OnBoardingScreen';
 
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
@@ -47,13 +48,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               Color.fromRGBO(0, 7, 15, 1),
               Color.fromRGBO(0, 2, 5, 1),
               Color.fromRGBO(1, 23, 48, 1),
-              /* Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 0, 23, 1),
-              Color.fromRGBO(1, 7, 55, 1), */
             ],
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -61,32 +55,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         ),
         child: Stack(
           children: [
-            Positioned(
-                right: width * 0.03,
-                top: height * 0.05,
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        LoginScreen.id,
-                      );
-                    },
-                    child: Text(
-                      "SKIP",
-                      style: Styles.textStyle60
-                          .copyWith(decoration: TextDecoration.underline),
-                    ))),
+            
             Builder(builder: (ctx1) {
               return PageView(
                 controller: _controller,
                 onPageChanged: (val) {
                   setState(() {
                     _currentIndex = val;
-                    print(_currentIndex);
-                    /* if (_currentIndex == 3) {
-                      Future.delayed(const Duration(seconds: 2),
-                          () => Navigator.of(ctx1).pushNamed('/a'));
-                    }*/
                   });
                 },
                 children: myData
@@ -120,6 +95,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           ),
                         ))
                     .toList(),
+              );
+            }),
+            Builder(builder: (context) {
+              return Positioned(
+                right: width * 0.03,
+                top: height * 0.05,
+                child: GestureDetector(
+                  onTap: ()=> Navigator.pushNamed(context, ForgetPasswordScreen.fpId),
+                  child:Text(
+                          "SKIP",
+                          style: Styles.textStyle60
+                              .copyWith(decoration: TextDecoration.underline),
+                        ),
+                ),
               );
             }),
             Align(
