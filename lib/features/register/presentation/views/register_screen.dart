@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
 import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
 import 'package:lakini_gp/features/register/validation.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
-import 'package:lakini_gp/features/register/widgets/custom_drop_down_form_field.dart';
+
 import 'package:lakini_gp/features/register/widgets/custom_textfield.dart';
 
 class RegisterScreen extends StatefulWidget {

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
-import 'package:lakini_gp/features/register/presentation/views/forget_password_screen.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

@@ -25,9 +25,10 @@ abstract class Styles {
     color: const Color.fromRGBO(153, 153, 153, 1)
   );
 
-  static const textStyle16 = TextStyle(
+  static var textStyle16 = GoogleFonts.poppins(
     fontSize: 16,
     fontWeight: FontWeight.w500,
+    color:Colors.white,
   );
   static var textStyle60 = GoogleFonts.poppins(
       textStyle: const TextStyle(

@@ -4,6 +4,7 @@ import 'package:lakini_gp/features/register/presentation/views/login_screen.dart
 import 'package:lakini_gp/features/register/presentation/views/register_screen.dart';
 import 'package:lakini_gp/features/register/presentation/views/create_password_screen.dart';
 
+import 'features/home/presentation/views/notification_screen.dart';
 import 'features/register/presentation/views/forget_password_screen.dart';
 import 'features/register/presentation/views/otp_verification_screen.dart';
 import 'features/splash/presentation/views/splash_screen.dart';
@@ -19,7 +20,7 @@ class Lakini extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: const SplashScreen(),
+      home: const NotificationScreen(),
       routes: {
         ForgetPasswordScreen.fpId: (_) => ForgetPasswordScreen(),
         OtpVerification.otp: (_) => OtpVerification(),
