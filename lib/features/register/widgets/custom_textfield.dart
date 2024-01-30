@@ -24,20 +24,28 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Column(
       children: [
         const SizedBox(
           height: 5,
         ),
         TextFormField(
+          cursorColor: mainColor,
+          maxLines: 1,
           controller: widget.textController,
           decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(16),
             hintText: widget.hintText,
-            hintStyle: Styles.textStyle16,
+            hintStyle: Styles.textStyle16.copyWith(color: Colors.grey),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
-            prefixIcon: Icon(widget.icon),
+            prefixIcon: Icon(
+              widget.icon,
+              color: Colors.grey,
+            ),
             suffixIcon: widget.isPassword
                 ? IconButton(
                     onPressed: () {

@@ -9,9 +9,10 @@ class CustomRegisterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    double buttonWidth = screenSize.width * 0.9;
-    double buttonHeight = 48.0;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double buttonWidth = 345 * width;
+    double buttonHeight = height * 48 / 852;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: mainColor,

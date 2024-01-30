@@ -25,6 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        automaticallyImplyLeading: true,
+      ),
       body: Container(
         height: MediaQuery.of(context).size.height * 1,
         decoration: const BoxDecoration(
@@ -95,8 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         children: [
                           Checkbox(
-                            activeColor: Colors.black,
-                            checkColor: const Color(0xff00A123),
+                            activeColor: darkGreenColor,
+                            checkColor: Colors.white,
                             value: value,
                             onChanged: (bool? value) {
                               setState(() {

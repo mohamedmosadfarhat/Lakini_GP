@@ -25,7 +25,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+      ),
       body: Container(
+        height: MediaQuery.of(context).size.height * 1,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topRight,
