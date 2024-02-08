@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lakini_gp/core/utils/styles.dart';
 
 import '../models/location_model.dart';
 
@@ -22,7 +23,9 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isSelected ? "Pick Your Location" : "Your Location"),
+        centerTitle: true,
+        backgroundColor: const Color.fromRGBO(10, 17, 32, 1),
+        title: Text(widget.isSelected ? "Pick Your Location" : "Location Details",style: Styles.textStyle18,),
         actions: [
           if (widget.isSelected)
             IconButton(

@@ -6,6 +6,7 @@ import 'package:lakini_gp/features/profile/presentation/views/terms_and_conditio
 import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
 import 'package:lakini_gp/features/register/presentation/views/register_screen.dart';
 import 'package:lakini_gp/features/register/presentation/views/create_password_screen.dart';
+import 'features/home/item_details/screen/item_details_screen.dart';
 import 'features/register/presentation/views/forget_password_screen.dart';
 import 'features/register/presentation/views/otp_verification_screen.dart';
 import 'features/splash/presentation/views/splash_screen.dart';
@@ -21,7 +22,7 @@ class Lakini extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: const ProfileMenu(),
+      home: const ItemDetails(),
       routes: {
         ForgetPasswordScreen.fpId: (_) => ForgetPasswordScreen(),
         OtpVerification.otp: (_) => OtpVerification(),
@@ -33,6 +34,7 @@ class Lakini extends StatelessWidget {
         EditProfileScreen.id: (_) => const EditProfileScreen(),
         ProfileMenu.id: (_) => const ProfileMenu(),
         TermsAndConditionScreen.id: (_) => const TermsAndConditionScreen(),
+        ItemDetails.itemId: (_)=>const ItemDetails(),
       },
     );
   }
