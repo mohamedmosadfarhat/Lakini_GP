@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/features/onboarding/presentation/views/onboarding_screen.dart';
+import 'package:lakini_gp/features/posts/presentation/views/post_added.dart';
+import 'package:lakini_gp/features/posts/presentation/views/post_screen.dart';
 import 'package:lakini_gp/features/profile/presentation/views/edit_profile.dart';
 import 'package:lakini_gp/features/profile/presentation/views/profile_menu.dart';
 import 'package:lakini_gp/features/profile/presentation/views/terms_and_conditions_screen.dart';
@@ -22,7 +24,7 @@ class Lakini extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: const ItemDetails(),
+      home: const RegisterScreen(),
       routes: {
         ForgetPasswordScreen.fpId: (_) => ForgetPasswordScreen(),
         OtpVerification.otp: (_) => OtpVerification(),
@@ -34,7 +36,9 @@ class Lakini extends StatelessWidget {
         EditProfileScreen.id: (_) => const EditProfileScreen(),
         ProfileMenu.id: (_) => const ProfileMenu(),
         TermsAndConditionScreen.id: (_) => const TermsAndConditionScreen(),
-        ItemDetails.itemId: (_)=>const ItemDetails(),
+        ItemDetails.itemId: (_) => const ItemDetails(),
+        AddPostScreen.id: (_) => const AddPostScreen(),
+        PostAddedSuccessScreen.id: (_) => const PostAddedSuccessScreen(),
       },
     );
   }

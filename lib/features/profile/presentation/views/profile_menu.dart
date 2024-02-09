@@ -135,8 +135,8 @@ class _ProfileMenuState extends State<ProfileMenu> {
                           context: context,
                           builder: (BuildContext context) {
                             return const CustomAlertDialog(
-                              content: 'You want to exit the application ',
-                              buttonText2: 'Logout',
+                              content: 'You want to delete account ',
+                              buttonText2: 'Delete',
                             );
                           });
                     },

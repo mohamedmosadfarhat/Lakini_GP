@@ -3,7 +3,7 @@ import 'package:lakini_gp/core/utils/styles.dart';
 import 'package:lakini_gp/features/register/presentation/views/register_screen.dart';
 import 'package:lakini_gp/features/register/validation.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
-import 'package:lakini_gp/features/register/widgets/custom_textfield.dart';
+import 'package:lakini_gp/features/register/widgets/custom_text_form_field.dart';
 
 import 'forget_password_screen.dart';
 
@@ -24,28 +24,29 @@ class _LoginScreenState extends State<LoginScreen> {
   static String id = 'LoginScreen';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        automaticallyImplyLeading: true,
+    return Container(
+      height: MediaQuery.of(context).size.height * 1,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color(0xff011730),
+              Color(0xff00070F),
+              Color(0xff00070F),
+              Color(0xff000205),
+              Color(0xff000205),
+              Color(0xff011730),
+            ]),
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height * 1,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Color(0xff011730),
-                Color(0xff00070F),
-                Color(0xff00070F),
-                Color(0xff000205),
-                Color(0xff000205),
-                Color(0xff011730),
-              ]),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          automaticallyImplyLeading: true,
         ),
-        child: Form(
+        body: Form(
           key: formKey,
           child: Padding(
             padding: const EdgeInsets.all(18.0),
@@ -71,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Email',
                         style: Styles.textStyle18,
                       ),
-                      CustomTextField(
+                      CustomTextFormField(
                         icon: Icons.email_outlined,
                         hintText: 'Enter your email',
                         textController: emailController,
@@ -86,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Password',
                         style: Styles.textStyle18,
                       ),
-                      CustomTextField(
+                      CustomTextFormField(
                         icon: Icons.lock_outline,
                         hintText: 'Enter password',
                         textController: passwordController,

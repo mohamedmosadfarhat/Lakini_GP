@@ -4,7 +4,7 @@ import 'package:lakini_gp/features/register/presentation/views/login_screen.dart
 import 'package:lakini_gp/features/register/validation.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
 
-import 'package:lakini_gp/features/register/widgets/custom_textfield.dart';
+import 'package:lakini_gp/features/register/widgets/custom_text_form_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -24,26 +24,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
       TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color(0xff011730),
+              Color(0xff00070F),
+              Color(0xff00070F),
+              Color(0xff000205),
+              Color(0xff000205),
+              Color(0xff011730),
+            ]),
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height * 1,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Color(0xff011730),
-                Color(0xff00070F),
-                Color(0xff00070F),
-                Color(0xff000205),
-                Color(0xff000205),
-                Color(0xff011730),
-              ]),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          automaticallyImplyLeading: true,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
-        child: Form(
+        body: Form(
           key: formKey,
           child: Padding(
             padding: const EdgeInsets.all(18.0),
@@ -51,9 +54,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 45,
-                  ),
                   Image.asset('assets/icon.png'),
                   const Text(
                     'Register',
@@ -69,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'Username',
                         style: Styles.textStyle18,
                       ),
-                      CustomTextField(
+                      CustomTextFormField(
                         icon: Icons.person,
                         hintText: 'Enter your name',
                         textController: usernameController,
@@ -84,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'Email',
                         style: Styles.textStyle18,
                       ),
-                      CustomTextField(
+                      CustomTextFormField(
                         icon: Icons.email_outlined,
                         textController: emailController,
                         hintText: 'Enter your email',
@@ -99,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'Location',
                         style: Styles.textStyle18,
                       ),
-                      CustomTextField(
+                      CustomTextFormField(
                           icon: Icons.location_on_outlined,
                           hintText: 'Enter your Location',
                           validator: (String? value) {
@@ -113,7 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'Password',
                         style: Styles.textStyle18,
                       ),
-                      CustomTextField(
+                      CustomTextFormField(
                         icon: Icons.lock_outline,
                         hintText: 'Enter password',
                         isPassword: true,
@@ -130,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'Confirm Password',
                         style: Styles.textStyle18,
                       ),
-                      CustomTextField(
+                      CustomTextFormField(
                         icon: Icons.lock_outline,
                         hintText: 'Confirm password',
                         isPassword: true,

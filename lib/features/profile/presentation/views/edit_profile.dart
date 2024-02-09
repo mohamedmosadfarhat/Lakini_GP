@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lakini_gp/core/utils/assets.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
 import 'package:lakini_gp/features/register/validation.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
-import 'package:lakini_gp/features/register/widgets/custom_textfield.dart';
+import 'package:lakini_gp/features/register/widgets/custom_text_form_field.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -20,6 +24,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+
+  String? imagePath;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +49,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: Center(
                   child: Stack(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 66,
-                        backgroundImage: AssetImage('assets/pfp.png'),
+                        backgroundImage: imagePath != null
+                            ? FileImage(File(imagePath!))
+                                as ImageProvider<Object>
+                            : const AssetImage('assets/pfp.png'),
                       ),
                       Positioned(
                         bottom: 0,
@@ -54,7 +64,50 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           backgroundColor: Colors.black.withOpacity(0.4),
                           child: IconButton(
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () async {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Choose Image Source"),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () async {
+                                            Navigator.of(context).pop();
+                                            String? path = await pickImage(
+                                                ImageSource.gallery);
+                                            if (path != null) {
+                                              setState(() {
+                                                imagePath = path;
+                                              });
+                                            }
+                                          },
+                                          child: const Text("Gallery"),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            Navigator.of(context).pop();
+                                            String? path = await pickImage(
+                                                ImageSource.camera);
+                                            if (path != null) {
+                                              setState(() {
+                                                imagePath = path;
+                                              });
+                                            }
+                                          },
+                                          child: const Text("Camera"),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                             icon: const Icon(
                               Icons.add_a_photo_outlined,
                               size: 24,
@@ -71,7 +124,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 'Username',
                 style: Styles.textStyle18,
               ),
-              CustomTextField(
+              CustomTextFormField(
                 icon: Icons.person,
                 hintText: 'Ahmed Sherif',
                 textController: usernameController,
@@ -86,7 +139,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 'Email',
                 style: Styles.textStyle18,
               ),
-              CustomTextField(
+              CustomTextFormField(
                 icon: Icons.email_outlined,
                 textController: emailController,
                 hintText: 'ahmedalii12336@gmail.com',
@@ -101,7 +154,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 'Location',
                 style: Styles.textStyle18,
               ),
-              CustomTextField(
+              CustomTextFormField(
                   icon: Icons.location_on_outlined,
                   hintText: 'Biala Kafr El_Sheikh ',
                   validator: (String? value) {
@@ -115,7 +168,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 'Password',
                 style: Styles.textStyle18,
               ),
-              CustomTextField(
+              CustomTextFormField(
                 icon: Icons.lock_outline,
                 hintText: 'Enter password',
                 isPassword: true,
@@ -132,7 +185,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 'Confirm Password',
                 style: Styles.textStyle18,
               ),
-              CustomTextField(
+              CustomTextFormField(
                 icon: Icons.lock_outline,
                 hintText: 'Confirm password',
                 isPassword: true,
