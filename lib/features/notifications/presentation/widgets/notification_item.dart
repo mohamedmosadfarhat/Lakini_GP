@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 
-import '../../../../../core/utils/styles.dart';
+import '../../../../core/utils/styles.dart';
 
 class NotificationItem extends StatelessWidget {
   const NotificationItem({super.key});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
+import 'package:lakini_gp/features/home/item_details/presentation/views/home_screen.dart';
 import 'package:lakini_gp/features/register/presentation/views/register_screen.dart';
 import 'package:lakini_gp/features/register/validation.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
@@ -133,6 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomRegisterButton(
                         text: 'Login',
                         onPressed: () {
+                          Navigator.pushNamed(context, HomeScreen.id);
                           if (!formKey.currentState!.validate()) {
                             return;
                           }

@@ -6,16 +6,30 @@ const darkGreenColor = Color(0xff00A123);
 
 abstract class Styles {
   static var textStyle18 = GoogleFonts.poppins(
-      fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white);
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+  );
   static const textStyle20 = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.normal,
+  );
+  static const textStyle28 = TextStyle(
+    fontSize: 28,
+    fontWeight: FontWeight.bold,
   );
   static const textStyle30 = TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.w900,
     letterSpacing: 1.2,
   );
+
+  static const textStyle50 = TextStyle(
+    fontSize: 50,
+    fontWeight: FontWeight.w900,
+    letterSpacing: 1.2,
+  );
+
   static var textStyle14 = GoogleFonts.poppins(
       fontSize: 14,
       fontWeight: FontWeight.w400,

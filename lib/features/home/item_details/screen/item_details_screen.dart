@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:developer';
 
@@ -21,11 +20,9 @@ class ItemDetails extends StatefulWidget {
 }
 
 class _ItemDetailsState extends State<ItemDetails> {
-
   PlaceLocation? _pickedLocation;
   bool _isLoading = false;
   String? _error;
-
 
   String get locationImage {
     if (_pickedLocation == null) {
@@ -40,7 +37,7 @@ class _ItemDetailsState extends State<ItemDetails> {
   void _savePlace(double lat, double lng) async {
     final url = Uri.parse(
         "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=AIzaSyDWYIwIwT2Cx7maujw2kxbcvbFKhIGhLOE");
-    try{
+    try {
       final res = await http.get(url);
       if (res.statusCode >= 404) {
         setState(() {
@@ -54,21 +51,15 @@ class _ItemDetailsState extends State<ItemDetails> {
             PlaceLocation(latitude: lat, longitude: lng, address: address);
         _isLoading = false;
       });
-    }catch(err)
-    {
+    } catch (err) {
       setState(() {
         _error = "Something Went Wrong. Please try again later!!";
       });
     }
-
-
-
-
   }
 
-
-  void _getLocation()async{
-    Location location =  Location();
+  void _getLocation() async {
+    Location location = Location();
 
     bool serviceEnabled;
     PermissionStatus permissionGranted;
@@ -114,18 +105,17 @@ class _ItemDetailsState extends State<ItemDetails> {
   void initState() {
     super.initState();
     _getLocation();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget previewContent =  Center(
+    Widget previewContent = Center(
       child: Text(
         "Access Denied!",
         style: Styles.textStyle18,
         textAlign: TextAlign.center,
       ),
-    ) ;
+    );
     if (_pickedLocation != null) {
       previewContent = Image.network(
         locationImage,
@@ -142,7 +132,8 @@ class _ItemDetailsState extends State<ItemDetails> {
     if (_error != null) {
       previewContent = Center(
         child: Text(_error!),
-      );}
+      );
+    }
 
     List<String> itemImages = ["assets/item.png", "assets/item2.jpg"];
     var imgView = PageController();
@@ -176,7 +167,6 @@ class _ItemDetailsState extends State<ItemDetails> {
                             ),
                           ),
                         ),
-
                       ],
                     ),
                     itemCount: itemImages.length,
@@ -338,7 +328,9 @@ class _ItemDetailsState extends State<ItemDetails> {
                                 Icons.celebration_outlined,
                                 color: Color.fromRGBO(189, 255, 0, 1),
                               ),
-                              const SizedBox(width: 10,),
+                              const SizedBox(
+                                width: 10,
+                              ),
                               Text(
                                 "Reward",
                                 style: Styles.textStyle16,
@@ -347,12 +339,15 @@ class _ItemDetailsState extends State<ItemDetails> {
                               Text(
                                 "500L.E",
                                 style: Styles.textStyle16.copyWith(
-                                    color: const Color.fromRGBO(189, 255, 0, 1)),
+                                    color:
+                                        const Color.fromRGBO(189, 255, 0, 1)),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 35,),
+                        const SizedBox(
+                          height: 35,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 32.0),
                           child: Row(
@@ -360,54 +355,74 @@ class _ItemDetailsState extends State<ItemDetails> {
                               Container(
                                 width: 95,
                                 height: 48,
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  color: Colors.white
-                                ),
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: Colors.white),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.call,color: Colors.blueAccent,),
-                                    const SizedBox(width: 10,),
-                                    Text("Call",style: Styles.textStyle16.copyWith(color: Colors.blue),)
+                                    const Icon(
+                                      Icons.call,
+                                      color: Colors.blueAccent,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Call",
+                                      style: Styles.textStyle16
+                                          .copyWith(color: Colors.blue),
+                                    )
                                   ],
                                 ),
                               ),
-                              const SizedBox(width: 14,),
+                              const SizedBox(
+                                width: 14,
+                              ),
                               Container(
-                                width: 247,
                                 height: 48,
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  color: Colors.blue
-                                ),
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: Colors.blue),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.sms,color: Colors.white,),
-                                    const SizedBox(width: 10,),
-                                    Text("Message in the app",style: Styles.textStyle16,)
+                                    const Icon(
+                                      Icons.sms,
+                                      color: Colors.white,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Message in the ap",
+                                      style: Styles.textStyle16,
+                                    )
                                   ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 16,),
+                        const SizedBox(
+                          height: 16,
+                        ),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context)=>  MapScreen(
+                                builder: (context) => MapScreen(
                                   location: _pickedLocation!,
                                   isSelected: false,
                                 ),
                               ),
-                            );},
+                            );
+                          },
                           child: SizedBox(
                             width: 361,
                             height: 255,
-
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
                                 child: previewContent),

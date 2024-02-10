@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/custom_container.dart';
-import 'widgets/notification_item.dart';
-import 'widgets/separator.dart';
+import '../widgets/custom_container.dart';
+import '../widgets/notification_item.dart';
+import '../widgets/separator.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -32,10 +32,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
         ),
         child: Column(
-
           children: [
             const SizedBox(
-              height: 64,
+              height: 10,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -43,7 +42,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ),
             Expanded(
                 child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) => const NotificationItem(),
               itemCount: 20,
               separatorBuilder: (BuildContext context, int index) =>
@@ -66,13 +65,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
             });
           },
           child: customContainer(
-              context: context,
-              text: index == 0
-                  ? "All"
-                  : index == 1
-                      ? "Losts"
-                      : "Founds",
-              isTapped: value == index ? true : false),
+            context: context,
+            text: index == 0
+                ? "All"
+                : index == 1
+                    ? "Losts"
+                    : "Founds",
+            isTapped: value == index ? true : false,
+          ),
         ),
       ),
     );
