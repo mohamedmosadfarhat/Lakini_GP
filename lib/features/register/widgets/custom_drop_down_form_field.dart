@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
 
 class CustomDropDownFormField extends StatelessWidget {
-  CustomDropDownFormField(
-      {super.key, required this.icon, required this.hintText});
+  const CustomDropDownFormField(
+      {super.key,
+      required this.icon,
+      required this.hintText,
+      required this.items});
   final IconData icon;
   final String hintText;
-  final items = [
-    'Alexandria',
-    'Cairo',
-    'Giza',
-    'Gharbia',
-    'Luxor',
-    'Kafr-ElSheikh',
-  ];
+  final List items;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,7 +24,7 @@ class CustomDropDownFormField extends StatelessWidget {
               hintText: hintText,
               prefixIcon: Icon(icon),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(10),
               ),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: mainColor),
@@ -39,7 +35,6 @@ class CustomDropDownFormField extends StatelessWidget {
                       value: e,
                       child: Row(
                         children: [
-                          Icon((Icons.location_on_outlined)),
                           Text(e),
                         ],
                       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/features/Ai%20/presentation/views/searching_with_ai.dart';
 import 'package:lakini_gp/features/onboarding/presentation/views/onboarding_screen.dart';
+import 'package:lakini_gp/features/posts/presentation/views/post_added.dart';
+import 'package:lakini_gp/features/posts/presentation/views/post_screen.dart';
 import 'package:lakini_gp/features/profile/presentation/views/edit_profile.dart';
 import 'package:lakini_gp/features/profile/presentation/views/profile_menu.dart';
 import 'package:lakini_gp/features/profile/presentation/views/terms_and_conditions_screen.dart';
@@ -40,7 +42,10 @@ class Lakini extends StatelessWidget {
         ProfileMenu.id: (_) => const ProfileMenu(),
         TermsAndConditionScreen.id: (_) => const TermsAndConditionScreen(),
         ChatContent.id: (context) => ChatContent(),
-        SearchingWithAi.id: (context) => SearchingWithAi()
+        SearchingWithAi.id: (context) => SearchingWithAi(),
+        ItemDetails.itemId: (_) => const ItemDetails(),
+        AddPostScreen.id: (_) => const AddPostScreen(),
+        PostAddedSuccessScreen.id: (_) => const PostAddedSuccessScreen(),
       },
     );
   }

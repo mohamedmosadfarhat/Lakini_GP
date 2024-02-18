@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
 
-class CustomTextField extends StatefulWidget {
-  const CustomTextField(
+class CustomTextFormField extends StatefulWidget {
+  const CustomTextFormField(
       {super.key,
       required this.icon,
       required this.hintText,
@@ -16,10 +16,10 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final TextEditingController textController;
   @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
   bool showPwd = false;
 
   @override

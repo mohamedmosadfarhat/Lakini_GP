@@ -4,7 +4,6 @@ import 'package:lakini_gp/core/utils/styles.dart';
 import '../../../../Ai /presentation/views/searching_with_ai.dart';
 import 'custom_item.dart';
 
-
 class HomeBodey extends StatefulWidget {
   const HomeBodey({Key? key}) : super(key: key);
 
@@ -48,7 +47,7 @@ class _HomeBodeState extends State<HomeBodey> {
                       style: Styles.textStyle20,
                     ),
                     Container(
-                      width: 70,
+                      width: 60,
                       decoration: BoxDecoration(
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(15)),
@@ -56,7 +55,10 @@ class _HomeBodeState extends State<HomeBodey> {
                         onPressed: () {
                           Navigator.pushNamed(context, SearchingWithAi.id);
                         },
-                        icon: Icon(Icons.tune),
+                        icon: Icon(
+                          Icons.tune,
+                          size: 30,
+                        ),
                       ),
                     )
                   ],
