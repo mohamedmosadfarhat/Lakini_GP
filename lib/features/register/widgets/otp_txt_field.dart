@@ -59,9 +59,10 @@ class OtpVerificationRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(
-        5,
+        6,
         (index) => Padding(
-          padding: const EdgeInsets.all(6.0),
+          padding: const EdgeInsets.only(left:6.0),
+          
           child: OtpTextFormField(
             controller: txtController[index],
             validator: validator,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
 
-import '../../../../Ai /presentation/views/searching_with_ai.dart';
+
 import 'custom_item.dart';
 
 class HomeBodey extends StatefulWidget {
@@ -53,7 +53,7 @@ class _HomeBodeState extends State<HomeBodey> {
                           borderRadius: BorderRadius.circular(15)),
                       child: IconButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, SearchingWithAi.id);
+                          //Navigator.pushNamed(context, SearchingWithAi.id);
                         },
                         icon: Icon(
                           Icons.tune,
