@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:lakini_gp/features/onboarding/presentation/views/onboarding_screen.dart';
 import 'package:lakini_gp/features/posts/presentation/views/post_added.dart';
 import 'package:lakini_gp/features/posts/presentation/views/post_screen.dart';
@@ -21,7 +20,7 @@ import 'features/register/presentation/views/forget_password_screen.dart';
 import 'features/register/presentation/views/otp_verification_screen.dart';
 import 'features/splash/presentation/views/splash_screen.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   await CacheHelper.init();
@@ -41,7 +40,6 @@ class Lakini extends StatelessWidget {
         BlocProvider(
           create: (context) => AppLoginCubit(),
         ),
-      
       ],
       child: MaterialApp(
         theme: ThemeData.dark(),
@@ -59,7 +57,7 @@ class Lakini extends StatelessWidget {
           EditProfileScreen.id: (_) => const EditProfileScreen(),
           ProfileMenu.id: (_) => const ProfileMenu(),
           TermsAndConditionScreen.id: (_) => const TermsAndConditionScreen(),
-          ChatContent.id: (context) => ChatContent(),
+          ChatContent.id: (context) => const ChatContent(),
           //SearchingWithAi.id: (context) => SearchingWithAi(),
           ItemDetails.itemId: (_) => const ItemDetails(),
           AddPostScreen.id: (_) => const AddPostScreen(),

@@ -36,7 +36,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           maxLines: 1,
           controller: widget.textController,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(16),
+            contentPadding: const EdgeInsets.all(13),
             hintText: widget.hintText,
             hintStyle: Styles.textStyle16.copyWith(color: Colors.grey),
             border: const OutlineInputBorder(

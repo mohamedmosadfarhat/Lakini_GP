@@ -27,27 +27,28 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   bool value = false;
 
- 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppLoginCubit, AppLoginState>(
       listener: (context, state) {
         if (state is AppLoginSuccessState) {
-          if(state.loginModel.status){
-             print(state.loginModel.message);
-            buildSnackBar(context: context,text:  state.loginModel.message,clr:  const Color(0xff011730));
-            CacheHelper.saveData(
-                    key: "token", value: state.loginModel.token)
+          if (state.loginModel.status) {
+            print(state.loginModel.message);
+            buildSnackBar(
+                context: context,
+                text: state.loginModel.message,
+                clr: const Color(0xff011730));
+            CacheHelper.saveData(key: "token", value: state.loginModel.token)
                 .then((value) {
-                  token = CacheHelper.getData(key: "token");
+              token = CacheHelper.getData(key: "token");
               Navigator.pushNamed(context, HomeScreen.id);
             });
+          } else {
+            buildSnackBar(
+                context: context,
+                text: state.loginModel.message,
+                clr: const Color.fromARGB(255, 92, 1, 1));
           }
-           else{
-             buildSnackBar(context:  context,text:  state.loginModel.message,
-               clr:  const Color.fromARGB(255, 92, 1, 1));
-          }
-          
         }
       },
       builder: (context, state) {
@@ -77,21 +78,27 @@ class _LoginScreenState extends State<LoginScreen> {
             body: Form(
               key: formKey,
               child: Padding(
-                padding: const EdgeInsets.all(18.0),
+                padding: const EdgeInsets.all(20.0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(
-                        height: 60,
+                        height: 25,
                       ),
                       Image.asset('assets/icon.png'),
-                      const Text(
+                      Text(
                         'Login',
-                        style: Styles.textStyle30,
+                        style: Styles.textStyle28
+                            .copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        'Login to continue using the app',
+                        style: Styles.textStyle14.copyWith(
+                            fontWeight: FontWeight.w400, color: Colors.white),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 42,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           CustomTextFormField(
                             icon: Icons.lock_outline,
                             hintText: 'Enter password',
+                            isPassword: true,
                             textController: passwordController,
                             validator: (String? val) {
                               if (val!.isEmpty || !val.isValidPassword) {
@@ -138,20 +146,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                   });
                                 },
                               ),
-                              const Text('Remember me'),
+                              Text(
+                                'Remember me',
+                                style: Styles.textStyle14
+                                    .copyWith(color: Colors.white),
+                              ),
                               const Spacer(),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pushNamed(
-                                      context, ForgetPasswordScreen.fpId,
-                                      
-                                      );
+                                    context,
+                                    ForgetPasswordScreen.fpId,
+                                  );
                                 },
                                 child: Text(
                                   'Forget Password?',
                                   style: Styles.textStyle14.copyWith(
                                     color: mainColor,
                                     decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w700,
                                     decorationColor: mainColor,
                                   ),
                                 ),
@@ -159,37 +172,41 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 26,
                           ),
                           CustomRegisterButton(
                             text: 'Login',
                             onPressed: () {
-                              if (!emailController.text
-                                        .contains("@") ||
-                                    !emailController.text.contains(".com")) {
-                                  buildSnackBar(
-                                      context: context,
-                                      text: "Invalid email address",
-                                      clr: const Color.fromARGB(255, 92, 1, 1));
-                                } 
-                              else{
+                              if (!emailController.text.contains("@") ||
+                                  !emailController.text.contains(".com")) {
+                                buildSnackBar(
+                                    context: context,
+                                    text: "Invalid email address",
+                                    clr: const Color.fromARGB(255, 92, 1, 1));
+                              } else {
                                 cubit.userLogin(
-                                  email: emailController.text,
-                                  password: passwordController.text);
+                                    email: emailController.text,
+                                    password: passwordController.text);
                               }
                             },
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 28,
                           ),
-                          if(state is AppLoginLoadingState)
-                          const LinearProgressIndicator(color: Color.fromRGBO(1, 23, 48, 1),),
+                          if (state is AppLoginLoadingState)
+                            const LinearProgressIndicator(
+                              color: Color.fromRGBO(1, 23, 48, 1),
+                            ),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Don\'t have an account?'),
+                          Text(
+                            'Don\'t have an account?',
+                            style: Styles.textStyle14
+                                .copyWith(color: Colors.white),
+                          ),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(
@@ -237,4 +254,3 @@ SnackBar buildSnackBar(
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
   return snackBar;
 }
-

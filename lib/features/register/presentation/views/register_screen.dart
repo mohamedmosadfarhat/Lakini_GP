@@ -6,9 +6,7 @@ import 'package:lakini_gp/features/register/presentation/register_cubit/register
 import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
 import 'package:lakini_gp/features/register/validation.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
-
 import 'package:lakini_gp/features/register/widgets/custom_text_form_field.dart';
-
 import 'otp_verification_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -79,7 +77,7 @@ class RegisterScreen extends StatelessWidget {
             body: Form(
               key: formKey,
               child: Padding(
-                padding: const EdgeInsets.all(18.0),
+                padding: const EdgeInsets.all(20.0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -94,7 +92,7 @@ class RegisterScreen extends StatelessWidget {
                         style: Styles.textStyle30,
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 14,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,7 +225,10 @@ class RegisterScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Already have an account?'),
+                          Text(
+                            'Already have an account?',
+                            style: Styles.textStyle16,
+                          ),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(

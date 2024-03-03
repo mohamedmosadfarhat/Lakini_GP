@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
 
-class CutsomTextField extends StatelessWidget {
-  const CutsomTextField(
+class CustomTextFieldPost extends StatelessWidget {
+  const CustomTextFieldPost(
       {super.key,
       required this.hintText,
       this.textEditingController,

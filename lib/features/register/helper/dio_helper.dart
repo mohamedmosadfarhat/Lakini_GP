@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 
 class DioHelper {
@@ -17,15 +15,16 @@ class DioHelper {
     required String content,
     required String url,
     required Map<String, dynamic> data,
+    String? myToken,
     Map<String, dynamic>? query,
   }) async {
     dio!.options.headers = {
       'accept': accept,
       'Content-Type': content,
+      "Authorization": "Bearer $myToken",
     };
 
-    return dio!
-        .post(
+    return dio!.post(
       url,
       queryParameters: query,
       data: data,

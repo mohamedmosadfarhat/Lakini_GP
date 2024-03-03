@@ -24,7 +24,7 @@ class _TermsAndConditionScreenState extends State<TermsAndConditionScreen> {
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Terms and Conditions',
           style: Styles.textStyle20,
         ),

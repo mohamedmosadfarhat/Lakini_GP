@@ -3,13 +3,10 @@ import 'package:lakini_gp/core/utils/styles.dart';
 
 class CustomDropDownFormField extends StatelessWidget {
   const CustomDropDownFormField(
-      {super.key,
-      required this.icon,
-      required this.hintText,
-      required this.items});
-  final IconData icon;
+      {super.key, this.icon, required this.hintText, required this.items});
+  final IconData? icon;
   final String hintText;
-  final List items;
+  final List<dynamic> items;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,9 +19,9 @@ class CustomDropDownFormField extends StatelessWidget {
             alignment: Alignment.center,
             decoration: InputDecoration(
               hintText: hintText,
-              prefixIcon: Icon(icon),
+              prefixIcon: icon != null ? Icon(icon) : null,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(8),
               ),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: mainColor),
