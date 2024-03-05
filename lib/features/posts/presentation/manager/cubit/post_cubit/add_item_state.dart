@@ -1,4 +1,4 @@
-import 'package:lakini_gp/features/posts/data/models/item_model.dart';
+
 
 class AddItemState {}
 
@@ -11,6 +11,10 @@ class AddItemSuccess extends AddItemState {
 }
 
 class AddItemFailure extends AddItemState {
-  final String message;
-  AddItemFailure({required this.message});
+
+  AddItemFailure();
 }
+
+class AddImageLoading extends AddItemState{}
+class AddImageSuccess extends AddItemState{}
+

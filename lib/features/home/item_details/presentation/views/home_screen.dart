@@ -18,19 +18,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int cIndex = 0;
-  var screens = [
-    HomeBodey(),
-    ChatScreen(),
-    NotificationScreen(),
-    ProfileMenu()
+    List<Widget> screens = [
+     const HomeBodey(),
+    const ChatScreen(),
+    const NotificationScreen(),
+     const ProfileMenu()
   ];
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    //var width = MediaQuery.of(context).size.width;
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
             Color.fromRGBO(1, 23, 48, 1),
@@ -50,9 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          actions: [
+          actions: const [
             Padding(
-              padding: const EdgeInsets.only(right: 15),
+              padding: EdgeInsets.only(right: 15),
               child: Icon(
                 Icons.search,
                 size: 30,
@@ -61,10 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         // backgroundColor:,
-        drawer: Menue(),
+        drawer: const Menue(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             border: Border(
               top: BorderSide(color: Color(0xff0075FF), width: 1.0),
             ),
@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BottomAppBar(
             height: height * .09,
             elevation: 0,
-            color: Color.fromRGBO(1, 23, 48, 1),
+            color: const Color.fromRGBO(1, 23, 48, 1),
             shape: const CircularNotchedRectangle(),
             notchMargin: 5,
             child: Row(
@@ -85,12 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         setState(() {
                           cIndex = 0;
-                          print(cIndex);
+                          //print(cIndex);
                         });
                       },
                       icon: Icons.home,
                       hint: "Home",
-                      color: cIndex == 0 ? Colors.white : Color(0xff555557),
+                      color: cIndex == 0 ? Colors.white : const Color(0xff555557),
                     ),
                     ButtomNavigationButton(
                       onPressed: () {
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       icon: Icons.chat,
                       hint: "Chat",
-                      color: cIndex == 1 ? Colors.white : Color(0xff555557),
+                      color: cIndex == 1 ? Colors.white : const Color(0xff555557),
                     ),
                   ],
                 ),
@@ -111,13 +111,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         setState(
                           () {
                             cIndex = 2;
-                            print(cIndex);
+                           // print(cIndex);
                           },
                         );
                       },
                       icon: Icons.notifications,
                       hint: "Notifications",
-                      color: cIndex == 2 ? Colors.white : Color(0xff555557),
+                      color: cIndex == 2 ? Colors.white : const Color(0xff555557),
                     ),
                     ButtomNavigationButton(
                       onPressed: () {
@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       icon: Icons.person,
                       hint: "Profile",
-                      color: cIndex == 3 ? Colors.white : Color(0xff555557),
+                      color: cIndex == 3 ? Colors.white : const Color(0xff555557),
                     ),
                   ],
                 )
@@ -137,12 +137,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xff0075FF),
-          shape: CircleBorder(),
+          backgroundColor: const Color(0xff0075FF),
+          shape: const CircleBorder(),
           onPressed: () {
             Navigator.pushNamed(context, AddPostScreen.id);
           },
-          child: Icon(
+          child: const Icon(
             Icons.add,
             size: 30,
           ),

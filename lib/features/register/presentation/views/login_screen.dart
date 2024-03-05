@@ -38,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 context: context,
                 text: state.loginModel.message,
                 clr: const Color(0xff011730));
+            CacheHelper.saveData(key: "remeber_me", value: value);
             CacheHelper.saveData(key: "token", value: state.loginModel.token)
                 .then((value) {
               token = CacheHelper.getData(key: "token");

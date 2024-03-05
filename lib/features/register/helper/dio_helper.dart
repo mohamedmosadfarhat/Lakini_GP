@@ -14,7 +14,7 @@ class DioHelper {
     String? accept,
     required String content,
     required String url,
-    required Map<String, dynamic> data,
+    required  data,
     String? myToken,
     Map<String, dynamic>? query,
   }) async {
@@ -30,6 +30,8 @@ class DioHelper {
       data: data,
     );
   }
+
+  
 
   static Future<Response> putData({
     String? accept,

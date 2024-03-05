@@ -14,6 +14,7 @@ import 'features/home/item_details/presentation/views/home_screen.dart';
 import 'features/home/item_details/screen/item_details_screen.dart';
 import 'features/register/helper/cache_helper.dart';
 import 'features/register/helper/dio_helper.dart';
+import 'features/register/helper/end_point.dart';
 import 'features/register/presentation/login_cubit/login_cubit.dart';
 import 'features/register/presentation/register_cubit/register_cubit.dart';
 import 'features/register/presentation/views/forget_password_screen.dart';
@@ -24,11 +25,26 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   await CacheHelper.init();
-  runApp(const Lakini());
+  bool onBoarding = CacheHelper.getData(key: "onBoarding") ?? false;
+  bool rememberMe = CacheHelper.getData(key: "remeber_me") ?? false;
+  print(token);
+  Widget widget;
+
+  if (onBoarding) {
+    token = CacheHelper.getData(key: "token");
+    print(token);
+     widget = token != null&& rememberMe ? const HomeScreen() : const LoginScreen();
+  } else {
+    widget = const OnBoardingScreen();
+  }
+  runApp( Lakini(
+    startWidget: widget,
+  ));
 }
 
 class Lakini extends StatelessWidget {
-  const Lakini({super.key});
+  final Widget? startWidget;
+  const Lakini({this.startWidget,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +60,14 @@ class Lakini extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
+        home:   SplashScreen(navigator: startWidget!,),
         routes: {
           ForgetPasswordScreen.fpId: (_) => ForgetPasswordScreen(),
           OtpVerification.otp: (_) => OtpVerification(),
           CreatePasswordScreen.cpId: (_) => CreatePasswordScreen(),
           LoginScreen.id: (_) => const LoginScreen(),
           RegisterScreen.id: (_) => const RegisterScreen(),
-          SplashScreen.id: (_) => const SplashScreen(),
+          SplashScreen.id: (_) =>  SplashScreen(navigator: startWidget!,),
           OnBoardingScreen.id: (_) => const OnBoardingScreen(),
           HomeScreen.id: (_) => const HomeScreen(),
           EditProfileScreen.id: (_) => const EditProfileScreen(),

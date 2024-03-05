@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../core/utils/styles.dart';
-import '../../../onboarding/presentation/views/onboarding_screen.dart';
+
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final Widget navigator;
+  const SplashScreen({required this.navigator,super.key});
   static String id = 'SplashScreen';
 
   @override
@@ -31,6 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     });
   }
+ 
 
   void startAnimation() {
     setState(() {
@@ -111,7 +113,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Navigator.pushReplacement(
                   context,
                   PageTransition(
-                    child: const OnBoardingScreen(),
+                    child: widget.navigator,
                     type: PageTransitionType.rightToLeft,
                     curve: Curves.easeIn,
                     duration: const Duration(milliseconds: 700),

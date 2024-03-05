@@ -1,10 +1,12 @@
-import 'package:dio/dio.dart';
+
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lakini_gp/core/utils/assets.dart';
+
 import 'package:lakini_gp/core/utils/styles.dart';
 import 'package:lakini_gp/features/posts/data/repos/add_post_repo.dart';
-import 'package:lakini_gp/features/posts/data/repos/add_post_repo_imple.dart';
+
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/category_cubit/category_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/add_item_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/add_item_state.dart';
@@ -12,9 +14,11 @@ import 'package:lakini_gp/features/posts/presentation/views/post_added.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/custom_drop_down_button.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/custom_text_field.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/found_reward.dart';
-import 'package:lakini_gp/features/posts/presentation/widgets/image_picker_daialog.dart';
+
 import 'package:lakini_gp/features/posts/presentation/widgets/snackBar_error_widget.dart';
+import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
+
 import '../../services/city_view_model.dart';
 import 'add_image_container.dart';
 
@@ -47,7 +51,7 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
 
   String value = 'reward';
   //List<String> imagePaths = [];
-  FormData? formData;
+
   bool isExpanded = false;
   bool isLoading = false;
   List<String> items = ['Item ', 'cat', 'people', 'Item 4', 'Item 5', 'string'];
@@ -70,18 +74,16 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
         BlocProvider(
           create: (context) => CategoryCubit(addPostRepo),
         ),
-        BlocProvider(create: (context) => AddItemCubit()),
+        BlocProvider(create: (context) => AddItemCubit()
+        ),
       ],
       child:
           BlocConsumer<AddItemCubit, AddItemState>(listener: (context, state) {
-        if (state is AddItemLoading) {
-          isLoading = true;
-        } else if (state is AddItemSuccess) {
+        if (state is AddItemSuccess) {
+          buildSnackBar(context: context, text: "Item Added Successfully", clr: const Color(0xff011730));
           Navigator.pushNamed(context, PostAddedSuccessScreen.id);
-          isLoading = false;
         } else if (state is AddItemFailure) {
-          showSnackBarMessage(context, state.message);
-          isLoading = false;
+          showSnackBarMessage(context, "Failed To Add Item");
         }
       }, builder: (context, state) {
         var cubit = AddItemCubit.get(context);
@@ -124,7 +126,21 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                   // ),
                 ],
               ),
-              SingleChildScrollView(
+
+              GestureDetector(
+                onTap: cubit.fetchImage,
+                child: cubit.pickedImage == null
+                    ? const UploadImg()
+                    : ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.file(cubit.pickedImage!,
+                          fit: BoxFit.cover,
+                          height: 96,
+                          width: 96),
+                    ),
+              ),
+
+              /*  SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
@@ -141,25 +157,7 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                       AddImageContainer(
                         widgetChild: IconButton(
                           onPressed: () async {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return ImagePickerDialog(
-                                  onImageSourceSelected: (source) async {
-                                    String? path = await pickImage(source);
-
-                                    if (path != null) {
-                                      formData = FormData.fromMap({
-                                        "file": await MultipartFile.fromFile(
-                                            path,
-                                            filename: "image.jpg"),
-                                      });
-                                      setState(() async {});
-                                    }
-                                  },
-                                );
-                              },
-                            );
+                           
                           },
                           icon: const Icon(
                             Icons.add_photo_alternate_outlined,
@@ -170,7 +168,7 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                       ),
                   ],
                 ),
-              ),
+              ), */
               Text(
                 'Add title',
                 style: Styles.textStyle18,
@@ -318,15 +316,15 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
               CustomRegisterButton(
                   text: 'Add',
                   onPressed: () {
-                    cubit.addItem(
-                      name: nameController.text.toString(),
-                      status: statusController.text.toString(),
-                      desc: descController.text.toString(),
-                      image: formData,
-                      place: locationOfLostFoundController.text.toString(),
-                      phone: phoneController.text.toString(),
-                      categoryName: typeController.text.toString(),
-                    );
+                    cubit.submit(
+                        lostType: typeController.text,
+                        titlel: nameController.text,
+                        caption: descController.text,
+                        phoneNumber: phoneController.text,
+                        location: locationOfLostFoundController.text,
+                        status: "lost",
+                        reward: rewardController.text,
+                        );
                   }),
             ],
           ),

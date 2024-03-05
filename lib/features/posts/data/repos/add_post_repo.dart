@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:lakini_gp/features/posts/data/models/category_model.dart';
-import 'package:lakini_gp/features/posts/data/models/item_model.dart';
+
 
 import '../../../../core/utils/errors/failure.dart';
 
