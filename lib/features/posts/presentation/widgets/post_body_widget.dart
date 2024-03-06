@@ -1,8 +1,6 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:lakini_gp/core/utils/styles.dart';
 import 'package:lakini_gp/features/posts/data/repos/add_post_repo.dart';
@@ -14,10 +12,12 @@ import 'package:lakini_gp/features/posts/presentation/views/post_added.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/custom_drop_down_button.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/custom_text_field.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/found_reward.dart';
+import 'package:lakini_gp/features/posts/presentation/widgets/image_picker_daialog.dart';
 
 import 'package:lakini_gp/features/posts/presentation/widgets/snackBar_error_widget.dart';
 import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
+import 'package:lakini_gp/features/register/widgets/custom_drop_down_form_field.dart';
 
 import '../../services/city_view_model.dart';
 import 'add_image_container.dart';
@@ -50,13 +50,24 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String value = 'reward';
-  //List<String> imagePaths = [];
-
   bool isExpanded = false;
   bool isLoading = false;
-  List<String> items = ['Item ', 'cat', 'people', 'Item 4', 'Item 5', 'string'];
+  String? selectedLostType;
+  List<String> items = [
+    'Clothes ',
+    'Phones',
+    'Watches',
+    'People',
+    'Electronics',
+  ];
   CityViewModel cityViewModel = CityViewModel();
-  AddPostRepo? addPostRepo;
+  int characterCount = 0;
+
+  void updateCharacterCount(String newText) {
+    setState(() {
+      characterCount = newText.length;
+    });
+  }
 
   @override
   void initState() {
@@ -71,16 +82,15 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => CategoryCubit(addPostRepo),
-        ),
-        BlocProvider(create: (context) => AddItemCubit()
-        ),
+        BlocProvider(create: (context) => AddItemCubit()),
       ],
       child:
           BlocConsumer<AddItemCubit, AddItemState>(listener: (context, state) {
         if (state is AddItemSuccess) {
-          buildSnackBar(context: context, text: "Item Added Successfully", clr: const Color(0xff011730));
+          buildSnackBar(
+              context: context,
+              text: "Item Added Successfully",
+              clr: const Color(0xff011730));
           Navigator.pushNamed(context, PostAddedSuccessScreen.id);
         } else if (state is AddItemFailure) {
           showSnackBarMessage(context, "Failed To Add Item");
@@ -96,23 +106,13 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                 widget.type,
                 style: Styles.textStyle18,
               ),
-              CustomTextFieldPost(
+              CustomDropDownFormField(
                 hintText: 'Enter your lost Type',
-                textEditingController: typeController,
+                items: items,
+                onItemSelected: (selectedType) {
+                  selectedLostType = selectedType;
+                },
               ),
-              // CustomDropDownButtonNew(
-              //   onTap: () {
-              //     setState(() {
-              //       isExpanded = !isExpanded;
-              //     });
-              //   },
-              //   hintText: 'Choose your lost type',
-              //   listPrefixIcon: Icons.location_on_outlined,
-              //   isExpanded: isExpanded,
-              //   suffixIcon: Icons.arrow_drop_down_outlined,
-              //   items: [],
-              //   controller: typeController,
-              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -120,24 +120,30 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                     'Add photo',
                     style: Styles.textStyle18,
                   ),
-                  // Text(
-                  //   ' (${imagePaths.length}/4)',
-                  //   style: Styles.textStyle14.copyWith(color: Colors.grey),
-                  // ),
                 ],
               ),
-
               GestureDetector(
-                onTap: cubit.fetchImage,
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ImagePickerDialog(
+                        onImageSourceSelected: (ImageSource source) {
+                          // Handle the selected image source here
+                          // For example, you can call a function to handle picking image from source
+                          cubit.fetchImage();
+                        },
+                      );
+                    },
+                  );
+                },
                 child: cubit.pickedImage == null
                     ? const UploadImg()
                     : ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: Image.file(cubit.pickedImage!,
-                          fit: BoxFit.cover,
-                          height: 96,
-                          width: 96),
-                    ),
+                        borderRadius: BorderRadius.circular(30),
+                        child: Image.file(cubit.pickedImage!,
+                            fit: BoxFit.cover, height: 96, width: 96),
+                      ),
               ),
 
               /*  SingleChildScrollView(
@@ -157,7 +163,7 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                       AddImageContainer(
                         widgetChild: IconButton(
                           onPressed: () async {
-                           
+
                           },
                           icon: const Icon(
                             Icons.add_photo_alternate_outlined,
@@ -183,11 +189,16 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                     'Add caption',
                     style: Styles.textStyle18.copyWith(color: Colors.white),
                   ),
+                  Text(
+                    ' ($characterCount/250)',
+                    style: Styles.textStyle14.copyWith(color: Colors.grey),
+                  ),
                 ],
               ),
               CustomTextFieldPost(
                 hintText: 'Add caption',
                 textEditingController: descController,
+                onChanged: updateCharacterCount,
               ),
               Text(
                 'Your phone',
@@ -317,14 +328,14 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                   text: 'Add',
                   onPressed: () {
                     cubit.submit(
-                        lostType: typeController.text,
-                        titlel: nameController.text,
-                        caption: descController.text,
-                        phoneNumber: phoneController.text,
-                        location: locationOfLostFoundController.text,
-                        status: "lost",
-                        reward: rewardController.text,
-                        );
+                      lostType: selectedLostType!,
+                      titlel: nameController.text,
+                      caption: descController.text,
+                      phoneNumber: phoneController.text,
+                      location: locationOfLostFoundController.text,
+                      status: widget.type,
+                      reward: rewardController.text,
+                    );
                   }),
             ],
           ),

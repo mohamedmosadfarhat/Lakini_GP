@@ -7,7 +7,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   final AddPostRepo? addPostRepo;
 
-  Future<void> getAllCategories() async {
+  getAllCategories() async {
     emit(CategoryLoading());
     try {
       var results = await addPostRepo!.getCategoryName();
