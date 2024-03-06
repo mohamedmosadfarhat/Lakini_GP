@@ -129,8 +129,6 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                     builder: (BuildContext context) {
                       return ImagePickerDialog(
                         onImageSourceSelected: (ImageSource source) {
-                          // Handle the selected image source here
-                          // For example, you can call a function to handle picking image from source
                           cubit.fetchImage();
                         },
                       );
