@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
 
-import '../models/location_model.dart';
+import '../../data/models/location_model.dart';
 
 class MapScreen extends StatefulWidget {
   final PlaceLocation location;

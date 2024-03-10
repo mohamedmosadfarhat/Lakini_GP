@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
-import 'package:lakini_gp/features/home/item_details/presentation/wedgits/capitalize_extension.dart';
+import 'package:lakini_gp/features/home/data/models/item_model.dart';
+import 'package:lakini_gp/features/home/presentation/views/wedgits/capitalize_extension.dart';
 
-import '../../screen/item_details_screen.dart';
+import '../item_details_screen.dart';
 
 class CustomItem extends StatelessWidget {
-  const CustomItem({
-    super.key,
-  });
+  CustomItem({required this.itemModel});
+  final ItemModel itemModel;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,11 @@ class CustomItem extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ItemDetails.itemId);
+        Navigator.pushNamed(
+          context,
+          ItemDetails.itemId,
+          arguments: itemModel,
+        );
       },
       child: Padding(
         padding: EdgeInsets.only(
@@ -39,11 +44,11 @@ class CustomItem extends StatelessWidget {
                   width: width * .33,
                   height: height * .18,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         bottomLeft: Radius.circular(10)),
-                    child: Image.asset(
-                      "assets/cat_test.png",
+                    child: Image.network(
+                      "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${itemModel.itemImage}",
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -59,16 +64,12 @@ class CustomItem extends StatelessWidget {
                       height: height * .01,
                     ),
                     Text(
-                      "cat seami"
-                          .capitalize()
-                          .split(' ')
-                          .map((word) => word.capitalize())
-                          .join(' '),
+                      "${itemModel.itemName}".capitalize(),
                       style: Styles.textStyle20.copyWith(
                           fontWeight: FontWeight.w700, fontFamily: "inter"),
                     ),
                     Text(
-                      "lost male seami in biala lost male seami  ".capitalize(),
+                      "${itemModel.description}".capitalize(),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: Styles.textStyle16,
@@ -78,7 +79,7 @@ class CustomItem extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.location_on,
                           color: Color(0xffFA9600),
                           size: 20,
@@ -86,9 +87,13 @@ class CustomItem extends StatelessWidget {
                         SizedBox(
                           width: width * .02,
                         ),
-                        Text(
-                          "Biala Kafr El_Sheikh".capitalize(),
-                          style: Styles.textStyle14,
+                        Flexible(
+                          child: Text(
+                            "${itemModel.foundPlace}",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: Styles.textStyle14,
+                          ),
                         ),
                       ],
                     ),
@@ -97,7 +102,7 @@ class CustomItem extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.calendar_view_month_rounded,
                           size: 20,
                         ),
@@ -105,7 +110,9 @@ class CustomItem extends StatelessWidget {
                           width: width * .02,
                         ),
                         Text(
-                          "September 25 - 24".capitalize(),
+                          "${itemModel.foundDate}".capitalize(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                           style: Styles.textStyle14,
                         ),
                       ],

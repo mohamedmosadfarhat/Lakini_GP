@@ -1,19 +1,25 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:http/http.dart' as http;
+import 'package:lakini_gp/constant.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
+import 'package:lakini_gp/features/home/data/models/item_model.dart';
+import 'package:lakini_gp/features/home/data/models/location_model.dart';
+import 'package:lakini_gp/features/home/presentation/views/wedgits/capitalize_extension.dart';
 import 'package:location/location.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../models/location_model.dart';
 import 'map_screen.dart';
 
 class ItemDetails extends StatefulWidget {
   static const String itemId = "ItemDetailsId";
 
-  const ItemDetails({super.key});
+  const ItemDetails({
+    super.key,
+  });
 
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
@@ -109,6 +115,8 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var itemModel = ModalRoute.of(context)!.settings.arguments as ItemModel;
+
     Widget previewContent = Center(
       child: Text(
         "Access Denied!",
@@ -135,7 +143,9 @@ class _ItemDetailsState extends State<ItemDetails> {
       );
     }
 
-    List<String> itemImages = ["assets/item.png", "assets/item2.jpg"];
+    List<String> itemImages = [
+      "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${itemModel.itemImage}",
+    ];
     var imgView = PageController();
     double width = MediaQuery.of(context).size.width;
 
@@ -160,10 +170,10 @@ class _ItemDetailsState extends State<ItemDetails> {
                           child: SizedBox(
                             width: double.infinity,
                             height: 418,
-                            child: Image.asset(
+                            child: Image.network(
                               itemImages[index],
                               width: double.infinity,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
@@ -243,11 +253,12 @@ class _ItemDetailsState extends State<ItemDetails> {
                               ClipRRect(
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(5)),
-                                child: Image.asset(
-                                  "assets/profile.jpg",
+                                child: Image.network(
+                                  "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${itemModel.userImage}",
+                                  //  https://wdw888lb-7075.uks1.devtunnels.ms/resources/${itemModel.itemImage}
                                   width: 50,
                                   height: 50,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                 ),
                               ),
                               const SizedBox(
@@ -256,11 +267,11 @@ class _ItemDetailsState extends State<ItemDetails> {
                               Column(
                                 children: [
                                   Text(
-                                    "Ahmed ali Sherif",
+                                    "${itemModel.userName}",
                                     style: Styles.textStyle18,
                                   ),
                                   Text(
-                                    "September 25 - 24",
+                                    "${itemModel.foundDate}",
                                     style: Styles.textStyle14,
                                   )
                                 ],
@@ -277,7 +288,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                     color: const Color.fromRGBO(5, 44, 7, 1)),
                                 child: Center(
                                   child: Text(
-                                    "Found",
+                                    "${itemModel.itemStatus}".capitalize(),
                                     style: Styles.textStyle14.copyWith(
                                       color:
                                           const Color.fromRGBO(20, 167, 0, 1),
@@ -301,11 +312,11 @@ class _ItemDetailsState extends State<ItemDetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Cat seami",
+                                  "${itemModel.itemName}",
                                   style: Styles.textStyle18,
                                 ),
                                 Text(
-                                  "Horem ipsum dolor sit amet, consectetur adipiscing elit. consectetur adipiscing elit.  consectetur adipiscing elit.  consectetur adipiscing elit.  consectetur adipiscing elit.  Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.",
+                                  "${itemModel.description}",
                                   style: Styles.textStyle14,
                                 )
                               ],
@@ -337,7 +348,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                               ),
                               const Spacer(),
                               Text(
-                                "500L.E",
+                                "${itemModel.itemAward}",
                                 style: Styles.textStyle16.copyWith(
                                     color:
                                         const Color.fromRGBO(189, 255, 0, 1)),
@@ -352,29 +363,35 @@ class _ItemDetailsState extends State<ItemDetails> {
                           padding: const EdgeInsets.symmetric(horizontal: 32.0),
                           child: Row(
                             children: [
-                              Container(
-                                width: 95,
-                                height: 48,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6),
-                                    color: Colors.white),
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.call,
-                                      color: Colors.blueAccent,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Call",
-                                      style: Styles.textStyle16
-                                          .copyWith(color: Colors.blue),
-                                    )
-                                  ],
+                              GestureDetector(
+                                onTap: () {
+                                  FlutterPhoneDirectCaller.callNumber(
+                                      "${itemModel.phoneNumber}");
+                                },
+                                child: Container(
+                                  width: 95,
+                                  height: 48,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      color: Colors.white),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.call,
+                                        color: Colors.blueAccent,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Call",
+                                        style: Styles.textStyle16
+                                            .copyWith(color: basicColor),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                               const SizedBox(

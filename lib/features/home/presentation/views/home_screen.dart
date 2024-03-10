@@ -1,13 +1,19 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakini_gp/core/utils/services_locator.dart';
 import 'package:lakini_gp/features/chat/presentation/views/chat_screen.dart';
+import 'package:lakini_gp/features/home/data/repos/home_repo_impl.dart';
+import 'package:lakini_gp/features/home/presentation/manager/cubit/display_items_cubit.dart';
 import 'package:lakini_gp/features/notifications/presentation/views/notification_screen.dart';
 
-import '../../../../posts/presentation/views/post_screen.dart';
-import '../../../../profile/presentation/views/profile_menu.dart';
-import '../wedgits/buttom_navigation_button.dart';
+import '../../../../core/utils/api_sevices.dart';
+import '../../../posts/presentation/views/post_screen.dart';
+import '../../../profile/presentation/views/profile_menu.dart';
+import 'wedgits/buttom_navigation_button.dart';
 
-import '../wedgits/home_body.dart';
-import '../wedgits/menue.dart';
+import 'wedgits/home_body.dart';
+import 'wedgits/menue.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,21 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         extendBody: true,
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: Icon(
-                Icons.search,
-                size: 30,
-              ),
-            ),
-          ],
-        ),
+
         // backgroundColor:,
-        drawer: Menue(),
+
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
@@ -148,6 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: screens[cIndex],
+        // ),
       ),
     );
   }
