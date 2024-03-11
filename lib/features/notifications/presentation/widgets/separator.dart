@@ -7,7 +7,7 @@ class Seprator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 3,
-      width: 390,
+      width: double.infinity,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
             colors: [
@@ -17,7 +17,7 @@ class Seprator extends StatelessWidget {
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            tileMode: TileMode.mirror),
+            tileMode: TileMode.clamp),
       ),
     );
   }

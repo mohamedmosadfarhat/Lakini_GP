@@ -22,62 +22,72 @@ class RegisterScreen extends StatelessWidget {
     final TextEditingController locationController = TextEditingController();
 
     final TextEditingController emailController = TextEditingController();
+    final TextEditingController regionController = TextEditingController();
+    final TextEditingController phoneController = TextEditingController();
 
     final TextEditingController passwordController = TextEditingController();
 
     final TextEditingController confirmPasswordController =
         TextEditingController();
-    return BlocConsumer<AppRegisterCubit, AppRegisterState>(
-      listener: (context, state) {
-        if (state is AppRegisterSuccessState) {
-          if (state.registerModel.status &&
-              passwordController.text == confirmPasswordController.text) {
-            print(state.registerModel.message);
-            buildSnackBar(
-                context: context,
-                text: state.registerModel.message,
-                clr: const Color(0xff011730));
-            Navigator.pushNamed(
-              context,
-              OtpVerification.otp,
-              arguments: {"email": emailController.text.toString()},
-            );
-          } else {
-            buildSnackBar(
-                context: context,
-                text: state.registerModel.message,
-                clr: const Color.fromARGB(255, 92, 1, 1));
+    return BlocProvider(
+      create: (context) => AppRegisterCubit(),
+      child: BlocConsumer<AppRegisterCubit, AppRegisterState>(
+        listener: (context, state) {
+          if (state is AppRegisterSuccessState) {
+            if (state.status! &&
+                passwordController.text == confirmPasswordController.text) {
+             
+              buildSnackBar(
+                  context: context,
+                  text: state.message!,
+                  clr: const Color(0xff011730));
+              Navigator.pushNamed(
+                context,
+                OtpVerification.otp,
+                arguments: {"email": emailController.text.toString()},
+              );
+            } else {
+              buildSnackBar(
+                  context: context,
+                  text: state.message!,
+                  clr: const Color.fromARGB(255, 92, 1, 1));
+            }
           }
-        }
-      },
-      builder: (context, state) {
-        var cubit = AppRegisterCubit.get(context);
-        return Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Color(0xff011730),
-                  Color(0xff00070F),
-                  Color(0xff00070F),
-                  Color(0xff000205),
-                  Color(0xff000205),
-                  Color(0xff011730),
-                ]),
-          ),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              automaticallyImplyLeading: true,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
+        },
+        builder: (context, state) {
+          var cubit = AppRegisterCubit.get(context);
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color(0xff011730),
+                    Color(0xff00070F),
+                    Color(0xff00070F),
+                    Color(0xff000205),
+                    Color(0xff000205),
+                    Color(0xff011730),
+                  ]),
             ),
-            body: Form(
-              key: formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:14.0),
+                    child: Image.asset("assets/icon.png",height: 32,),
+                  ),
+                ],
+                title:   Text("Register",style: Styles.textStyle18.copyWith(fontSize: 22)),
+                centerTitle: true,
+                automaticallyImplyLeading: true,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+              ),
+              body: Padding(
+                padding: const EdgeInsets.symmetric(horizontal:20.0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -86,11 +96,37 @@ class RegisterScreen extends StatelessWidget {
                         const LinearProgressIndicator(
                           color: Color.fromRGBO(1, 54, 115, 1),
                         ),
-                      Image.asset('assets/icon.png'),
-                      const Text(
-                        'Register',
-                        style: Styles.textStyle30,
+                       
+                      Center(
+                      child: Stack(
+                        children: [
+                         cubit.pickedImage != null?
+                         CircleAvatar(radius: 66,backgroundImage: FileImage(cubit.pickedImage!),)
+                          :const CircleAvatar(
+                            radius: 66,
+                            backgroundImage: NetworkImage(
+                                    "https://wdw888lb-7075.uks1.devtunnels.ms/resources/Anonymous-man.png"),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: CircleAvatar(
+                              radius: 17,
+                              backgroundColor: Colors.black.withOpacity(0.4),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: cubit.fetchImage,
+                                icon: const Icon(
+                                  Icons.add_a_photo_outlined,
+                                  size: 24,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
                       const SizedBox(
                         height: 14,
                       ),
@@ -119,6 +155,7 @@ class RegisterScreen extends StatelessWidget {
                           CustomTextFormField(
                             icon: Icons.email_outlined,
                             textController: emailController,
+                            inputType: TextInputType.emailAddress,
                             hintText: 'Enter your email',
                             validator: (String? value) {
                               if (value!.isEmpty || !value.isValidEmail) {
@@ -128,7 +165,7 @@ class RegisterScreen extends StatelessWidget {
                             },
                           ),
                           Text(
-                            'Location',
+                            'City',
                             style: Styles.textStyle18,
                           ),
                           CustomTextFormField(
@@ -141,6 +178,26 @@ class RegisterScreen extends StatelessWidget {
                                 return null;
                               },
                               textController: locationController),
+                          Text(
+                            'Region',
+                            style: Styles.textStyle18,
+                          ),
+                          CustomTextFormField(
+                              icon: Icons.location_on_outlined,
+                              hintText: 'Enter your Location',
+                              validator: (String? value) {},
+                              textController: regionController),
+                          Text(
+                            'Phone',
+                            style: Styles.textStyle18,
+                          ),
+                          CustomTextFormField(
+                              icon: Icons.location_on_outlined,
+                              hintText: 'Enter your Phone Number',
+                              inputType: TextInputType.phone,
+                              validator: (String? value) {},
+                              textController: phoneController),
+
                           Text(
                             'Password',
                             style: Styles.textStyle18,
@@ -183,41 +240,73 @@ class RegisterScreen extends StatelessWidget {
                                       context: context,
                                       text:
                                           "Username must be at least 6 and maximum 50 characters.",
-                                      clr: const Color.fromARGB(255, 92, 1, 1));
+                                      clr: const Color.fromARGB(
+                                          255, 92, 1, 1));
                                 } else if (!emailController.text
                                         .contains("@") ||
                                     !emailController.text.contains(".com")) {
                                   buildSnackBar(
                                       context: context,
                                       text: "Invalid email address",
-                                      clr: const Color.fromARGB(255, 92, 1, 1));
-                                } else if (passwordController.text.length < 8) {
+                                      clr: const Color.fromARGB(
+                                          255, 92, 1, 1));
+                                } 
+                                else if(regionController.text.isEmpty || locationController.text.isEmpty){
+                                  buildSnackBar(
+                                      context: context,
+                                      text:
+                                          "Enter Your Region And City",
+                                      clr: const Color.fromARGB(
+                                          255, 92, 1, 1));
+                                }
+                                else if(phoneController.text.isEmpty){
+                                  buildSnackBar(
+                                      context: context,
+                                      text:
+                                          "Enter Your Phone Number",
+                                      clr: const Color.fromARGB(
+                                          255, 92, 1, 1));
+                                }
+                                else if (passwordController.text.length <
+                                    8) {
                                   buildSnackBar(
                                       context: context,
                                       text:
                                           "Password must be at least 8 and maximum 50 characters.",
-                                      clr: const Color.fromARGB(255, 92, 1, 1));
+                                      clr: const Color.fromARGB(
+                                          255, 92, 1, 1));
                                 } else if (!passwordController
                                     .text.isValidPassword) {
                                   buildSnackBar(
                                       context: context,
                                       text:
                                           "Passwords must have at least one non alphanumeric character,at least one digit ('0'-'9'),at least one uppercase ('A'-'Z').",
-                                      clr: const Color.fromARGB(255, 92, 1, 1));
+                                      clr: const Color.fromARGB(
+                                          255, 92, 1, 1));
                                 } else if (passwordController.text !=
                                     confirmPasswordController.text) {
                                   buildSnackBar(
                                       context: context,
                                       text: "Password Dosen't Match",
-                                      clr: const Color.fromARGB(255, 92, 1, 1));
-                                } else {
+                                      clr: const Color.fromARGB(
+                                          255, 92, 1, 1));
+                                } 
+                                else if(cubit.pickedImage == null){
+                                  buildSnackBar(
+                                      context: context,
+                                      text:
+                                          "Please Set Your Profile Picture",
+                                      clr: const Color.fromARGB(
+                                          255, 92, 1, 1));
+                                }
+                                else {
                                   cubit.userRegister(
                                       city: locationController.text,
                                       userName: usernameController.text,
                                       email: emailController.text,
                                       password: passwordController.text,
-                                      region: "r",
-                                      phone: "2");
+                                      region: regionController.text,
+                                      phone: phoneController.text);
                                 }
                               }),
                         ],
@@ -238,8 +327,8 @@ class RegisterScreen extends StatelessWidget {
                             },
                             child: Text(
                               'Log in',
-                              style:
-                                  Styles.textStyle14.copyWith(color: mainColor),
+                              style: Styles.textStyle14
+                                  .copyWith(color: mainColor),
                             ),
                           )
                         ],
@@ -249,9 +338,9 @@ class RegisterScreen extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

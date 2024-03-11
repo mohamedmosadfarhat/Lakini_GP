@@ -8,10 +8,11 @@ class CustomDropDownButtonNew extends StatefulWidget {
   final bool isExpanded;
   final List<String> items;
   final IconData? suffixIcon;
-  final TextEditingController? controller;
+
   final Function(String?)? onChanged;
   final IconData? listPrefixIcon;
   final IconData? prefixIcon;
+  final TextEditingController searchController;
 
   const CustomDropDownButtonNew({
     Key? key,
@@ -20,10 +21,11 @@ class CustomDropDownButtonNew extends StatefulWidget {
     required this.isExpanded,
     required this.items,
     this.suffixIcon,
-    this.controller,
+
     this.onChanged,
     this.listPrefixIcon,
     this.prefixIcon,
+    required this.searchController,
   }) : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class CustomDropDownButtonNew extends StatefulWidget {
 }
 
 class _CustomDropDownButtonNewState extends State<CustomDropDownButtonNew> {
-  TextEditingController searchController = TextEditingController();
+
   bool isExpanded = false;
   List<String> filteredItems = [];
 
@@ -52,7 +54,7 @@ class _CustomDropDownButtonNewState extends State<CustomDropDownButtonNew> {
 
   void selectItem(String item) {
     setState(() {
-      searchController.text = item;
+      widget.searchController.text = item;
       isExpanded = false;
     });
   }
@@ -69,8 +71,11 @@ class _CustomDropDownButtonNewState extends State<CustomDropDownButtonNew> {
             });
           },
           child: TextField(
-            controller: searchController,
+            style: Styles.textStyle14.copyWith(color: Colors.white),
+            controller: widget.searchController,
             decoration: InputDecoration(
+              hintStyle: Styles.textStyle14,
+
               suffixIcon: Icon(widget.suffixIcon),
               prefixIcon:
                   widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
@@ -98,7 +103,7 @@ class _CustomDropDownButtonNewState extends State<CustomDropDownButtonNew> {
           Container(
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.only(bottom: 8),
-            height: 150.0,
+            height: 300,
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(color: mainColor),
@@ -122,7 +127,8 @@ class _CustomDropDownButtonNewState extends State<CustomDropDownButtonNew> {
                         )
                       else
                         const SizedBox(width: 0),
-                      Text(filteredItems[index]),
+                      SizedBox(width: 24,),
+                      Text(filteredItems[index],style:Styles.textStyle14.copyWith(color: Colors.white),),
                     ],
                   ),
                   onTap: () =>

@@ -9,11 +9,16 @@ class AppRegisterInitialState extends AppRegisterState {}
 class AppRegisterLoadingState extends AppRegisterState {}
 
 class AppRegisterSuccessState extends AppRegisterState {
-  final AppModel registerModel;
-  AppRegisterSuccessState(this.registerModel);
+  final String? message;
+  final bool? status;
+  AppRegisterSuccessState({required this.message,required this.status});
 }
 
 class AppRegisterErrorState extends AppRegisterState {
-  final String error;
- AppRegisterErrorState(this.error);
+  
+ AppRegisterErrorState();
 }
+
+class AddImageLoading extends AppRegisterState {}
+
+class AddImageSuccess extends AppRegisterState {}

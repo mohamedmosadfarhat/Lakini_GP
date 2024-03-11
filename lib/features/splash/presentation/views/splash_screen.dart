@@ -24,12 +24,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       startAnimation();
-
-      Future.delayed(const Duration(seconds: 4), () {
-        setState(() {
-          imageUrl = "assets/Next.png";
-        });
-      });
     });
   }
  

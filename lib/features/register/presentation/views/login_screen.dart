@@ -13,6 +13,7 @@ import '../../helper/end_point.dart';
 import '../login_cubit/login_cubit.dart';
 import 'forget_password_screen.dart';
 
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   static String id = 'LoginScreen';
@@ -29,208 +30,213 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppLoginCubit, AppLoginState>(
-      listener: (context, state) {
-        if (state is AppLoginSuccessState) {
-          if (state.loginModel.status) {
-            print(state.loginModel.message);
-            buildSnackBar(
-                context: context,
-                text: state.loginModel.message,
-                clr: const Color(0xff011730));
-            CacheHelper.saveData(key: "remeber_me", value: value);
-            CacheHelper.saveData(key: "token", value: state.loginModel.token)
-                .then((value) {
-              token = CacheHelper.getData(key: "token");
-              Navigator.pushNamed(context, HomeScreen.id);
-            });
-          } else {
-            buildSnackBar(
-                context: context,
-                text: state.loginModel.message,
-                clr: const Color.fromARGB(255, 92, 1, 1));
+    return BlocProvider(
+      create: (context) => AppLoginCubit(),
+      child: BlocConsumer<AppLoginCubit, AppLoginState>(
+        listener: (context, state) {
+          if (state is AppLoginSuccessState) {
+            if (state.loginModel.status) {
+              print(state.loginModel.message);
+              buildSnackBar(
+                  context: context,
+                  text: state.loginModel.message,
+                  clr: const Color(0xff011730));
+              CacheHelper.saveData(key: "remeber_me", value: value);
+              CacheHelper.saveData(key: "token", value: state.loginModel.token)
+                  .then((value) {
+                token = CacheHelper.getData(key: "token");
+                Navigator.pushReplacementNamed(context, HomeScreen.id);
+              });
+              CacheHelper.saveData(
+                  key: "userId", value: state.loginModel.userId);
+            } else {
+              buildSnackBar(
+                  context: context,
+                  text: state.loginModel.message,
+                  clr: const Color.fromARGB(255, 92, 1, 1));
+            }
           }
-        }
-      },
-      builder: (context, state) {
-        var cubit = AppLoginCubit.get(context);
-        return Container(
-          height: MediaQuery.of(context).size.height * 1,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Color(0xff011730),
-                  Color(0xff00070F),
-                  Color(0xff00070F),
-                  Color(0xff000205),
-                  Color(0xff000205),
-                  Color(0xff011730),
-                ]),
-          ),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0.0,
-              automaticallyImplyLeading: true,
+        },
+        builder: (context, state) {
+          var cubit = AppLoginCubit.get(context);
+          return Container(
+            height: MediaQuery.of(context).size.height * 1,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color(0xff011730),
+                    Color(0xff00070F),
+                    Color(0xff00070F),
+                    Color(0xff000205),
+                    Color(0xff000205),
+                    Color(0xff011730),
+                  ]),
             ),
-            body: Form(
-              key: formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Image.asset('assets/icon.png'),
-                      Text(
-                        'Login',
-                        style: Styles.textStyle28
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        'Login to continue using the app',
-                        style: Styles.textStyle14.copyWith(
-                            fontWeight: FontWeight.w400, color: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 42,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Email',
-                            style: Styles.textStyle18,
-                          ),
-                          CustomTextFormField(
-                            icon: Icons.email_outlined,
-                            hintText: 'Enter your email',
-                            textController: emailController,
-                            validator: (String? val) {
-                              if (val!.isEmpty || !val.isValidEmail) {
-                                return "Invalid Email!";
-                              }
-                              return null;
-                            },
-                          ),
-                          Text(
-                            'Password',
-                            style: Styles.textStyle18,
-                          ),
-                          CustomTextFormField(
-                            icon: Icons.lock_outline,
-                            hintText: 'Enter password',
-                            isPassword: true,
-                            textController: passwordController,
-                            validator: (String? val) {
-                              if (val!.isEmpty || !val.isValidPassword) {
-                                return 'Please enter valid password';
-                              }
-                              return null;
-                            },
-                          ),
-                          Row(
-                            children: [
-                              Checkbox(
-                                activeColor: darkGreenColor,
-                                checkColor: Colors.white,
-                                value: value,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    this.value = value!;
-                                  });
-                                },
-                              ),
-                              Text(
-                                'Remember me',
-                                style: Styles.textStyle14
-                                    .copyWith(color: Colors.white),
-                              ),
-                              const Spacer(),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    ForgetPasswordScreen.fpId,
-                                  );
-                                },
-                                child: Text(
-                                  'Forget Password?',
-                                  style: Styles.textStyle14.copyWith(
-                                    color: mainColor,
-                                    decoration: TextDecoration.underline,
-                                    fontWeight: FontWeight.w700,
-                                    decorationColor: mainColor,
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                automaticallyImplyLeading: true,
+              ),
+              body: Form(
+                key: formKey,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Image.asset('assets/icon.png'),
+                        Text(
+                          'Login',
+                          style: Styles.textStyle28
+                              .copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          'Login to continue using the app',
+                          style: Styles.textStyle14.copyWith(
+                              fontWeight: FontWeight.w400, color: Colors.white),
+                        ),
+                        const SizedBox(
+                          height: 42,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Email',
+                              style: Styles.textStyle18,
+                            ),
+                            CustomTextFormField(
+                              icon: Icons.email_outlined,
+                              hintText: 'Enter your email',
+                              textController: emailController,
+                              validator: (String? val) {
+                                if (val!.isEmpty || !val.isValidEmail) {
+                                  return "Invalid Email!";
+                                }
+                                return null;
+                              },
+                            ),
+                            Text(
+                              'Password',
+                              style: Styles.textStyle18,
+                            ),
+                            CustomTextFormField(
+                              icon: Icons.lock_outline,
+                              hintText: 'Enter password',
+                              isPassword: true,
+                              textController: passwordController,
+                              validator: (String? val) {
+                                if (val!.isEmpty || !val.isValidPassword) {
+                                  return 'Please enter valid password';
+                                }
+                                return null;
+                              },
+                            ),
+                            Row(
+                              children: [
+                                Checkbox(
+                                  activeColor: darkGreenColor,
+                                  checkColor: Colors.white,
+                                  value: value,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      this.value = value!;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  'Remember me',
+                                  style: Styles.textStyle14
+                                      .copyWith(color: Colors.white),
+                                ),
+                                const Spacer(),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacementNamed(
+                                        context,
+                                        ForgetPasswordScreen.fpId,
+                                      );
+                                  },
+                                  child: Text(
+                                    'Forget Password?',
+                                    style: Styles.textStyle14.copyWith(
+                                      color: mainColor,
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.w700,
+                                      decorationColor: mainColor,
+                                    ),
                                   ),
                                 ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 26,
+                            ),
+                            CustomRegisterButton(
+                              text: 'Login',
+                              onPressed: () {
+                                if (!emailController.text.contains("@") ||
+                                    !emailController.text.contains(".com")) {
+                                  buildSnackBar(
+                                      context: context,
+                                      text: "Invalid email address",
+                                      clr: const Color.fromARGB(255, 92, 1, 1));
+                                } else {
+                                  cubit.userLogin(
+                                      email: emailController.text,
+                                      password: passwordController.text);
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              height: 28,
+                            ),
+                            if (state is AppLoginLoadingState)
+                              const LinearProgressIndicator(
+                                color: mainColor,
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 26,
-                          ),
-                          CustomRegisterButton(
-                            text: 'Login',
-                            onPressed: () {
-                              if (!emailController.text.contains("@") ||
-                                  !emailController.text.contains(".com")) {
-                                buildSnackBar(
-                                    context: context,
-                                    text: "Invalid email address",
-                                    clr: const Color.fromARGB(255, 92, 1, 1));
-                              } else {
-                                cubit.userLogin(
-                                    email: emailController.text,
-                                    password: passwordController.text);
-                              }
-                            },
-                          ),
-                          const SizedBox(
-                            height: 28,
-                          ),
-                          if (state is AppLoginLoadingState)
-                            const LinearProgressIndicator(
-                              color: Color.fromRGBO(1, 23, 48, 1),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Don\'t have an account?',
+                              style: Styles.textStyle14
+                                  .copyWith(color: Colors.white),
                             ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Don\'t have an account?',
-                            style: Styles.textStyle14
-                                .copyWith(color: Colors.white),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                RegisterScreen.id,
-                              );
-                            },
-                            child: Text(
-                              'Register',
-                              style:
-                                  Styles.textStyle14.copyWith(color: mainColor),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  RegisterScreen.id,
+                                );
+                              },
+                              child: Text(
+                                'Register',
+                                style: Styles.textStyle14
+                                    .copyWith(color: mainColor),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

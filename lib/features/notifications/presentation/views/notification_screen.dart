@@ -58,20 +58,23 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Row(
       children: List.generate(
         3,
-        (index) => GestureDetector(
-          onTap: () {
-            setState(() {
-              value = index;
-            });
-          },
-          child: customContainer(
-            context: context,
-            text: index == 0
-                ? "All"
-                : index == 1
-                    ? "Losts"
-                    : "Founds",
-            isTapped: value == index ? true : false,
+        (index) => Padding(
+          padding: const EdgeInsets.only(left:16.0),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                value = index;
+              });
+            },
+            child: customContainer(
+              context: context,
+              text: index == 0
+                  ? "All"
+                  : index == 1
+                      ? "Losts"
+                      : "Founds",
+              isTapped: value == index ? true : false,
+            ),
           ),
         ),
       ),

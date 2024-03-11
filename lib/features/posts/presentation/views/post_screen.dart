@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lakini_gp/core/utils/styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_cubit.dart';
+
 import 'package:lakini_gp/features/posts/presentation/widgets/post_body_widget.dart';
+
+import '../../../notifications/presentation/widgets/custom_container.dart';
+import '../manager/cubit/post_cubit/app_state.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});
@@ -47,110 +52,108 @@ class _AddPostScreenState extends State<AddPostScreen>
     super.dispose();
   }
 
+  int value = 0;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Color(0xff011730),
-                  Color(0xff00070F),
-                  Color(0xff00070F),
-                  Color(0xff000205),
-                  Color(0xff000205),
-                  Color(0xff011730),
-                ]),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 44.0, bottom: 10),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.close),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(right: 16.0),
-                        child: CircleAvatar(
-                          radius: 22,
-                          backgroundImage: AssetImage('assets/pfp.png'),
-                        ),
-                      ),
-                      DropdownButton<String>(
-                        dropdownColor: const Color(0xff000001),
-                        value: selectedValue,
-                        items: getDropDownItem.toList(),
-                        onChanged: (String? newVal) {
-                          setState(() {
-                            selectedValue = newVal!;
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                ),
-                /* Note: this is using tab Bar */
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+    //double width = MediaQuery.of(context).size.width;
+
+    return BlocConsumer<AppCubit, AppState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = AppCubit.get(context);
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Color(0xff011730),
+                      Color(0xff00070F),
+                      Color(0xff00070F),
+                      Color(0xff000205),
+                      Color(0xff000205),
+                      Color(0xff011730),
+                    ]),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
                   children: [
-                    TabBar(
-                      indicatorWeight: 0,
-                      tabAlignment: TabAlignment.start,
-                      labelPadding: EdgeInsets.symmetric(
-                        horizontal: width * 0.07,
-                        vertical: 0,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 44.0, bottom: 10),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(Icons.close),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: CircleAvatar(
+                              radius: 22,
+                              backgroundImage: NetworkImage(
+                                  "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile.accountPhoto}"),
+                            ),
+                          ),
+                          DropdownButton<String>(
+                            dropdownColor: const Color(0xff000001),
+                            value: selectedValue,
+                            items: getDropDownItem.toList(),
+                            onChanged: (String? newVal) {
+                              setState(() {
+                                selectedValue = newVal!;
+                              });
+                            },
+                          )
+                        ],
                       ),
-                      isScrollable: true, // Disable scrolling between tabs
-                      controller: _controller,
-                      dividerHeight: 0,
-                      labelColor: Colors.white,
-                      labelStyle: Styles.textStyle14
-                          .copyWith(fontWeight: FontWeight.w600),
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(35),
-                        color: mainColor,
-                      ),
-                      splashFactory: NoSplash.splashFactory,
-                      tabs: const <Tab>[
-                        Tab(text: 'Lost'),
-                        Tab(text: 'Found'),
-                      ],
+                    ),
+                    /* Note: this is using tab Bar */
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: generateList(),
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    PostBodyWidget(
+                      type: value == 0 ? 'Lost' : "Found",
+                      locationType: value == 0 ? "lost" : 'found',
+                      dropDownHintText: value == 0
+                          ? 'Choose your lost type'
+                          : "Choose your found type ",
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                SizedBox(
-                  height: height * 1.13,
-                  child: TabBarView(
-                    controller: _controller,
-                    children: const [
-                      PostBodyWidget(
-                        type: 'Lost type',
-                        locationType: 'lost',
-                        dropDownHintText: 'Choose your lost type',
-                      ),
-                      PostBodyWidget(
-                        type: 'Found type',
-                        locationType: 'found',
-                        dropDownHintText: 'Choose your found type',
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  generateList() {
+    return Row(
+      children: List.generate(
+        2,
+        (index) => Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                value = index;
+              });
+            },
+            child: customContainer(
+              context: context,
+              text: index == 0 ? "Losts" : "Founds",
+              isTapped: value == index ? true : false,
             ),
           ),
         ),

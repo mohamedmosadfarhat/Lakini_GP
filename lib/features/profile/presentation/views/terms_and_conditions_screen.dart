@@ -31,6 +31,7 @@ class _TermsAndConditionScreenState extends State<TermsAndConditionScreen> {
         centerTitle: true,
       ),
       body: Container(
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topRight,

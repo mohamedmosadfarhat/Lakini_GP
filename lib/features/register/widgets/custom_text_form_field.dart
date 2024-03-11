@@ -8,11 +8,13 @@ class CustomTextFormField extends StatefulWidget {
       required this.icon,
       required this.hintText,
       this.isPassword = false,
+      this.inputType,
       required this.validator,
       required this.textController});
   final IconData icon;
   final String hintText;
   final bool isPassword;
+  final TextInputType? inputType;
   final String? Function(String?)? validator;
   final TextEditingController textController;
   @override
@@ -32,6 +34,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           height: 5,
         ),
         TextFormField(
+          keyboardType: widget.inputType,
+          style: Styles.textStyle16,
           cursorColor: mainColor,
           maxLines: 1,
           controller: widget.textController,

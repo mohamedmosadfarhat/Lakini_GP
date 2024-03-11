@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lakini_gp/core/utils/styles.dart';
 
 class CustomMenuItem extends StatelessWidget {
   const CustomMenuItem(
@@ -20,7 +21,9 @@ class CustomMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(title),
+      title: Text(title ,style: Styles.textStyle16.copyWith(
+        color: title == "Logout" || title == "Delete Account"? Colors.red : Colors.white, 
+      ),),
       leading: CircleAvatar(
         backgroundColor: prefixIconColor,
         child: Icon(

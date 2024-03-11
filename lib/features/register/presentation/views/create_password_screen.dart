@@ -5,6 +5,7 @@ import 'package:lakini_gp/features/register/presentation/login_cubit/login_cubit
 import 'package:lakini_gp/features/register/validation.dart';
 
 import '../../../../core/utils/styles.dart';
+import '../../helper/cache_helper.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/input_field.dart';
 import '../login_cubit/login_state.dart';
@@ -26,15 +27,19 @@ class CreatePasswordScreen extends StatelessWidget {
 
     return BlocConsumer<AppLoginCubit, AppLoginState>(
       listener: (context, state) {
-        if (state is AppSetPasswordSuccessState ) {
-          if (state.setPasswordModel.status ) {
+        if (state is AppSetPasswordSuccessState) {
+          if (state.setPasswordModel.status) {
             print(state.setPasswordModel.message);
             buildSnackBar(
                 context: context,
                 text: state.setPasswordModel.message,
                 clr: const Color(0xff011730));
-                 Navigator.pushNamed(context, LoginScreen.id);
-           
+            CacheHelper.removeData(key: "userId");
+            CacheHelper.removeData(key: "token").then((value) {
+              if (value!) {
+                Navigator.pushReplacementNamed(context, LoginScreen.id);
+              }
+            });
           } else {
             buildSnackBar(
                 context: context,
@@ -169,13 +174,16 @@ class CreatePasswordScreen extends StatelessWidget {
                                 cubit.usersetPassword(
                                   myToken: tokenController.text.toString(),
                                   email: emailController.text.toString(),
-                                  password: confirmPasswordController.text.toString(),
+                                  password:
+                                      confirmPasswordController.text.toString(),
                                 );
                               }
                             },
                           ),
-                          if(state is AppSetPasswordLoadingState)
-                          const LinearProgressIndicator(color: Color.fromRGBO(1, 23, 48, 1),),
+                          if (state is AppSetPasswordLoadingState)
+                            const LinearProgressIndicator(
+                              color: Color.fromRGBO(1, 23, 48, 1),
+                            ),
                         ]),
                   ),
                 ),

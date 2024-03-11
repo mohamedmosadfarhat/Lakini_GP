@@ -1,3 +1,4 @@
+/*
 import 'package:dartz/dartz.dart';
 import 'package:lakini_gp/features/posts/data/models/category_model.dart';
 
@@ -15,3 +16,4 @@ abstract class AddPostRepo {
   );
   Future<Either<Failure, List<CategoryItem>>> getCategoryName();
 }
+*/
