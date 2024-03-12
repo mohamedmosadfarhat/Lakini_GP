@@ -1,5 +1,6 @@
 // import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakini_gp/constant.dart';
 import 'package:lakini_gp/core/utils/api_sevices.dart';
@@ -85,156 +86,159 @@ class _HomeBodeState extends State<HomeBodey> {
             drawer: Menue(),
             //
             backgroundColor: Colors.transparent,
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Discover !",
-                          style: Styles.textStyle50,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            body: BlocConsumer<DisplayItemsCubit, DisplayItemsState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "what are you looking for ?",
-                              style: Styles.textStyle20,
+                              "Discover !",
+                              style: Styles.textStyle50,
                             ),
-                            Container(
-                              width: 55,
-                              decoration: BoxDecoration(
-                                  color: basicColor,
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.tune,
-                                  size: 30,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  "what are you looking for ?",
+                                  style: Styles.textStyle$20,
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: TabBar(
-                      dividerColor: Colors.transparent,
-                      tabAlignment: TabAlignment.start,
-                      isScrollable: true,
-                      labelPadding: EdgeInsets.only(right: 5),
-                      physics: const ClampingScrollPhysics(),
-                      padding: const EdgeInsets.only(
-                          top: 20, left: 0, right: 0, bottom: 17),
-                      unselectedLabelColor: Colors.grey,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: basicColor,
-                      ),
-                      tabs: tabs,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    child: BlocConsumer<DisplayItemsCubit, DisplayItemsState>(
-                      listener: (context, state) {
-                        // TODO: implement listener
-                      },
-                      builder: (context, state) {
-                        return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: categorytype.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 34.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    BlocProvider.of<DisplayItemsCubit>(context)
-                                        .getStatus(index);
-                                    currentcategorytype =
-                                        BlocProvider.of<DisplayItemsCubit>(
-                                                context)
-                                            .currentIndex;
-                                  },
-                                  child: Container(
-                                    child: Stack(
-                                      children: [
-                                        Text(
-                                          categorytype[index],
-                                          style: Styles.textStyle20.copyWith(
-                                              color:
-                                                  currentcategorytype == index
-                                                      ? Colors.blue
-                                                      : Colors.white),
-                                        ),
-                                        Positioned(
-                                          bottom: 0,
-                                          child: Container(
-                                            width: 200,
-                                            height: 6,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              color:
-                                                  currentcategorytype == index
-                                                      ? Colors.blue
-                                                      : Colors.transparent,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                Container(
+                                  width: 55,
+                                  decoration: BoxDecoration(
+                                      color: basicColor,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.tune,
+                                      size: 30,
                                     ),
                                   ),
-                                ),
-                              );
-                            });
-                      },
-                    ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: TabBar(
+                          dividerColor: Colors.transparent,
+                          tabAlignment: TabAlignment.start,
+                          isScrollable: true,
+                          labelPadding: EdgeInsets.only(right: 5),
+                          physics: const ClampingScrollPhysics(),
+                          padding: const EdgeInsets.only(
+                              top: 20, left: 0, right: 0, bottom: 17),
+                          unselectedLabelColor: Colors.grey,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          indicator: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: basicColor,
+                          ),
+                          tabs: tabs,
+                        ),
+                      ),
+                      SizedBox(
+                          height: 40,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: categorytype.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 34.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      BlocProvider.of<DisplayItemsCubit>(
+                                              context)
+                                          .getStatus(index);
+                                      currentcategorytype =
+                                          BlocProvider.of<DisplayItemsCubit>(
+                                                  context)
+                                              .currentIndex;
+                                    },
+                                    child: Container(
+                                      child: Stack(
+                                        children: [
+                                          Text(
+                                            categorytype[index],
+                                            style: Styles.textStyle20.copyWith(
+                                                color:
+                                                    currentcategorytype == index
+                                                        ? Colors.blue
+                                                        : Colors.white),
+                                          ),
+                                          Positioned(
+                                            bottom: 0,
+                                            child: Container(
+                                              width: 200,
+                                              height: 6,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                color:
+                                                    currentcategorytype == index
+                                                        ? basicColor
+                                                        : Colors.transparent,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              })),
+                      Container(
+                        width: double.infinity,
+                        height: .3,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Expanded(
+                        child: TabBarView(
+                          children: [
+                            ItemListView(
+                              ctegoryName: "All",
+                            ),
+                            ItemListView(
+                              ctegoryName: "People",
+                            ),
+                            ItemListView(
+                              ctegoryName: "Animals",
+                            ),
+                            ItemListView(
+                              ctegoryName: "Electronics",
+                            ),
+                            ItemListView(
+                              ctegoryName: "Cars",
+                            ),
+                            ItemListView(
+                              ctegoryName: "Clothes",
+                            ),
+                            ItemListView(
+                              ctegoryName: "Documents",
+                            ),
+                            ItemListView(
+                              ctegoryName: "Clothes",
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    width: double.infinity,
-                    height: .3,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Expanded(
-                    child: TabBarView(
-                      children: [
-                        ItemListView(
-                          ctegoryName: "All",
-                        ),
-                        ItemListView(
-                          ctegoryName: "People",
-                        ),
-                        ItemListView(
-                          ctegoryName: "Animal",
-                        ),
-                        ItemListView(
-                          ctegoryName: "Electronics",
-                        ),
-                        ItemListView(
-                          ctegoryName: "Documents",
-                        ),
-                        ItemListView(
-                          ctegoryName: "Clothes",
-                        ),
-                        ItemListView(
-                          ctegoryName: "Clothes",
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ),

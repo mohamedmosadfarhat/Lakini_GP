@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+
 import 'package:lakini_gp/core/utils/styles.dart';
 
 class CustomTextFormField extends StatefulWidget {
@@ -24,8 +24,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    //double width = MediaQuery.of(context).size.width;
+    //double height = MediaQuery.of(context).size.height;
     return Column(
       children: [
         const SizedBox(
@@ -36,7 +36,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           maxLines: 1,
           controller: widget.textController,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(16),
+            contentPadding: const EdgeInsets.all(13),
             hintText: widget.hintText,
             hintStyle: Styles.textStyle16.copyWith(color: Colors.grey),
             border: const OutlineInputBorder(

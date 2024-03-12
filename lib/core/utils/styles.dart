@@ -10,11 +10,11 @@ abstract class Styles {
     fontWeight: FontWeight.w600,
     color: Colors.white,
   );
-  static const textStyle20 = TextStyle(
+  static var textStyle20 = GoogleFonts.poppins(
     fontSize: 20,
     fontWeight: FontWeight.normal,
   );
-  static const textStyle28 = TextStyle(
+  static var textStyle28 = GoogleFonts.poppins(
     fontSize: 28,
     fontWeight: FontWeight.bold,
   );
@@ -23,7 +23,11 @@ abstract class Styles {
     fontWeight: FontWeight.w900,
     letterSpacing: 1.2,
   );
-
+  static const textStyle$20 = TextStyle(
+    fontSize: 20,
+    //fontWeight: FontWeight.w900,
+    // letterSpacing: 1.2,
+  );
   static const textStyle50 = TextStyle(
     fontSize: 50,
     fontWeight: FontWeight.w900,

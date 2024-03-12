@@ -24,6 +24,11 @@ List<Tab> tabs = [
   ),
   Tab(
     child: TabWedgit(
+      CategoryName: Kcars,
+    ),
+  ),
+  Tab(
+    child: TabWedgit(
       CategoryName: Kclothes,
     ),
   ),

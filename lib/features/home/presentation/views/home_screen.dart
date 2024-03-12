@@ -1,13 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lakini_gp/core/utils/services_locator.dart';
 import 'package:lakini_gp/features/chat/presentation/views/chat_screen.dart';
-import 'package:lakini_gp/features/home/data/repos/home_repo_impl.dart';
-import 'package:lakini_gp/features/home/presentation/manager/cubit/display_items_cubit.dart';
 import 'package:lakini_gp/features/notifications/presentation/views/notification_screen.dart';
 
-import '../../../../core/utils/api_sevices.dart';
 import '../../../posts/presentation/views/post_screen.dart';
 import '../../../profile/presentation/views/profile_menu.dart';
 import 'wedgits/buttom_navigation_button.dart';
@@ -24,19 +18,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int cIndex = 0;
-  var screens = [
-    HomeBodey(),
-    ChatScreen(),
-    NotificationScreen(),
-    ProfileMenu()
+  List<Widget> screens = [
+    const HomeBodey(),
+    const ChatScreen(),
+    const NotificationScreen(),
+    const ProfileMenu()
   ];
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    //var width = MediaQuery.of(context).size.width;
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
             Color.fromRGBO(1, 23, 48, 1),
@@ -54,11 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
         extendBody: true,
         backgroundColor: Colors.transparent,
 
-        // backgroundColor:,
-
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             border: Border(
               top: BorderSide(color: Color(0xff0075FF), width: 1.0),
             ),
@@ -66,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BottomAppBar(
             height: height * .09,
             elevation: 0,
-            color: Color.fromRGBO(1, 23, 48, 1),
+            color: const Color.fromRGBO(1, 23, 48, 1),
             shape: const CircularNotchedRectangle(),
             notchMargin: 5,
             child: Row(
@@ -79,12 +71,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         setState(() {
                           cIndex = 0;
-                          print(cIndex);
+                          //print(cIndex);
                         });
                       },
                       icon: Icons.home,
                       hint: "Home",
-                      color: cIndex == 0 ? Colors.white : Color(0xff555557),
+                      color:
+                          cIndex == 0 ? Colors.white : const Color(0xff555557),
                     ),
                     ButtomNavigationButton(
                       onPressed: () {
@@ -94,7 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       icon: Icons.chat,
                       hint: "Chat",
-                      color: cIndex == 1 ? Colors.white : Color(0xff555557),
+                      color:
+                          cIndex == 1 ? Colors.white : const Color(0xff555557),
                     ),
                   ],
                 ),
@@ -105,13 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         setState(
                           () {
                             cIndex = 2;
-                            print(cIndex);
+                            // print(cIndex);
                           },
                         );
                       },
                       icon: Icons.notifications,
                       hint: "Notifications",
-                      color: cIndex == 2 ? Colors.white : Color(0xff555557),
+                      color:
+                          cIndex == 2 ? Colors.white : const Color(0xff555557),
                     ),
                     ButtomNavigationButton(
                       onPressed: () {
@@ -122,7 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       icon: Icons.person,
                       hint: "Profile",
-                      color: cIndex == 3 ? Colors.white : Color(0xff555557),
+                      color:
+                          cIndex == 3 ? Colors.white : const Color(0xff555557),
                     ),
                   ],
                 )
@@ -131,12 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xff0075FF),
-          shape: CircleBorder(),
+          backgroundColor: const Color(0xff0075FF),
+          shape: const CircleBorder(),
           onPressed: () {
             Navigator.pushNamed(context, AddPostScreen.id);
           },
-          child: Icon(
+          child: const Icon(
             Icons.add,
             size: 30,
           ),

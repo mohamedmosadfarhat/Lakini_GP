@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
 
-class CutsomTextField extends StatelessWidget {
-  const CutsomTextField(
-      {super.key,
-      required this.hintText,
-      this.textEditingController,
-      this.icon});
+class CustomTextFieldPost extends StatelessWidget {
   final String hintText;
   final IconData? icon;
   final TextEditingController? textEditingController;
+  final void Function(String)? onChanged;
+
+  const CustomTextFieldPost({
+    Key? key,
+    required this.hintText,
+    this.icon,
+    this.textEditingController,
+    this.onChanged,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,6 +22,11 @@ class CutsomTextField extends StatelessWidget {
       child: TextField(
         controller: textEditingController,
         cursorColor: mainColor,
+        onChanged: (value) {
+          if (onChanged != null) {
+            onChanged!(value);
+          }
+        },
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),

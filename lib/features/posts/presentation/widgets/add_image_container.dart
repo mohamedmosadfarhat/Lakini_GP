@@ -1,71 +1,27 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-class AddImageContainer extends StatelessWidget {
-  final String? imagePath;
-  final VoidCallback? onDelete;
-  final bool addIcon;
-  final Widget? widgetChild;
-
-  const AddImageContainer({
-    Key? key,
-    this.imagePath,
-    this.onDelete,
-    this.addIcon = false,
-    this.widgetChild,
-  }) : super(key: key);
+class UploadImg extends StatelessWidget {
+  const UploadImg({super.key});
 
   @override
   Widget build(BuildContext context) {
+    //double height = MediaQuery.of(context).size.height;
     return Container(
-      margin: const EdgeInsets.only(bottom: 16, top: 8, right: 8),
-      height: MediaQuery.of(context).size.height * 0.12,
-      width: MediaQuery.of(context).size.width * 0.25,
+      margin: const EdgeInsets.only(top: 12, bottom: 24),
+      height: 96,
+      width: 96,
       decoration: BoxDecoration(
-        color: const Color(0xff0E1823),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
+        //border: Border.all(style: BorderStyle.solid),
+        color: const Color.fromRGBO(14, 24, 35, 1),
       ),
-      child: imagePath != null
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Stack(
-                children: [
-                  if (imagePath != null)
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.12,
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: Image.file(
-                        File(imagePath!),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  if (addIcon)
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.add_photo_alternate_outlined,
-                        size: 24,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  if (onDelete != null)
-                    Positioned(
-                      top: 4,
-                      right: 4,
-                      child: GestureDetector(
-                        onTap: onDelete,
-                        child: const Icon(
-                          Icons.delete_forever,
-                          color: Color(0xffEA4335),
-                          size: 18,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            )
-          : widgetChild,
+      child: const Center(
+        child: Icon(
+          Icons.add_photo_alternate_outlined,
+          size: 38,
+          color: Colors.grey,
+        ),
+      ),
     );
   }
 }

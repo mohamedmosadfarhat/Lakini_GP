@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../core/utils/styles.dart';
+import '../../../register/helper/cache_helper.dart';
 import '../onboarding_models/onboarding_model.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -17,19 +19,34 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  int _currentIndex = 0;
-  final PageController _controller = PageController(
-    initialPage: 0,
-  );
+   int _currentIndex = 0;
+  final PageController _controller = PageController(initialPage: 0);
+
+ late Timer _timer;
 
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 2), (timer) {
-      _currentIndex = (_currentIndex + 1) % myData.length;
-      _controller.animateToPage(_currentIndex,
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer when the widget is disposed
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+      setState(() {
+        _currentIndex = (_currentIndex + 1) % myData.length;
+        _controller.animateToPage(
+          _currentIndex,
           duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOutCubicEmphasized);
+          curve: Curves.easeInOutCubic,
+        );
+      });
     });
   }
 
@@ -101,7 +118,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 right: width * 0.03,
                 top: height * 0.05,
                 child: GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, LoginScreen.id),
+                  onTap: () {
+                    CacheHelper.saveData(key: "onBoarding", value: true)
+                        .then((value) {
+                      if (value == true) {
+                        Navigator.pushReplacement(
+                            context,
+                            PageTransition(
+                              child: const LoginScreen(),
+                              type: PageTransitionType.rightToLeft,
+                              curve: Curves.easeIn,
+                              duration: const Duration(milliseconds: 700),
+                            ));
+                      }
+                    });
+                  },
                   child: Text(
                     "SKIP",
                     style: Styles.textStyle60
