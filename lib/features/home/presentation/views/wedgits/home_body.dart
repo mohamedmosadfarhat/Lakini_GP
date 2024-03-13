@@ -1,6 +1,5 @@
 // import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakini_gp/constant.dart';
 import 'package:lakini_gp/core/utils/api_sevices.dart';
@@ -22,10 +21,8 @@ class HomeBodey extends StatefulWidget {
 }
 
 class _HomeBodeState extends State<HomeBodey> {
-  int currentcategory = 0;
   int currentcategorytype = 0;
 
-  String status = "found";
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -101,7 +98,7 @@ class _HomeBodeState extends State<HomeBodey> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "Discover !",
+                              "Descover !",
                               style: Styles.textStyle50,
                             ),
                             Row(
@@ -230,7 +227,7 @@ class _HomeBodeState extends State<HomeBodey> {
                               ctegoryName: "Documents",
                             ),
                             ItemListView(
-                              ctegoryName: "Clothes",
+                              ctegoryName: "Other",
                             ),
                           ],
                         ),

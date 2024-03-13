@@ -427,35 +427,6 @@ class _ItemDetailsState extends State<ItemDetails> {
                             ),
                           ),
                           const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 35.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.location_on,
-                                      color: Color(0xffFA9600),
-                                      size: 20,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Location",
-                                      style: Styles.textStyle20,
-                                    ),
-                                  ],
-                                ),
-                                Text("${itemModel.foundPlace}")
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
                             height: 16,
                           ),
                           GestureDetector(

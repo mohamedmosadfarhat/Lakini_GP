@@ -1,50 +1,80 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
 
-class CustomAlertDialog extends StatelessWidget {
-  const CustomAlertDialog({
-    super.key,
-    required this.content,
-    required this.buttonText2,
-    this.onPressed2,
-  });
-  final String content;
-  final String buttonText2;
-  final void Function()? onPressed2;
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoAlertDialog(
-      title: const Text('Are You Sure !'),
-      actions: [
-        Column(
-          children: [
-            CupertinoDialogAction(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'Cancel',
-                  style: Styles.textStyle16,
-                )),
-            Divider(
-              thickness: 0.5,
-              indent: 0,
-              endIndent: 0,
-              color: Colors.grey.withOpacity(0.2),
-            ),
-            CupertinoDialogAction(
-                onPressed: onPressed2,
-                child: Text(
-                  buttonText2,
-                  style: Styles.textStyle16.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: const Color(0xffC92B27)),
-                )),
-          ],
-        ),
-      ],
-      content: Text(content),
-    );
-  }
+void buildDialog({required BuildContext context,required String title,required String message,required void Function() function,required String order}) {
+  double width = MediaQuery.of(context).size.width;
+  double height = MediaQuery.of(context).size.height;
+  final AlertDialog alert = AlertDialog(
+    backgroundColor: const Color.fromRGBO(14, 24, 35, 1),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+    contentTextStyle: Styles.textStyle16,
+    title: Text(
+      title,
+      style: Styles.textStyle18,
+    ),
+    content: SizedBox(
+      height: height * 0.15,
+      child: Column(
+        children: <Widget>[
+          const Divider(
+            color: Colors.grey,
+          ),
+           Text(message,style: Styles.textStyle16,),
+          const Spacer(),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: const MaterialStatePropertyAll(
+                          Color.fromRGBO(201, 43, 39, 1)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    onPressed: function,
+                    child: Text(
+                      order,
+                      style: GoogleFonts.lato(color: Colors.white),
+                    )),
+              ),
+              SizedBox(
+                width: width * 0.035,
+              ),
+              Expanded(
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                          mainColor.withOpacity(0.6)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: GoogleFonts.lato(color: Colors.white),
+                    )),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+  showDialog(
+    context: context,
+    builder: (BuildContext ctx) {
+      return alert;
+    },
+    barrierDismissible: true,
+    //barrierColor: Colors.orange.withOpacity(0.3)
+  );
 }

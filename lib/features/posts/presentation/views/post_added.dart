@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
+import 'package:lakini_gp/features/home/presentation/views/home_screen.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
 
 class PostAddedSuccessScreen extends StatelessWidget {
@@ -44,7 +45,11 @@ class PostAddedSuccessScreen extends StatelessWidget {
               SizedBox(
                 height: height * 0.09,
               ),
-              CustomRegisterButton(text: 'Home', onPressed: () {}),
+              CustomRegisterButton(
+                  text: 'Home',
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, HomeScreen.id);
+                  }),
             ],
           ),
         ),

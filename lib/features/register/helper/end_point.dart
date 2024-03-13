@@ -1,8 +1,14 @@
 String? token;
-const Register = "/api/Account/Register";
+String? userId;
+var url = 'https://wdw888lb-7075.uks1.devtunnels.ms';
+const Register = "api/Account/Register";
 const Login = "/api/Account/Login";
 const Confirm = "/api/Account/Confirm-email";
 const Reconfirm = "/api/Account/Resend-email-confirmation";
 const ForgotPassword = "/api/Account/forgot-username-or-password";
 const SetPassword = "/api/Account/reset-password";
-const AddItem = "/api/Item/Add-Item";
+const AddItem = "api/Item/Add-Item";
+const GetCategory = "/api/Category/GetAll";
+const GetProfile = "/api/Account/Get-Account";
+const DeleteAccount = "/api/Account/Delete";
+const UpdateAccount = "api/Account/Update-account";

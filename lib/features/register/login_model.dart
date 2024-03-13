@@ -6,6 +6,7 @@ class UserData {
   final String? phoneNumber;
   final String? city;
   final String? token;
+  final String? userId;
 
   factory UserData.fromJson(Map<String, dynamic>? json) {
     return UserData(
@@ -16,6 +17,7 @@ class UserData {
       phoneNumber: json?["phoneNumber"],
       city: json?["city"],
       token: json?["jwt"],
+      userId: json?["userid"],
     );
   }
 
@@ -27,5 +29,6 @@ class UserData {
       required this.email,
       required this.phoneNumber,
       required this.city,
+      required this.userId,
       required this.token});
 }

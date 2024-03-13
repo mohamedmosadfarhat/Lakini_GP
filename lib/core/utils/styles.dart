@@ -18,7 +18,7 @@ abstract class Styles {
     fontSize: 28,
     fontWeight: FontWeight.bold,
   );
-  static const textStyle30 = TextStyle(
+  static var textStyle30 = GoogleFonts.poppins(
     fontSize: 30,
     fontWeight: FontWeight.w900,
     letterSpacing: 1.2,
