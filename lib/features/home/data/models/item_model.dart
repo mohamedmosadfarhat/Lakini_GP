@@ -81,6 +81,9 @@ class ItemModel {
   String? email;
   String? userPlace;
   String? phoneNumber;
+  double? itemLatitude;
+  double? itemLongitude;
+ 
 
   ItemModel(
       {this.itemId,
@@ -97,7 +100,10 @@ class ItemModel {
       this.email,
       this.userPlace,
       this.phoneNumber,
-      this.userImage});
+      this.userImage,
+       this.itemLatitude,
+      this.itemLongitude 
+      });
 
   ItemModel.fromJson(Map<String, dynamic> json) {
     itemId = json['itemId'];
@@ -115,13 +121,15 @@ class ItemModel {
     email = json['email'];
     userPlace = json['userPlace'];
     phoneNumber = json['phoneNumber'];
+     itemLatitude = json['latitude'].toDouble();
+    itemLongitude = json['longitude'].toDouble(); 
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['itemId'] = this.itemId;
     data['itemStatus'] = this.itemStatus;
-    data['itemImage'] = this.itemImage;
+    data['itemImage'] = itemImage;
     data['userImage'] = this.itemImage;
     data['categoryName'] = this.categoryName;
     data['itemName'] = this.itemName;
@@ -134,6 +142,8 @@ class ItemModel {
     data['email'] = this.email;
     data['userPlace'] = this.userPlace;
     data['phoneNumber'] = this.phoneNumber;
+    data['latitude'] = this.itemLatitude;
+    data['longitude'] = this.itemLongitude; 
     return data;
   }
 }

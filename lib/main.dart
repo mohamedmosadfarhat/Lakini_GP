@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakini_gp/features/home/presentation/views/home_screen.dart';
@@ -14,7 +15,11 @@ import 'package:lakini_gp/features/register/presentation/views/login_screen.dart
 import 'package:lakini_gp/features/register/presentation/views/register_screen.dart';
 import 'package:lakini_gp/features/register/presentation/views/create_password_screen.dart';
 import 'bloc_observer.dart';
+import 'core/utils/api_sevices.dart';
 import 'features/chat/presentation/views/chat_content.dart';
+import 'features/home/data/repos/home_repo_impl.dart';
+import 'features/home/presentation/manager/cubit/display_items_cubit.dart';
+import 'features/notifications/presentation/views/notification_screen.dart';
 import 'features/posts/presentation/manager/cubit/post_cubit/app_state.dart';
 import 'features/register/helper/cache_helper.dart';
 import 'features/register/helper/dio_helper.dart';
@@ -56,6 +61,8 @@ class Lakini extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider( create: (context) =>
+              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))..fetchItems(),),
         BlocProvider(
           create: (context) => AppCubit()
             ..getCategory()
@@ -67,14 +74,13 @@ class Lakini extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return MaterialApp(
-            theme: ThemeData.dark(),
+            theme: ThemeData.dark(
+             
+            ),
             debugShowCheckedModeBanner: false,
-            home: state is GetCategoryLoadingState ||
-                    state is GetProfileLoadingState
-                ? SplashScreen(
+            home:  SplashScreen(
                     navigator: startWidget!,
-                  )
-                : startWidget,
+                  ),
           //home: HomeScreen(),
             routes: {
               ForgetPasswordScreen.fpId: (_) => ForgetPasswordScreen(),
@@ -96,7 +102,7 @@ class Lakini extends StatelessWidget {
               ItemDetails.itemId: (_) => const ItemDetails(),
               AddPostScreen.id: (_) => const AddPostScreen(),
               PostAddedSuccessScreen.id: (_) => const PostAddedSuccessScreen(),
-              ChooseLocation.locationId: (_) => const ChooseLocation(),
+              //ChooseLocation.locationId: (_) => const ChooseLocation(),
             },
           );
         },

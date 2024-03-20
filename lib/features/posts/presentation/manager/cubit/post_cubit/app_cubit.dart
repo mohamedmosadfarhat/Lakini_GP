@@ -93,11 +93,11 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  late Category category;
+   Category? category;
 
   void getCategory() {
     emit(GetCategoryLoadingState());
-    DioHelper.getData(url: GetCategory).then((value) {
+    DioHelper.getData(url: GetCategory,token: token).then((value) {
       category = Category.fromJson(value.data);
       print(value);
       emit(GetCategorySuccessState());
@@ -107,12 +107,12 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-  late ProfileModet profile;
+   ProfileModet? profile;
 
   void getProfile() {
     print(userId);
     emit(GetProfileLoadingState());
-    DioHelper.getData(url: "$GetProfile/$userId").then((value) {
+    DioHelper.getData(url: "$GetProfile/$userId",token: token).then((value) {
       profile = ProfileModet.fromJson(value.data);
       print(value);
       emit(GetProfileSuccessState());
@@ -131,11 +131,11 @@ class AppCubit extends Cubit<AppState> {
   }) async {
    
     var request = http.MultipartRequest('PUT', Uri.parse("$url/$UpdateAccount"));
-    print(profile.userName);
-    print(profile.email);
-    print(profile.phone);
-    print(profile.city);
-    print(profile.region);
+    print(profile!.userName);
+    print(profile!.email);
+    print(profile!.phone);
+    print(profile!.city);
+    print(profile!.region);
     request.headers['Authorization'] = 'Bearer $token';
     request.fields['UserName'] = UserName;
     request.fields['Email'] = Email;

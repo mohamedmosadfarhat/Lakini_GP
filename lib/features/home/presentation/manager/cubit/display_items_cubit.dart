@@ -1,9 +1,17 @@
-import 'dart:collection';
 
-import 'package:bloc/bloc.dart';
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakini_gp/features/home/data/models/item_model.dart';
 import 'package:lakini_gp/features/home/data/repos/home_repo.dart';
-import 'package:meta/meta.dart';
+
+import '../../../../posts/data/models/category_model.dart';
+import '../../../../posts/presentation/manager/cubit/post_cubit/app_state.dart';
+import '../../../../profile/profile_model.dart';
+import '../../../../register/helper/dio_helper.dart';
+import '../../../../register/helper/end_point.dart';
+
 
 part 'display_items_state.dart';
 
@@ -43,4 +51,36 @@ class DisplayItemsCubit extends Cubit<DisplayItemsState> {
       emit(DisplayItemsSuccess(items));
     });
   }
+
+
+
+  /* late Category category;
+
+  void getCategory() {
+    emit(GetCategoryLoadingState());
+    DioHelper.getData(url: GetCategory,token: token).then((value) {
+      category = Category.fromJson(value.data);
+      print(value);
+      emit(GetCategorySuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(GetCategoryErrorState());
+    });
+  }
+
+  late ProfileModet profile;
+
+  void getProfile() {
+    print(userId);
+    emit(GetProfileLoadingState());
+    DioHelper.getData(url: "$GetProfile/$userId",token: token).then((value) {
+      profile = ProfileModet.fromJson(value.data);
+      print(value);
+      emit(GetProfileSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(GetProfileErrorState());
+    });
+  } */
+
 }

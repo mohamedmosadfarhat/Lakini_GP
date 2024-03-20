@@ -14,7 +14,7 @@ import 'login_screen.dart';
 class CreatePasswordScreen extends StatelessWidget {
   static const String cpId = "CreatePasswordId";
   CreatePasswordScreen({super.key});
-  final GlobalKey<FormState> _formKey = GlobalKey();
+  
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController tokenController = TextEditingController();
@@ -24,6 +24,7 @@ class CreatePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
 
     return BlocConsumer<AppLoginCubit, AppLoginState>(
       listener: (context, state) {
@@ -52,6 +53,7 @@ class CreatePasswordScreen extends StatelessWidget {
         var cubit = AppLoginCubit.get(context);
         return Scaffold(
           body: Container(
+            height: double.infinity,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -70,122 +72,105 @@ class CreatePasswordScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: Center(
                 child: SingleChildScrollView(
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Create new password",
-                            style: Styles.textStyle60.copyWith(fontSize: 28),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Create new password",
+                          style: Styles.textStyle60.copyWith(fontSize: 28,fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: height*0.02,),
+                        Text(
+                          "Please take the token that had sent to you on your G-mail and put it here ",
+                          style: Styles.textStyle14,
+                        ),
+                         SizedBox(height: height*0.03,),
+                        InputField(
+                          title: 'Token',
+                          hint: 'Enter Your Token',
+                          controller: tokenController,
+                        ),
+                        InputField(
+                          title: 'Email',
+                          hint: 'Enter Your Email',
+                          widget: const Icon(
+                            Icons.mail_outline,
+                            color: Colors.grey,
                           ),
-                          Text(
-                            "Please take the token that had sent to you on your G-mail and put it here ",
-                            style: Styles.textStyle14,
+                          textType: TextInputType.emailAddress,
+                          controller: emailController,
+                        ),
+                        InputField(
+                          title: 'New Password',
+                          hint: 'Enter Password',
+                          widget: const Icon(
+                            Icons.lock_outline,
+                            color: Colors.grey,
                           ),
-                          InputField(
-                            title: 'Token',
-                            hint: 'Enter Your Token',
-                            controller: tokenController,
-                            validator: (val) {
-                              if (val!.isEmpty) {
-                                return "Required Field!";
-                              }
-                              return null;
-                            },
-                          ),
-                          InputField(
-                            title: 'Email',
-                            hint: 'Enter Your Email',
-                            widget: const Icon(
-                              Icons.mail_outline,
-                              color: Colors.grey,
-                            ),
-                            textType: TextInputType.emailAddress,
-                            controller: emailController,
-                            validator: (val) {
-                              if (val!.isEmpty || !val.contains("@")) {
-                                return "Invalid E_Mail!";
-                              }
-                              return null;
-                            },
-                          ),
-                          InputField(
-                            title: 'New Password',
-                            hint: 'Enter Password',
+                          textType: TextInputType.visiblePassword,
+                          controller: passwordController,
+                        ),
+                        InputField(
+                            title: 'Confirm Password',
+                            hint: 'Enter Confirm Password',
                             widget: const Icon(
                               Icons.lock_outline,
                               color: Colors.grey,
                             ),
                             textType: TextInputType.visiblePassword,
-                            controller: passwordController,
-                          ),
-                          InputField(
-                              title: 'Confirm Password',
-                              hint: 'Enter Confirm Password',
-                              widget: const Icon(
-                                Icons.lock_outline,
-                                color: Colors.grey,
-                              ),
-                              textType: TextInputType.visiblePassword,
-                              controller: confirmPasswordController,
-                              validator: (value) {
-                                if (value != passwordController.text) {
-                                  return "Password Don't Match!";
-                                }
-                                return null;
-                              }),
-                          SizedBox(height: height * 0.03),
-                          MyButton(
-                            label: 'Set Password',
-                            onTap: () {
-                              if (tokenController.text.isEmpty) {
-                                buildSnackBar(
-                                    context: context,
-                                    text: "Required Field",
-                                    clr: const Color.fromARGB(255, 92, 1, 1));
-                              } else if (!emailController.text.contains("@") ||
-                                  !emailController.text.contains(".com")) {
-                                buildSnackBar(
-                                    context: context,
-                                    text: "Invalid email address",
-                                    clr: const Color.fromARGB(255, 92, 1, 1));
-                              } else if (passwordController.text.length < 8) {
-                                buildSnackBar(
-                                    context: context,
-                                    text:
-                                        "Password must be at least 8 and maximum 50 characters.",
-                                    clr: const Color.fromARGB(255, 92, 1, 1));
-                              } else if (!passwordController
-                                  .text.isValidPassword) {
-                                buildSnackBar(
-                                    context: context,
-                                    text:
-                                        "Passwords must have at least one non alphanumeric character,at least one digit ('0'-'9'),at least one uppercase ('A'-'Z').",
-                                    clr: const Color.fromARGB(255, 92, 1, 1));
-                              } else if (passwordController.text !=
-                                  confirmPasswordController.text) {
-                                buildSnackBar(
-                                    context: context,
-                                    text: "Password Dosen't Match",
-                                    clr: const Color.fromARGB(255, 92, 1, 1));
-                              } else {
-                                cubit.usersetPassword(
-                                  myToken: tokenController.text.toString(),
-                                  email: emailController.text.toString(),
-                                  password:
-                                      confirmPasswordController.text.toString(),
-                                );
-                              }
-                            },
-                          ),
-                          if (state is AppSetPasswordLoadingState)
-                            const LinearProgressIndicator(
-                              color: Color.fromRGBO(1, 23, 48, 1),
+                            controller: confirmPasswordController,
                             ),
-                        ]),
-                  ),
+                        SizedBox(height: height * 0.03),
+                        state is AppSetPasswordLoadingState?
+                        Center(child: Image.asset("assets/loadinBall.gif",height: height*0.13,width: width*0.13,),):
+                        MyButton(
+                          label: 'Set Password',
+                          onTap: () {
+                            if (tokenController.text.isEmpty) {
+                              buildSnackBar(
+                                  context: context,
+                                  text: "Required Field",
+                                  clr: const Color.fromARGB(255, 92, 1, 1));
+                            } else if (!emailController.text.contains("@") ||
+                                !emailController.text.contains(".com")||
+                                !emailController.text.isValidEmail
+                                ) {
+                              buildSnackBar(
+                                  context: context,
+                                  text: "Invalid email address",
+                                  clr: const Color.fromARGB(255, 92, 1, 1));
+                            } else if (passwordController.text.length < 8) {
+                              buildSnackBar(
+                                  context: context,
+                                  text:
+                                      "Password must be at least 8 and maximum 50 characters.",
+                                  clr: const Color.fromARGB(255, 92, 1, 1));
+                            } else if (!passwordController
+                                .text.isValidPassword) {
+                              buildSnackBar(
+                                  context: context,
+                                  text:
+                                      "Passwords must have at least one non alphanumeric character,at least one digit ('0'-'9'),at least one uppercase ('A'-'Z').",
+                                  clr: const Color.fromARGB(255, 92, 1, 1));
+                            } else if (passwordController.text !=
+                                confirmPasswordController.text) {
+                              buildSnackBar(
+                                  context: context,
+                                  text: "Password Dosen't Match",
+                                  clr: const Color.fromARGB(255, 92, 1, 1));
+                            } else {
+                              cubit.usersetPassword(
+                                myToken: tokenController.text.toString(),
+                                email: emailController.text.toString(),
+                                password:
+                                    confirmPasswordController.text.toString(),
+                              );
+                            }
+                          },
+                        ),
+                       
+                      ]),
                 ),
               ),
             ),

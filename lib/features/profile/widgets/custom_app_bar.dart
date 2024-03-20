@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lakini_gp/core/utils/styles.dart';
+
 import 'package:lakini_gp/features/profile/presentation/views/edit_profile.dart';
 
 class CustomAppBar extends StatelessWidget {

@@ -15,7 +15,7 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
+   
 
     final TextEditingController usernameController = TextEditingController();
 
@@ -41,7 +41,7 @@ class RegisterScreen extends StatelessWidget {
                   context: context,
                   text: state.message!,
                   clr: const Color(0xff011730));
-              Navigator.pushNamed(
+              Navigator.pushReplacementNamed(
                 context,
                 OtpVerification.otp,
                 arguments: {"email": emailController.text.toString()},
@@ -56,6 +56,8 @@ class RegisterScreen extends StatelessWidget {
         },
         builder: (context, state) {
           var cubit = AppRegisterCubit.get(context);
+          double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
           return Container(
             height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
@@ -76,8 +78,8 @@ class RegisterScreen extends StatelessWidget {
               appBar: AppBar(
                 actions: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:14.0),
-                    child: Image.asset("assets/icon.png",height: 32,),
+                    padding: const EdgeInsets.symmetric(horizontal:12.0),
+                    child: Image.asset("assets/icon.png",height: height*0.09,width: width*0.09,),
                   ),
                 ],
                 title:   Text("Register",style: Styles.textStyle18.copyWith(fontSize: 22)),
@@ -89,14 +91,10 @@ class RegisterScreen extends StatelessWidget {
               body: Padding(
                 padding: const EdgeInsets.symmetric(horizontal:20.0),
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (state is AppRegisterLoadingState)
-                        const LinearProgressIndicator(
-                          color: Color.fromRGBO(1, 54, 115, 1),
-                        ),
-                       
                       Center(
                       child: Stack(
                         children: [
@@ -127,8 +125,8 @@ class RegisterScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                      const SizedBox(
-                        height: 14,
+                       SizedBox(
+                        height: height*0.02,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,12 +139,6 @@ class RegisterScreen extends StatelessWidget {
                             icon: Icons.person,
                             hintText: 'Enter your name',
                             textController: usernameController,
-                            validator: (String? value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your username';
-                              }
-                              return null;
-                            },
                           ),
                           Text(
                             'Email',
@@ -157,12 +149,6 @@ class RegisterScreen extends StatelessWidget {
                             textController: emailController,
                             inputType: TextInputType.emailAddress,
                             hintText: 'Enter your email',
-                            validator: (String? value) {
-                              if (value!.isEmpty || !value.isValidEmail) {
-                                return 'Please enter valid Email';
-                              }
-                              return null;
-                            },
                           ),
                           Text(
                             'City',
@@ -171,12 +157,7 @@ class RegisterScreen extends StatelessWidget {
                           CustomTextFormField(
                               icon: Icons.location_on_outlined,
                               hintText: 'Enter your Location',
-                              validator: (String? value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter location';
-                                }
-                                return null;
-                              },
+                             
                               textController: locationController),
                           Text(
                             'Region',
@@ -185,7 +166,7 @@ class RegisterScreen extends StatelessWidget {
                           CustomTextFormField(
                               icon: Icons.location_on_outlined,
                               hintText: 'Enter your Location',
-                              validator: (String? value) {},
+                           
                               textController: regionController),
                           Text(
                             'Phone',
@@ -195,7 +176,7 @@ class RegisterScreen extends StatelessWidget {
                               icon: Icons.location_on_outlined,
                               hintText: 'Enter your Phone Number',
                               inputType: TextInputType.phone,
-                              validator: (String? value) {},
+                            
                               textController: phoneController),
 
                           Text(
@@ -207,9 +188,7 @@ class RegisterScreen extends StatelessWidget {
                             hintText: 'Enter password',
                             isPassword: true,
                             textController: passwordController,
-                            validator: (String? val) {
-                              return null;
-                            },
+                           
                           ),
                           Text(
                             'Confirm Password',
@@ -220,18 +199,10 @@ class RegisterScreen extends StatelessWidget {
                             hintText: 'Confirm password',
                             isPassword: true,
                             textController: confirmPasswordController,
-                            validator: (String? value) {
-                              if (value!.isEmpty) {
-                                return 'Please confirm your password';
-                              } else if (value != passwordController.text) {
-                                return "Password Don't Match!";
-                              }
-                              return null;
-                            },
+                            
                           ),
-                          const SizedBox(
-                            height: 40,
-                          ),
+                          state is AppRegisterLoadingState?
+                          Center(child: Image.asset("assets/loadinBall.gif",height: height*0.13,width: width*0.13,),):
                           CustomRegisterButton(
                               text: 'Register',
                               onPressed: () {
@@ -244,7 +215,9 @@ class RegisterScreen extends StatelessWidget {
                                           255, 92, 1, 1));
                                 } else if (!emailController.text
                                         .contains("@") ||
-                                    !emailController.text.contains(".com")) {
+                                    !emailController.text.contains(".com")||
+                                    !emailController.text.isValidEmail
+                                    ) {
                                   buildSnackBar(
                                       context: context,
                                       text: "Invalid email address",

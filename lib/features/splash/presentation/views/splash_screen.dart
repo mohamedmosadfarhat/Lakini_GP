@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:page_transition/page_transition.dart';
+
 
 import '../../../../core/utils/styles.dart';
 
-
 class SplashScreen extends StatefulWidget {
   final Widget navigator;
-  const SplashScreen({required this.navigator,super.key});
+  const SplashScreen({required this.navigator, super.key});
   static String id = 'SplashScreen';
 
   @override
@@ -25,8 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       startAnimation();
     });
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => widget.navigator),
+      );
+    });
   }
- 
 
   void startAnimation() {
     setState(() {
@@ -102,21 +106,9 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                    child: widget.navigator,
-                    type: PageTransitionType.rightToLeft,
-                    curve: Curves.easeIn,
-                    duration: const Duration(milliseconds: 700),
-                  ));
-            },
-            child: Image.asset(
-              imageUrl,
-              height: height * 0.1,
-            ),
+          Image.asset(
+            imageUrl,
+            height: height * 0.1,
           ),
           SizedBox(
             height: height * 0.03,

@@ -26,6 +26,8 @@ class _MenueState extends State<Menue> {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = AppCubit.get(context);
+        var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
         return Drawer(
           child: Container(
             decoration: const BoxDecoration(
@@ -77,7 +79,7 @@ class _MenueState extends State<Menue> {
                             CircleAvatar(
                               radius: 30,
                               backgroundImage: NetworkImage(
-                                  "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile.accountPhoto}"),
+                                  "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile!.accountPhoto}"),
                             ),
                             const SizedBox(
                               width: 32,
@@ -86,7 +88,7 @@ class _MenueState extends State<Menue> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  cubit.profile.userName,
+                                  cubit.profile!.userName,
                                   style: Styles.textStyle20
                                       .copyWith(color: Colors.white),
                                 ),
@@ -97,7 +99,7 @@ class _MenueState extends State<Menue> {
                                       color: Color(0xffF3F3F3),
                                     ),
                                     Text(
-                                      "${cubit.profile.city},${cubit.profile.region}",
+                                      "${cubit.profile!.city},${cubit.profile!.region}",
                                       style: Styles.textStyle14
                                           .copyWith(color: Colors.grey),
                                     ),
@@ -183,6 +185,7 @@ class _MenueState extends State<Menue> {
                           order: 'Logout'),
                                         ),
                     ),
+                    SizedBox(height: height*0.09,)
                 ],
               ),
             ),
