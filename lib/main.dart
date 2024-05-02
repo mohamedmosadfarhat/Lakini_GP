@@ -21,6 +21,7 @@ import 'features/home/data/repos/home_repo_impl.dart';
 import 'features/home/presentation/manager/cubit/display_items_cubit.dart';
 import 'features/notifications/presentation/views/notification_screen.dart';
 import 'features/posts/presentation/manager/cubit/post_cubit/app_state.dart';
+import 'features/profile/presentation/views/ativites_screen.dart';
 import 'features/register/helper/cache_helper.dart';
 import 'features/register/helper/dio_helper.dart';
 import 'features/register/helper/end_point.dart';
@@ -62,11 +63,13 @@ class Lakini extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider( create: (context) =>
-              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))..fetchItems(),),
+              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))..fetchItems("get-Item-User-Details"),),
         BlocProvider(
           create: (context) => AppCubit()
             ..getCategory()
-            ..getProfile(),
+            ..getProfile()
+            ..getAllUsers()
+                      ,
         ),
         BlocProvider(create: (context) => AppLoginCubit()),
       ],
@@ -97,11 +100,12 @@ class Lakini extends StatelessWidget {
               ProfileMenu.id: (_) => const ProfileMenu(),
               TermsAndConditionScreen.id: (_) =>
                   const TermsAndConditionScreen(),
-              ChatContent.id: (context) => const ChatContent(),
+            
               //SearchingWithAi.id: (context) => SearchingWithAi(),
               ItemDetails.itemId: (_) => const ItemDetails(),
               AddPostScreen.id: (_) => const AddPostScreen(),
               PostAddedSuccessScreen.id: (_) => const PostAddedSuccessScreen(),
+              ActivitesScreen.id: (_) => const ActivitesScreen(),
               //ChooseLocation.locationId: (_) => const ChooseLocation(),
             },
           );

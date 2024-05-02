@@ -10,9 +10,9 @@ class HomeRepoImpl implements HomeRepo {
   final ApiService apiService;
   HomeRepoImpl(this.apiService);
   @override
-  Future<Either<Failure, List<ItemModel>>> fetchAllItems() async {
+  Future<Either<Failure, List<ItemModel>>> fetchAllItems(String endPoint) async {
     try {
-      var data = await apiService.get(endPoint: 'Item/get-Item-User-Details');
+      var data = await apiService.get(endPoint: 'Item/$endPoint');
       List<ItemModel> items = [];
       for (var item in data) {
         try {

@@ -391,7 +391,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

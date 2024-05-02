@@ -8,7 +8,7 @@ class Category{
 
 
       category = List<CategoryItem>.from(
-        json.map((banner) => CategoryItem.fromJson(banner)),
+        json.map((cat) => CategoryItem.fromJson(cat)),
       );
 return Category(category: category);
   }

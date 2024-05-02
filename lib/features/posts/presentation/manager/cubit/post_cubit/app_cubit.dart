@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lakini_gp/features/posts/data/models/last_chat_model.dart';
+import 'package:lakini_gp/features/posts/data/models/users_model.dart';
 import 'package:lakini_gp/features/profile/profile_model.dart';
 
 import 'package:lakini_gp/features/register/helper/end_point.dart';
@@ -21,7 +23,6 @@ class AppCubit extends Cubit<AppState> {
   final ImagePicker picker = ImagePicker();
   File? pickedImage;
   ImageProvider<Object>? imageProvider;
-  
 
   fetchImage() async {
     emit(AddImageLoading());
@@ -40,7 +41,8 @@ class AppCubit extends Cubit<AppState> {
 
   fetchProfileImage() async {
     emit(AddProfileImageLoading());
-    final XFile? image = await profilePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image =
+        await profilePicker.pickImage(source: ImageSource.gallery);
     if (image == null) {
       return;
     }
@@ -93,11 +95,11 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-   Category? category;
+  Category? category;
 
   void getCategory() {
     emit(GetCategoryLoadingState());
-    DioHelper.getData(url: GetCategory,token: token).then((value) {
+    DioHelper.getData(url: GetCategory, token: token).then((value) {
       category = Category.fromJson(value.data);
       print(value);
       emit(GetCategorySuccessState());
@@ -107,12 +109,37 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-   ProfileModet? profile;
+  AllUsers? users;
+  List<String?> lastM = [];
+  List<String?> lastT = [];
+
+  void getAllUsers() {
+    emit(GetAllUsersLoadingState());
+    DioHelper.getData(url: GetAllUsers, token: token).then((value) {
+      users = AllUsers.fromJson(value.data);
+      print(value);
+      for (var user in users!.user) {
+        print(user.userName);
+       
+        getLastChat(user.userId);
+         print(user.userId);
+      }
+
+      print(lastM);
+
+      emit(GetAllUsersSuccessState());
+    }).catchError((error) {
+      emit(GetAllUsersErrorState());
+      print(error.toString());
+    });
+  }
+
+  ProfileModet? profile;
 
   void getProfile() {
     print(userId);
     emit(GetProfileLoadingState());
-    DioHelper.getData(url: "$GetProfile/$userId",token: token).then((value) {
+    DioHelper.getData(url: "$GetProfile/$userId", token: token).then((value) {
       profile = ProfileModet.fromJson(value.data);
       print(value);
       emit(GetProfileSuccessState());
@@ -129,8 +156,8 @@ class AppCubit extends Cubit<AppState> {
     required String City,
     required String Region,
   }) async {
-   
-    var request = http.MultipartRequest('PUT', Uri.parse("$url/$UpdateAccount"));
+    var request =
+        http.MultipartRequest('PUT', Uri.parse("$url/$UpdateAccount"));
     print(profile!.userName);
     print(profile!.email);
     print(profile!.phone);
@@ -144,8 +171,8 @@ class AppCubit extends Cubit<AppState> {
     request.fields['Region'] = Region;
 
     if (profileImage != null) {
-      request.files.add(
-          await http.MultipartFile.fromPath('AccountPhoto', profileImage!.path));
+      request.files.add(await http.MultipartFile.fromPath(
+          'AccountPhoto', profileImage!.path));
     }
     emit(UpdateProfileLoadingState());
     var response = await request.send();
@@ -168,13 +195,96 @@ class AppCubit extends Cubit<AppState> {
   void deleteProfile() {
     print(userId);
     emit(DeleteProfileLoadingState());
-    DioHelper.deleteData(url:"$DeleteAccount/$userId",token: token).then((value) {
+    DioHelper.deleteData(url: "$DeleteAccount/$userId", token: token)
+        .then((value) {
       delete = AppModel.fromJson(value.data);
       print(value);
       emit(DeleteProfileSuccessState(delete: delete));
     }).catchError((error) {
       print(error.toString());
       emit(DeleteProfileErrorState());
+    });
+  }
+
+  final ImagePicker chatImagepicker = ImagePicker();
+  File? pickedchatImage;
+
+  fetchchatImage() async {
+    emit(AddChatImageLoading());
+    final XFile? image =
+        await chatImagepicker.pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return;
+    }
+    pickedchatImage = File(image.path);
+    emit(AddChatImageSuccess());
+  }
+
+  Future<void> sendMessage({
+    required String receiverEmail,
+    String? message,
+    double? Latitude,
+    double? Longitude,
+  }) async {
+    var request = http.MultipartRequest('POST', Uri.parse("$url/$AddChat"));
+    request.headers['Authorization'] = 'Bearer $token';
+    request.fields['receiverEmail'] = receiverEmail;
+    request.fields['message'] = message ?? "";
+    request.fields['Latitude'] = Latitude.toString();
+    request.fields['Longitude'] = Longitude.toString();
+
+    if (pickedchatImage != null) {
+      request.files.add(
+          await http.MultipartFile.fromPath('File', pickedchatImage!.path));
+    }
+
+    emit(SendMessageLoadingState());
+
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      print('Message sent successfully');
+      String responseBody = await response.stream.bytesToString();
+      print('Response Body: $responseBody');
+      pickedchatImage = null;
+      emit(SendMessageSuccessState());
+    } else {
+      print(response.stream.bytesToString());
+      print('Failed to send message');
+      emit(SendMessageErrorState());
+    }
+  }
+
+  late AppModel deleteChat;
+
+  void deleteChatMethod(userId) {
+    emit(DeleteChatLoadingState());
+    DioHelper.deleteData(url: "$DeleteChat?ReceiverId=$userId", token: token)
+        .then((value) {
+      deleteChat = AppModel.fromJson(value.data);
+      print(value);
+      emit(DeleteChatSuccessState(delete: deleteChat));
+    }).catchError((error) {
+      print(error.toString());
+      emit(DeleteChatErrorState());
+    });
+  }
+
+  LastChat? lastChat;
+
+  void getLastChat(userId) {
+    DioHelper.getData(url: "$GetLastChat?recieverId=$userId", token: token)
+        .then((value) {
+      lastChat = LastChat.fromJson(value.data);
+      print(lastChat?.content);
+      lastM.add(lastChat?.content);
+      lastT.add(lastChat?.time);
+      print(lastM);
+
+     
+    }).catchError((error) {
+      emit(GetLastChatErrorState());
+      print(error.toString());
     });
   }
 }

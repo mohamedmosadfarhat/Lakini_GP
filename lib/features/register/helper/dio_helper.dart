@@ -8,6 +8,7 @@ class DioHelper {
       baseUrl: "https://wdw888lb-7075.uks1.devtunnels.ms",
       receiveDataWhenStatusError: true,
     ));
+    //dio!.options.validateStatus = (_) => true;
   }
 
   static Future<Response> postData({

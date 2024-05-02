@@ -30,42 +30,34 @@ class ItemListView extends StatelessWidget {
           if (state is DisplayItemsSuccess) {
             return RefreshIndicator(
               onRefresh: () async {
-                await BlocProvider.of<DisplayItemsCubit>(context).fetchItems();
+                await BlocProvider.of<DisplayItemsCubit>(context).fetchItems("get-Item-User-Details");
               },
               child: ListView.builder(
-                itemCount: state.items.length,
-                itemBuilder: (context, index) {
-                  if (ctegoryName == "All" &&
-                      state.items[index].itemStatus ==
-                          BlocProvider.of<DisplayItemsCubit>(context).status) {
-                    return CustomItem(
-                      itemModel: state.items[index],
-                    );
-                  } else if (state.items[index].categoryName == ctegoryName &&
-                      state.items[index].itemStatus ==
-                          BlocProvider.of<DisplayItemsCubit>(context).status) {
-                    return CustomItem(
-                      itemModel: state.items[index],
-                    );
-                  } else {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(height: height*0.1,),
-                        Image.asset("assets/folder.png"),
-                         Text("There is No Item!", style: Styles.textStyle14,)
-                      ],
-                    );
-                  }
-                },
-              ),
-            );
-          } else if (state is DisplayItemsFailur) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                await BlocProvider.of<DisplayItemsCubit>(context).fetchItems();
+              itemCount: state.items.length,
+              itemBuilder: (context, index) {
+                if (ctegoryName == "All" &&
+                    state.items[index].itemStatus ==
+                        BlocProvider.of<DisplayItemsCubit>(context).status) {
+                  return CustomItem(
+                    itemModel: state.items[index],
+                  );
+                } else if (state.items[index].categoryName == ctegoryName &&
+                    state.items[index].itemStatus ==
+                        BlocProvider.of<DisplayItemsCubit>(context).status) {
+                  return CustomItem(
+                    itemModel: state.items[index],
+                  );
+                } else {
+                  return Container(height: 0, child: Text(""));
+                }
               },
+            ),
+          );
+        } else if (state is DisplayItemsFailur) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              await BlocProvider.of<DisplayItemsCubit>(context).fetchItems("get-Item-User-Details");
+            },
               child: ListView.builder(
                   itemCount: 1,
                   itemBuilder: (context, index) {
@@ -85,7 +77,7 @@ class ItemListView extends StatelessWidget {
               ),
             );
           } else {
-            return  Center(
+            return Center(
               child: Image.asset(
                 "assets/loadinBall.gif",
                 height: height * 0.13,
