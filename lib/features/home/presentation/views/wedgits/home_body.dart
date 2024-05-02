@@ -25,7 +25,7 @@ class HomeBodey extends StatefulWidget {
 
 class _HomeBodeState extends State<HomeBodey> {
   int currentcategorytype = 0;
-   
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -135,13 +135,12 @@ class _HomeBodeState extends State<HomeBodey> {
                                 style: Styles.textStyle$20,
                               ),
                               Container(
-                                width: width * 0.2,
-                                height: height * 0.05,
-                                decoration: BoxDecoration(
-                                    color: basicColor,
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Image.asset("assets/search.png")
-                              ),
+                                  width: width * 0.2,
+                                  height: height * 0.05,
+                                  decoration: BoxDecoration(
+                                      color: basicColor,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Image.asset("assets/search.png")),
                             ],
                           ),
                         ],
@@ -218,7 +217,7 @@ class _HomeBodeState extends State<HomeBodey> {
                       const SizedBox(
                         height: 15,
                       ),
-                       Expanded(
+                      Expanded(
                         child: TabBarView(
                           children: itemView,
                         ),

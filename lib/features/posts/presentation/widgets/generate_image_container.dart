@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class UploadImg extends StatelessWidget {
-  const UploadImg({super.key, this.imagePath});
-  final String? imagePath;
+class GenerateImageContainer extends StatelessWidget {
+  const GenerateImageContainer({super.key});
+
   @override
   Widget build(BuildContext context) {
     //double height = MediaQuery.of(context).size.height;
@@ -15,12 +15,16 @@ class UploadImg extends StatelessWidget {
         //border: Border.all(style: BorderStyle.solid),
         color: const Color.fromRGBO(14, 24, 35, 1),
       ),
-      child: const Center(
-        child: Icon(
-          Icons.add_photo_alternate_outlined,
-          size: 24,
-          color: Colors.grey,
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset('assets/fa_gears.png'),
+          const Text(
+            'Generate Image',
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

@@ -139,33 +139,40 @@ class OtpVerification extends StatelessWidget {
                                   decoration: TextDecoration.underline),
                             )),
                       ),
-                    SizedBox(height: height * 0.02),
-                    state is AppConfirmLoadingState||state is AppReconfirmLoadingState?
-                        Center(child: Image.asset("assets/loadinBall.gif",height: height*0.13,width: width*0.13,),):
-                      MyButton(
-                        label: 'Verify',
-                        onTap: () {
-                          if (usernameController.text.isEmpty ||
-                              txtController1.text.isEmpty ||
-                              txtController2.text.isEmpty ||
-                              txtController3.text.isEmpty ||
-                              txtController4.text.isEmpty ||
-                              txtController5.text.isEmpty ||
-                              txtController6.text.isEmpty) {
-                            buildSnackBar(
-                                context: context,
-                                text: "Please Fill All Fields!",
-                                clr: const Color.fromARGB(255, 92, 1, 1));
-                          }
-                          else{
-                            cubit.userConfirm(
-                            userName: usernameController.text.toString(),
-                            code:
-                                "${txtController1.text}${txtController2.text}${txtController3.text}${txtController4.text}${txtController5.text}${txtController6.text}",
-                          );
-                          }
-                        },
-                      )
+                      SizedBox(height: height * 0.02),
+                      state is AppConfirmLoadingState ||
+                              state is AppReconfirmLoadingState
+                          ? Center(
+                              child: Image.asset(
+                                "assets/loadinBall.gif",
+                                height: height * 0.13,
+                                width: width * 0.13,
+                              ),
+                            )
+                          : MyButton(
+                              label: 'Verify',
+                              onTap: () {
+                                if (usernameController.text.isEmpty ||
+                                    txtController1.text.isEmpty ||
+                                    txtController2.text.isEmpty ||
+                                    txtController3.text.isEmpty ||
+                                    txtController4.text.isEmpty ||
+                                    txtController5.text.isEmpty ||
+                                    txtController6.text.isEmpty) {
+                                  buildSnackBar(
+                                      context: context,
+                                      text: "Please Fill All Fields!",
+                                      clr: const Color.fromARGB(255, 92, 1, 1));
+                                } else {
+                                  cubit.userConfirm(
+                                    userName:
+                                        usernameController.text.toString(),
+                                    code:
+                                        "${txtController1.text}${txtController2.text}${txtController3.text}${txtController4.text}${txtController5.text}${txtController6.text}",
+                                  );
+                                }
+                              },
+                            )
                     ]),
               ),
             ),

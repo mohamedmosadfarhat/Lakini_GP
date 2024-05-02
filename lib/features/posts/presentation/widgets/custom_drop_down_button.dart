@@ -21,7 +21,6 @@ class CustomDropDownButtonNew extends StatefulWidget {
     required this.isExpanded,
     required this.items,
     this.suffixIcon,
-
     this.onChanged,
     this.listPrefixIcon,
     this.prefixIcon,
@@ -34,7 +33,6 @@ class CustomDropDownButtonNew extends StatefulWidget {
 }
 
 class _CustomDropDownButtonNewState extends State<CustomDropDownButtonNew> {
-
   bool isExpanded = false;
   List<String> filteredItems = [];
 
@@ -75,7 +73,6 @@ class _CustomDropDownButtonNewState extends State<CustomDropDownButtonNew> {
             controller: widget.searchController,
             decoration: InputDecoration(
               hintStyle: Styles.textStyle14,
-
               suffixIcon: Icon(widget.suffixIcon),
               prefixIcon:
                   widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
@@ -127,8 +124,13 @@ class _CustomDropDownButtonNewState extends State<CustomDropDownButtonNew> {
                         )
                       else
                         const SizedBox(width: 0),
-                      SizedBox(width: 24,),
-                      Text(filteredItems[index],style:Styles.textStyle14.copyWith(color: Colors.white),),
+                      SizedBox(
+                        width: 24,
+                      ),
+                      Text(
+                        filteredItems[index],
+                        style: Styles.textStyle14.copyWith(color: Colors.white),
+                      ),
                     ],
                   ),
                   onTap: () =>

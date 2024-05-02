@@ -8,8 +8,8 @@ class CustomTextFieldPost extends StatelessWidget {
       this.textEditingController,
       this.enable,
       this.widget,
-        this.max,
-        this.type,
+      this.max,
+      this.type,
       this.icon});
 
   final String hintText;

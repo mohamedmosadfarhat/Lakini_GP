@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 import '../../../../core/utils/styles.dart';
 
@@ -33,18 +31,17 @@ class NotificationItem extends StatelessWidget {
                     style: Styles.textStyle16.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
-                      
                     ),
                     children: const [
                       TextSpan(
-                        text: 'Ali Mohamed:', 
+                        text: 'Ali Mohamed:',
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       TextSpan(
-                        text: ' Added a post for a lost cat Dorem ipsum dolor sit.',
-                      
+                        text:
+                            ' Added a post for a lost cat Dorem ipsum dolor sit.',
                       ),
                     ],
                   ),
@@ -70,7 +67,8 @@ class NotificationItem extends StatelessWidget {
                           children: [
                             Center(
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Container(
                                   height: 4,
                                   width: width * 0.1,

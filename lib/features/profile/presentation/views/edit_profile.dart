@@ -41,13 +41,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               context: context,
               text: "your account has been updated",
               clr: const Color(0xff011730));
-          Navigator.pushReplacementNamed(context,HomeScreen.id);
+          Navigator.pushReplacementNamed(context, HomeScreen.id);
         }
       },
       builder: (context, state) {
         var cubit = AppCubit.get(context);
         var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+        var height = MediaQuery.of(context).size.height;
         usernameController.text = cubit.profile!.userName;
         emailController.text = cubit.profile!.email;
         cityController.text = cubit.profile!.city;
@@ -173,12 +173,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     state is GetProfileLoadingState ||
                             state is UpdateProfileLoadingState
                         ? Center(
-              child: Image.asset(
-                "assets/loadinBall.gif",
-                height: height * 0.13,
-                width: width * 0.13,
-              ),
-            )
+                            child: Image.asset(
+                              "assets/loadinBall.gif",
+                              height: height * 0.13,
+                              width: width * 0.13,
+                            ),
+                          )
                         : CustomRegisterButton(
                             text: 'Save',
                             onPressed: () {

@@ -1,8 +1,4 @@
-
-
-
 import 'package:lakini_gp/features/register/login_model.dart';
-
 
 import '../../app_model.dart';
 
@@ -19,7 +15,7 @@ class AppLoginSuccessState extends AppLoginState {
 
 class AppLoginErrorState extends AppLoginState {
   final String error;
- AppLoginErrorState(this.error);
+  AppLoginErrorState(this.error);
 }
 
 class AppConfirmLoadingState extends AppLoginState {}
@@ -31,7 +27,7 @@ class AppConfirmSuccessState extends AppLoginState {
 
 class AppConfirmErrorState extends AppLoginState {
   final String error;
- AppConfirmErrorState(this.error);
+  AppConfirmErrorState(this.error);
 }
 
 class AppReconfirmLoadingState extends AppLoginState {}
@@ -43,7 +39,7 @@ class AppReconfirmSuccessState extends AppLoginState {
 
 class AppReconfirmErrorState extends AppLoginState {
   final String error;
- AppReconfirmErrorState(this.error);
+  AppReconfirmErrorState(this.error);
 }
 
 class AppForgotPasswordLoadingState extends AppLoginState {}
@@ -55,8 +51,9 @@ class AppForgotPasswordSuccessState extends AppLoginState {
 
 class AppForgotPasswordErrorState extends AppLoginState {
   final String error;
- AppForgotPasswordErrorState(this.error);
+  AppForgotPasswordErrorState(this.error);
 }
+
 class AppSetPasswordLoadingState extends AppLoginState {}
 
 class AppSetPasswordSuccessState extends AppLoginState {
@@ -66,7 +63,5 @@ class AppSetPasswordSuccessState extends AppLoginState {
 
 class AppSetPasswordErrorState extends AppLoginState {
   final String error;
- AppSetPasswordErrorState(this.error);
+  AppSetPasswordErrorState(this.error);
 }
-
-

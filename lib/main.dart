@@ -4,10 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakini_gp/features/home/presentation/views/home_screen.dart';
 import 'package:lakini_gp/features/home/presentation/views/item_details_screen.dart';
 import 'package:lakini_gp/features/onboarding/presentation/views/onboarding_screen.dart';
+import 'package:lakini_gp/features/posts/data/repos/add_post_repo_imple.dart';
+import 'package:lakini_gp/features/posts/presentation/manager/cubit/cubit/generate_image_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/views/choose_location.dart';
+import 'package:lakini_gp/features/posts/presentation/views/generate_image.dart';
 import 'package:lakini_gp/features/posts/presentation/views/post_added.dart';
 import 'package:lakini_gp/features/posts/presentation/views/post_screen.dart';
+import 'package:lakini_gp/features/posts/presentation/widgets/generate_image_body.dart';
+import 'package:lakini_gp/features/posts/presentation/widgets/generate_image_container.dart';
+import 'package:lakini_gp/features/posts/presentation/widgets/post_body_widget.dart';
+import 'package:lakini_gp/features/posts/services/services_locator.dart';
 import 'package:lakini_gp/features/profile/presentation/views/edit_profile.dart';
 import 'package:lakini_gp/features/profile/presentation/views/profile_menu.dart';
 import 'package:lakini_gp/features/profile/presentation/views/terms_and_conditions_screen.dart';
@@ -31,6 +38,7 @@ import 'features/register/presentation/views/otp_verification_screen.dart';
 import 'features/splash/presentation/views/splash_screen.dart';
 
 void main() async {
+  setupServiceLocator();
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = SimpleBlocObserver();
   DioHelper.init();
@@ -62,8 +70,12 @@ class Lakini extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+
         BlocProvider( create: (context) =>
               DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))..fetchItems("get-Item-User-Details"),),
+
+       
+
         BlocProvider(
           create: (context) => AppCubit()
             ..getCategory()
@@ -77,14 +89,12 @@ class Lakini extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return MaterialApp(
-            theme: ThemeData.dark(
-             
-            ),
+            theme: ThemeData.dark(),
             debugShowCheckedModeBanner: false,
-            home:  SplashScreen(
-                    navigator: startWidget!,
-                  ),
-          //home: HomeScreen(),
+            home: SplashScreen(
+              navigator: startWidget!,
+            ),
+            //home: HomeScreen(),
             routes: {
               ForgetPasswordScreen.fpId: (_) => ForgetPasswordScreen(),
               OtpVerification.otp: (_) => OtpVerification(),
@@ -105,7 +115,11 @@ class Lakini extends StatelessWidget {
               ItemDetails.itemId: (_) => const ItemDetails(),
               AddPostScreen.id: (_) => const AddPostScreen(),
               PostAddedSuccessScreen.id: (_) => const PostAddedSuccessScreen(),
+
               ActivitesScreen.id: (_) => const ActivitesScreen(),
+
+              GenerateImageScreen.id: (_) => const GenerateImageScreen(),
+
               //ChooseLocation.locationId: (_) => const ChooseLocation(),
             },
           );

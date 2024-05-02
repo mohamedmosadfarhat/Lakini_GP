@@ -27,7 +27,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     //double width = MediaQuery.of(context).size.width;
     //double height = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.only(bottom:8.0),
+      padding: const EdgeInsets.only(bottom: 8.0),
       child: Column(
         children: [
           const SizedBox(
@@ -57,8 +57,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                           showPwd = !showPwd;
                         });
                       },
-                      icon:
-                          Icon(showPwd ? Icons.visibility : Icons.visibility_off))
+                      icon: Icon(
+                          showPwd ? Icons.visibility : Icons.visibility_off))
                   : null,
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: mainColor),

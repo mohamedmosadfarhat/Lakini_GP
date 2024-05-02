@@ -7,7 +7,7 @@ class AppModel {
   factory AppModel.fromJson(json) {
     return AppModel(
       status: json["status"],
-       message: json["message"],
-       );
+      message: json["message"],
+    );
   }
 }

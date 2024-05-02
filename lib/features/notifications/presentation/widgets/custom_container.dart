@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/utils/styles.dart';
 
- customContainer(
+customContainer(
     {required BuildContext context,
     required String text,
     required bool isTapped}) {

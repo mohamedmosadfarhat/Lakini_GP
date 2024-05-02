@@ -21,9 +21,14 @@ class CustomMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(title ,style: Styles.textStyle16.copyWith(
-        color: title == "Logout" || title == "Delete Account"? Colors.red : Colors.white, 
-      ),),
+      title: Text(
+        title,
+        style: Styles.textStyle16.copyWith(
+          color: title == "Logout" || title == "Delete Account"
+              ? Colors.red
+              : Colors.white,
+        ),
+      ),
       leading: CircleAvatar(
         backgroundColor: prefixIconColor,
         child: Icon(
