@@ -10,9 +10,11 @@ import 'package:lakini_gp/features/home/data/models/location_model.dart';
 import 'package:lakini_gp/features/home/presentation/views/map_screen.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_state.dart';
+import 'package:lakini_gp/features/posts/presentation/views/generate_image.dart';
 import 'package:lakini_gp/features/posts/presentation/views/post_added.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/custom_text_field.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/found_reward.dart';
+import 'package:lakini_gp/features/posts/presentation/widgets/generate_image_container.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/snackBar_error_widget.dart';
 import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
@@ -20,7 +22,10 @@ import 'package:location/location.dart';
 
 import 'add_image_container.dart';
 
+String? generatedData;
+
 class PostBodyWidget extends StatefulWidget {
+  static const String id = 'PostBodyWidget';
   const PostBodyWidget({
     super.key,
     required this.type,
@@ -31,12 +36,14 @@ class PostBodyWidget extends StatefulWidget {
   final String type;
   final String locationType;
   final String dropDownHintText;
+
   @override
   State<PostBodyWidget> createState() => _PostBodyWidgetState();
 }
 
 class _PostBodyWidgetState extends State<PostBodyWidget> {
   PlaceLocation? _pickedLocation;
+
   bool _isLoading = false;
 
   String get locationImage {
@@ -132,8 +139,6 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
 
   String value = 'reward';
 
-  //List<String> imagePaths = [];
-
   bool isLoading = false;
   List<String> items = ['Item ', 'cat', 'people', 'Item 4', 'Item 5', 'string'];
 
@@ -217,18 +222,35 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
             'Add photo',
             style: Styles.textStyle18,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              onTap: cubit.fetchImage,
-              child: cubit.pickedImage == null
-                  ? const UploadImg()
-                  : ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: Image.file(cubit.pickedImage!,
-                          fit: BoxFit.cover, height: 220, width: 220),
-                    ),
-            ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: GestureDetector(
+                  onTap: cubit.fetchImage,
+                  child: generatedData != null
+                      ? Image.network(
+                          generatedData!,
+                          width: 96,
+                          height: 96,
+                          fit: BoxFit.cover,
+                        )
+                      : cubit.pickedImage == null
+                          ? const UploadImg()
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Image.file(cubit.pickedImage!,
+                                  fit: BoxFit.cover, height: 220, width: 220),
+                            ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, GenerateImageScreen.id);
+                },
+                child: const GenerateImageContainer(),
+              ),
+            ],
           ),
           Text(
             'Add title',
@@ -432,7 +454,6 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                           text: "Please Upload The Image",
                           clr: const Color.fromARGB(255, 92, 1, 1));
                     } else {
-                   
                       cubit.submit(
                         lostType: typeController.text,
                         title: nameController.text,

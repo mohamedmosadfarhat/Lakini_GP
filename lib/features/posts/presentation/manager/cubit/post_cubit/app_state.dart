@@ -46,7 +46,6 @@ class DeleteProfileSuccessState extends AppState {
   final AppModel delete;
 
   DeleteProfileSuccessState({required this.delete});
-  
 }
 
 class DeleteProfileErrorState extends AppState {}

@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Scaffold(
               extendBody: true,
               backgroundColor: Colors.transparent,
-             /*  floatingActionButtonLocation:
+              /*  floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked, */
               bottomNavigationBar: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -84,8 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     gap: 8,
                     tabs: <GButton>[
                       GButton(
-                        icon:
-                            cIndex == 0 ? Icons.home : Icons.home_outlined,
+                        icon: cIndex == 0 ? Icons.home : Icons.home_outlined,
                         text: "Home",
                         padding: const EdgeInsets.all(8),
                         textStyle: Styles.textStyle14,
@@ -93,8 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       GButton(
                         //  margin: EdgeInsets.all(),
-                        icon:
-                            cIndex == 1 ? Icons.chat : Icons.chat_outlined,
+                        icon: cIndex == 1 ? Icons.chat : Icons.chat_outlined,
                         text: "Chat",
                         padding: const EdgeInsets.all(8),
                         textStyle: Styles.textStyle14,
@@ -110,9 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         gap: 5,
                       ),
                       GButton(
-                        icon: cIndex == 3
-                            ? Icons.person
-                            : Icons.person_outlined,
+                        icon:
+                            cIndex == 3 ? Icons.person : Icons.person_outlined,
                         text: "Profile",
                         padding: const EdgeInsets.all(8),
                         textStyle: Styles.textStyle14,

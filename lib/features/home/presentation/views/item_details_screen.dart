@@ -244,7 +244,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             height: 50,
-                            width: width*0.9,
+                            width: width * 0.9,
                             decoration: BoxDecoration(
                                 color: const Color.fromRGBO(10, 17, 32, 1),
                                 borderRadius: BorderRadius.circular(6)),
@@ -377,8 +377,8 @@ class _ItemDetailsState extends State<ItemDetails> {
                               );
                             },
                             child: SizedBox(
-                              width: width*0.9,
-                              height: height*0.3,
+                              width: width * 0.9,
+                              height: height * 0.3,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
                                 child: previewContent,

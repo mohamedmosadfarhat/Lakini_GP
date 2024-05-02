@@ -21,7 +21,6 @@ class AppCubit extends Cubit<AppState> {
   final ImagePicker picker = ImagePicker();
   File? pickedImage;
   ImageProvider<Object>? imageProvider;
-  
 
   fetchImage() async {
     emit(AddImageLoading());
@@ -40,7 +39,8 @@ class AppCubit extends Cubit<AppState> {
 
   fetchProfileImage() async {
     emit(AddProfileImageLoading());
-    final XFile? image = await profilePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image =
+        await profilePicker.pickImage(source: ImageSource.gallery);
     if (image == null) {
       return;
     }
@@ -93,11 +93,11 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-   Category? category;
+  Category? category;
 
   void getCategory() {
     emit(GetCategoryLoadingState());
-    DioHelper.getData(url: GetCategory,token: token).then((value) {
+    DioHelper.getData(url: GetCategory, token: token).then((value) {
       category = Category.fromJson(value.data);
       print(value);
       emit(GetCategorySuccessState());
@@ -107,12 +107,12 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-   ProfileModet? profile;
+  ProfileModet? profile;
 
   void getProfile() {
     print(userId);
     emit(GetProfileLoadingState());
-    DioHelper.getData(url: "$GetProfile/$userId",token: token).then((value) {
+    DioHelper.getData(url: "$GetProfile/$userId", token: token).then((value) {
       profile = ProfileModet.fromJson(value.data);
       print(value);
       emit(GetProfileSuccessState());
@@ -129,8 +129,8 @@ class AppCubit extends Cubit<AppState> {
     required String City,
     required String Region,
   }) async {
-   
-    var request = http.MultipartRequest('PUT', Uri.parse("$url/$UpdateAccount"));
+    var request =
+        http.MultipartRequest('PUT', Uri.parse("$url/$UpdateAccount"));
     print(profile!.userName);
     print(profile!.email);
     print(profile!.phone);
@@ -144,8 +144,8 @@ class AppCubit extends Cubit<AppState> {
     request.fields['Region'] = Region;
 
     if (profileImage != null) {
-      request.files.add(
-          await http.MultipartFile.fromPath('AccountPhoto', profileImage!.path));
+      request.files.add(await http.MultipartFile.fromPath(
+          'AccountPhoto', profileImage!.path));
     }
     emit(UpdateProfileLoadingState());
     var response = await request.send();
@@ -168,7 +168,8 @@ class AppCubit extends Cubit<AppState> {
   void deleteProfile() {
     print(userId);
     emit(DeleteProfileLoadingState());
-    DioHelper.deleteData(url:"$DeleteAccount/$userId",token: token).then((value) {
+    DioHelper.deleteData(url: "$DeleteAccount/$userId", token: token)
+        .then((value) {
       delete = AppModel.fromJson(value.data);
       print(value);
       emit(DeleteProfileSuccessState(delete: delete));

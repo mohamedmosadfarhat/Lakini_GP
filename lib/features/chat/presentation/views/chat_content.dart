@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/features/chat/presentation/wedgits/popup_menu_item.dart';
 
-
 import '../../../../core/utils/styles.dart';
 
 class ChatContent extends StatelessWidget {

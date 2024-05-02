@@ -5,7 +5,6 @@ import 'package:lakini_gp/features/register/presentation/login_cubit/login_state
 import 'package:lakini_gp/features/register/presentation/views/create_password_screen.dart';
 import 'package:lakini_gp/features/register/validation.dart';
 
-
 import '../../../../core/utils/styles.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/input_field.dart';
@@ -14,7 +13,7 @@ import 'login_screen.dart';
 class ForgetPasswordScreen extends StatelessWidget {
   static const String fpId = "ForgetPasswordId";
   ForgetPasswordScreen({super.key});
-  
+
   final TextEditingController emailController = TextEditingController();
 
   @override
@@ -24,15 +23,14 @@ class ForgetPasswordScreen extends StatelessWidget {
 
     return BlocConsumer<AppLoginCubit, AppLoginState>(
       listener: (context, state) {
-        if (state is AppForgotPasswordSuccessState ) {
-          if (state.forgotPasswordModel.status ) {
+        if (state is AppForgotPasswordSuccessState) {
+          if (state.forgotPasswordModel.status) {
             print(state.forgotPasswordModel.message);
             buildSnackBar(
                 context: context,
                 text: state.forgotPasswordModel.message,
                 clr: const Color(0xff011730));
-                 Navigator.pushNamed(context, CreatePasswordScreen.cpId);
-           
+            Navigator.pushNamed(context, CreatePasswordScreen.cpId);
           } else {
             buildSnackBar(
                 context: context,
@@ -72,19 +70,22 @@ class ForgetPasswordScreen extends StatelessWidget {
                           height: height * 0.15,
                           fit: BoxFit.cover,
                         ),
-                        SizedBox(height: height*0.03,),
+                        SizedBox(
+                          height: height * 0.03,
+                        ),
                         Text(
                           "Forget Password?",
                           style: Styles.textStyle60.copyWith(fontSize: 28),
                         ),
-                        SizedBox(height: height*0.03,),
+                        SizedBox(
+                          height: height * 0.03,
+                        ),
                         Text(
                           "Don’t worry! It occurs Please enter the email address Linked with your account.",
                           style: Styles.textStyle14,
                         ),
-                        
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical:16.0),
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
                           child: InputField(
                             title: 'Email',
                             hint: 'Enter Your Email',
@@ -96,26 +97,31 @@ class ForgetPasswordScreen extends StatelessWidget {
                             controller: emailController,
                           ),
                         ),
-                       
-                        state is AppForgotPasswordLoadingState?
-                        Center(child: Image.asset("assets/loadinBall.gif",height: height*0.13,width: width*0.13,),):
-                        MyButton(
-                          label: 'Send Code',
-                          onTap: () {
-                           if (!emailController.text.contains("@") ||
-                              !emailController.text.isValidEmail||
-                                  !emailController.text.contains(".com")) {
-                                buildSnackBar(
-                                    context: context,
-                                    text: "Invalid email address",
-                                    clr: const Color.fromARGB(255, 92, 1, 1));
-                              }
-                            else{
-                              cubit.userforgotPassword(
-                                email: emailController.text.toString());
-                            }
-                          },
-                        )
+                        state is AppForgotPasswordLoadingState
+                            ? Center(
+                                child: Image.asset(
+                                  "assets/loadinBall.gif",
+                                  height: height * 0.13,
+                                  width: width * 0.13,
+                                ),
+                              )
+                            : MyButton(
+                                label: 'Send Code',
+                                onTap: () {
+                                  if (!emailController.text.contains("@") ||
+                                      !emailController.text.isValidEmail ||
+                                      !emailController.text.contains(".com")) {
+                                    buildSnackBar(
+                                        context: context,
+                                        text: "Invalid email address",
+                                        clr: const Color.fromARGB(
+                                            255, 92, 1, 1));
+                                  } else {
+                                    cubit.userforgotPassword(
+                                        email: emailController.text.toString());
+                                  }
+                                },
+                              )
                       ]),
                 ),
               ),

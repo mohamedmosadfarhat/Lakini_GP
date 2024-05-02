@@ -17,18 +17,14 @@ class HomeRepoImpl implements HomeRepo {
       for (var item in data) {
         try {
           items.add(ItemModel.fromJson(item));
-
-         
         } catch (e) {
           items.add(ItemModel.fromJson(item));
           print(e.toString());
-         
         }
       }
       return right(items);
     } catch (e) {
       if (e is DioException) {
-       
         return left(
           ServerFailure.fromDioError(e),
         );

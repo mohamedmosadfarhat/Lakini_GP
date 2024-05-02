@@ -15,8 +15,6 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-
     final TextEditingController usernameController = TextEditingController();
 
     final TextEditingController locationController = TextEditingController();
@@ -36,7 +34,6 @@ class RegisterScreen extends StatelessWidget {
           if (state is AppRegisterSuccessState) {
             if (state.status! &&
                 passwordController.text == confirmPasswordController.text) {
-             
               buildSnackBar(
                   context: context,
                   text: state.message!,
@@ -57,7 +54,7 @@ class RegisterScreen extends StatelessWidget {
         builder: (context, state) {
           var cubit = AppRegisterCubit.get(context);
           double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+          double height = MediaQuery.of(context).size.height;
           return Container(
             height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
@@ -78,55 +75,64 @@ class RegisterScreen extends StatelessWidget {
               appBar: AppBar(
                 actions: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:12.0),
-                    child: Image.asset("assets/icon.png",height: height*0.09,width: width*0.09,),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Image.asset(
+                      "assets/icon.png",
+                      height: height * 0.09,
+                      width: width * 0.09,
+                    ),
                   ),
                 ],
-                title:   Text("Register",style: Styles.textStyle18.copyWith(fontSize: 22)),
+                title: Text("Register",
+                    style: Styles.textStyle18.copyWith(fontSize: 22)),
                 centerTitle: true,
                 automaticallyImplyLeading: true,
                 backgroundColor: Colors.transparent,
                 elevation: 0,
               ),
               body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal:20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Center(
-                      child: Stack(
-                        children: [
-                         cubit.pickedImage != null?
-                         CircleAvatar(radius: 66,backgroundImage: FileImage(cubit.pickedImage!),)
-                          :const CircleAvatar(
-                            radius: 66,
-                            backgroundImage: NetworkImage(
-                                    "https://wdw888lb-7075.uks1.devtunnels.ms/resources/Anonymous-man.png"),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: CircleAvatar(
-                              radius: 17,
-                              backgroundColor: Colors.black.withOpacity(0.4),
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: cubit.fetchImage,
-                                icon: const Icon(
-                                  Icons.add_a_photo_outlined,
-                                  size: 24,
-                                  color: Colors.white,
+                        child: Stack(
+                          children: [
+                            cubit.pickedImage != null
+                                ? CircleAvatar(
+                                    radius: 66,
+                                    backgroundImage:
+                                        FileImage(cubit.pickedImage!),
+                                  )
+                                : const CircleAvatar(
+                                    radius: 66,
+                                    backgroundImage: NetworkImage(
+                                        "https://wdw888lb-7075.uks1.devtunnels.ms/resources/Anonymous-man.png"),
+                                  ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                radius: 17,
+                                backgroundColor: Colors.black.withOpacity(0.4),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: cubit.fetchImage,
+                                  icon: const Icon(
+                                    Icons.add_a_photo_outlined,
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                       SizedBox(
-                        height: height*0.02,
+                      SizedBox(
+                        height: height * 0.02,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +163,6 @@ class RegisterScreen extends StatelessWidget {
                           CustomTextFormField(
                               icon: Icons.location_on_outlined,
                               hintText: 'Enter your Location',
-                             
                               textController: locationController),
                           Text(
                             'Region',
@@ -166,7 +171,6 @@ class RegisterScreen extends StatelessWidget {
                           CustomTextFormField(
                               icon: Icons.location_on_outlined,
                               hintText: 'Enter your Location',
-                           
                               textController: regionController),
                           Text(
                             'Phone',
@@ -176,9 +180,7 @@ class RegisterScreen extends StatelessWidget {
                               icon: Icons.location_on_outlined,
                               hintText: 'Enter your Phone Number',
                               inputType: TextInputType.phone,
-                            
                               textController: phoneController),
-
                           Text(
                             'Password',
                             style: Styles.textStyle18,
@@ -188,7 +190,6 @@ class RegisterScreen extends StatelessWidget {
                             hintText: 'Enter password',
                             isPassword: true,
                             textController: passwordController,
-                           
                           ),
                           Text(
                             'Confirm Password',
@@ -199,89 +200,88 @@ class RegisterScreen extends StatelessWidget {
                             hintText: 'Confirm password',
                             isPassword: true,
                             textController: confirmPasswordController,
-                            
                           ),
-                          state is AppRegisterLoadingState?
-                          Center(child: Image.asset("assets/loadinBall.gif",height: height*0.13,width: width*0.13,),):
-                          CustomRegisterButton(
-                              text: 'Register',
-                              onPressed: () {
-                                if (usernameController.text.length < 6) {
-                                  buildSnackBar(
-                                      context: context,
-                                      text:
-                                          "Username must be at least 6 and maximum 50 characters.",
-                                      clr: const Color.fromARGB(
-                                          255, 92, 1, 1));
-                                } else if (!emailController.text
-                                        .contains("@") ||
-                                    !emailController.text.contains(".com")||
-                                    !emailController.text.isValidEmail
-                                    ) {
-                                  buildSnackBar(
-                                      context: context,
-                                      text: "Invalid email address",
-                                      clr: const Color.fromARGB(
-                                          255, 92, 1, 1));
-                                } 
-                                else if(regionController.text.isEmpty || locationController.text.isEmpty){
-                                  buildSnackBar(
-                                      context: context,
-                                      text:
-                                          "Enter Your Region And City",
-                                      clr: const Color.fromARGB(
-                                          255, 92, 1, 1));
-                                }
-                                else if(phoneController.text.isEmpty){
-                                  buildSnackBar(
-                                      context: context,
-                                      text:
-                                          "Enter Your Phone Number",
-                                      clr: const Color.fromARGB(
-                                          255, 92, 1, 1));
-                                }
-                                else if (passwordController.text.length <
-                                    8) {
-                                  buildSnackBar(
-                                      context: context,
-                                      text:
-                                          "Password must be at least 8 and maximum 50 characters.",
-                                      clr: const Color.fromARGB(
-                                          255, 92, 1, 1));
-                                } else if (!passwordController
-                                    .text.isValidPassword) {
-                                  buildSnackBar(
-                                      context: context,
-                                      text:
-                                          "Passwords must have at least one non alphanumeric character,at least one digit ('0'-'9'),at least one uppercase ('A'-'Z').",
-                                      clr: const Color.fromARGB(
-                                          255, 92, 1, 1));
-                                } else if (passwordController.text !=
-                                    confirmPasswordController.text) {
-                                  buildSnackBar(
-                                      context: context,
-                                      text: "Password Dosen't Match",
-                                      clr: const Color.fromARGB(
-                                          255, 92, 1, 1));
-                                } 
-                                else if(cubit.pickedImage == null){
-                                  buildSnackBar(
-                                      context: context,
-                                      text:
-                                          "Please Set Your Profile Picture",
-                                      clr: const Color.fromARGB(
-                                          255, 92, 1, 1));
-                                }
-                                else {
-                                  cubit.userRegister(
-                                      city: locationController.text,
-                                      userName: usernameController.text,
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                      region: regionController.text,
-                                      phone: phoneController.text);
-                                }
-                              }),
+                          state is AppRegisterLoadingState
+                              ? Center(
+                                  child: Image.asset(
+                                    "assets/loadinBall.gif",
+                                    height: height * 0.13,
+                                    width: width * 0.13,
+                                  ),
+                                )
+                              : CustomRegisterButton(
+                                  text: 'Register',
+                                  onPressed: () {
+                                    if (usernameController.text.length < 6) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text:
+                                              "Username must be at least 6 and maximum 50 characters.",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else if (!emailController.text
+                                            .contains("@") ||
+                                        !emailController.text
+                                            .contains(".com") ||
+                                        !emailController.text.isValidEmail) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text: "Invalid email address",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else if (regionController.text.isEmpty ||
+                                        locationController.text.isEmpty) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text: "Enter Your Region And City",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else if (phoneController.text.isEmpty) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text: "Enter Your Phone Number",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else if (passwordController.text.length <
+                                        8) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text:
+                                              "Password must be at least 8 and maximum 50 characters.",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else if (!passwordController
+                                        .text.isValidPassword) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text:
+                                              "Passwords must have at least one non alphanumeric character,at least one digit ('0'-'9'),at least one uppercase ('A'-'Z').",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else if (passwordController.text !=
+                                        confirmPasswordController.text) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text: "Password Dosen't Match",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else if (cubit.pickedImage == null) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text:
+                                              "Please Set Your Profile Picture",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else {
+                                      cubit.userRegister(
+                                          city: locationController.text,
+                                          userName: usernameController.text,
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                          region: regionController.text,
+                                          phone: phoneController.text);
+                                    }
+                                  }),
                         ],
                       ),
                       Row(
@@ -300,8 +300,8 @@ class RegisterScreen extends StatelessWidget {
                             },
                             child: Text(
                               'Log in',
-                              style: Styles.textStyle14
-                                  .copyWith(color: mainColor),
+                              style:
+                                  Styles.textStyle14.copyWith(color: mainColor),
                             ),
                           )
                         ],

@@ -27,7 +27,7 @@ class _MenueState extends State<Menue> {
       builder: (context, state) {
         var cubit = AppCubit.get(context);
         var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+        var height = MediaQuery.of(context).size.height;
         return Drawer(
           child: Container(
             decoration: const BoxDecoration(
@@ -68,12 +68,11 @@ class _MenueState extends State<Menue> {
                     height: 30,
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical:12),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                     color: const Color(0xff182533),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16.0),
                       child: Row(
-                     
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CircleAvatar(
@@ -145,28 +144,28 @@ class _MenueState extends State<Menue> {
                     onTab: () {},
                   ),
                   CustomMenuItem(
-                      title: 'Dark mode',
-                      prefixIcon: Icons.dark_mode_outlined,
-                      prefixIconColor: const Color.fromRGBO(32, 22, 88, 1),
-                      trailingWidget: Switch(
-                        value: themeValue,
-                        activeColor: Colors.white,
-                        inactiveTrackColor: darkGreenColor,
-                        trackOutlineColor: MaterialStateProperty.all<Color>(
-                            Colors.transparent),
-                        inactiveThumbColor: Colors.white,
-                        onChanged: (bool val) {
-                          setState(() {
-                            themeValue = val;
-                          });
-                        },
-                      ),
-                      onTab: () {},
+                    title: 'Dark mode',
+                    prefixIcon: Icons.dark_mode_outlined,
+                    prefixIconColor: const Color.fromRGBO(32, 22, 88, 1),
+                    trailingWidget: Switch(
+                      value: themeValue,
+                      activeColor: Colors.white,
+                      inactiveTrackColor: darkGreenColor,
+                      trackOutlineColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
+                      inactiveThumbColor: Colors.white,
+                      onChanged: (bool val) {
+                        setState(() {
+                          themeValue = val;
+                        });
+                      },
                     ),
+                    onTab: () {},
+                  ),
                   const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomMenuItem(
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomMenuItem(
                       title: 'Logout',
                       prefixIcon: Icons.logout_outlined,
                       prefixIconColor: const Color(0xffEA4335),
@@ -183,9 +182,11 @@ class _MenueState extends State<Menue> {
                             });
                           },
                           order: 'Logout'),
-                                        ),
                     ),
-                    SizedBox(height: height*0.09,)
+                  ),
+                  SizedBox(
+                    height: height * 0.09,
+                  )
                 ],
               ),
             ),

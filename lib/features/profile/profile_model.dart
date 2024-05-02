@@ -1,5 +1,3 @@
-
-
 class ProfileModet {
   final String userName;
   final String email;
@@ -24,7 +22,7 @@ class ProfileModet {
       phone: json["phone"],
       city: json["city"],
       region: json["region"],
-      accountPhoto: json["accountPhoto"]??"Anonymous-man.png",
+      accountPhoto: json["accountPhoto"] ?? "Anonymous-man.png",
     );
   }
 }

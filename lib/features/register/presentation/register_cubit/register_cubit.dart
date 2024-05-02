@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 import 'package:http/http.dart' as http;
 
 import '../../helper/end_point.dart';
@@ -42,16 +41,16 @@ class AppRegisterCubit extends Cubit<AppRegisterState> {
 
     if (response.statusCode == 200) {
       print('Register Done successfully');
-     
+
       var responseBody = await response.stream.bytesToString();
-    // Parse the JSON string into a Map
-    var responseJson = json.decode(responseBody);
-    // Access the "message" field from the Map
-    var message = responseJson["message"];
-    var status = responseJson["status"];
-    print('Register Done successfully');
-    print('Response Body: $message');
-      emit(AppRegisterSuccessState(message: message,status: status));
+      // Parse the JSON string into a Map
+      var responseJson = json.decode(responseBody);
+      // Access the "message" field from the Map
+      var message = responseJson["message"];
+      var status = responseJson["status"];
+      print('Register Done successfully');
+      print('Response Body: $message');
+      emit(AppRegisterSuccessState(message: message, status: status));
     } else {
       print(response.stream.bytesToString());
       print('Failed to Register');

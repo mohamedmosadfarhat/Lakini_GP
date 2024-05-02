@@ -52,9 +52,14 @@ class ItemListView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: height*0.1,),
+                        SizedBox(
+                          height: height * 0.1,
+                        ),
                         Image.asset("assets/folder.png"),
-                         Text("There is No Item!", style: Styles.textStyle14,)
+                        Text(
+                          "There is No Item!",
+                          style: Styles.textStyle14,
+                        )
                       ],
                     );
                   }
@@ -85,7 +90,7 @@ class ItemListView extends StatelessWidget {
               ),
             );
           } else {
-            return  Center(
+            return Center(
               child: Image.asset(
                 "assets/loadinBall.gif",
                 height: height * 0.13,

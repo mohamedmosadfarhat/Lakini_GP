@@ -65,8 +65,8 @@ class CustomItem extends StatelessWidget {
                     ),
                     Text(
                       "${itemModel.itemName}".capitalize(),
-                      style: Styles.textStyle20.copyWith(
-                          fontWeight: FontWeight.w700),
+                      style: Styles.textStyle20
+                          .copyWith(fontWeight: FontWeight.w700),
                     ),
                     Text(
                       "${itemModel.description}".capitalize(),
@@ -104,7 +104,7 @@ class CustomItem extends StatelessWidget {
                           Icons.calendar_month,
                           size: 20,
                         ),
-                      const Spacer(),
+                        const Spacer(),
                         Text(
                           "${itemModel.foundDate}".capitalize(),
                           overflow: TextOverflow.ellipsis,

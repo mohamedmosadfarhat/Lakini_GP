@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (context, state) {
           var cubit = AppLoginCubit.get(context);
           double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+          double height = MediaQuery.of(context).size.height;
           return Container(
             height: double.infinity,
             decoration: const BoxDecoration(
@@ -89,8 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                       SizedBox(
-                        height: height*0.03,
+                      SizedBox(
+                        height: height * 0.03,
                       ),
                       Image.asset('assets/icon.png'),
                       Text(
@@ -103,8 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: Styles.textStyle14.copyWith(
                             fontWeight: FontWeight.w400, color: Colors.white),
                       ),
-                       SizedBox(
-                        height: height*0.06,
+                      SizedBox(
+                        height: height * 0.06,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,34 +165,43 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ],
                           ),
-                           SizedBox(
-                            height: height*0.03,
+                          SizedBox(
+                            height: height * 0.03,
                           ),
-                          state is AppLoginLoadingState?
-                          Center(child: Image.asset("assets/loadinBall.gif",height: height*0.13,width: width*0.13,),):
-                          CustomRegisterButton(
-                            text: 'Login',
-                            onPressed: () {
-                              if (!emailController.text.contains("@") ||
-                              !emailController.text.isValidEmail||
-                                  !emailController.text.contains(".com")) {
-                                buildSnackBar(
-                                    context: context,
-                                    text: "Invalid email address",
-                                    clr: const Color.fromARGB(255, 92, 1, 1));
-                              }else if(passwordController.text.isEmpty){
-                                  buildSnackBar(
-                                    context: context,
-                                    text: "Enter Your Password",
-                                    clr: const Color.fromARGB(255, 92, 1, 1));
-                              }
-                               else {
-                                cubit.userLogin(
-                                    email: emailController.text,
-                                    password: passwordController.text);
-                              }
-                            },
-                          ),
+                          state is AppLoginLoadingState
+                              ? Center(
+                                  child: Image.asset(
+                                    "assets/loadinBall.gif",
+                                    height: height * 0.13,
+                                    width: width * 0.13,
+                                  ),
+                                )
+                              : CustomRegisterButton(
+                                  text: 'Login',
+                                  onPressed: () {
+                                    if (!emailController.text.contains("@") ||
+                                        !emailController.text.isValidEmail ||
+                                        !emailController.text
+                                            .contains(".com")) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text: "Invalid email address",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else if (passwordController
+                                        .text.isEmpty) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text: "Enter Your Password",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else {
+                                      cubit.userLogin(
+                                          email: emailController.text,
+                                          password: passwordController.text);
+                                    }
+                                  },
+                                ),
                           TextButton(
                             onPressed: () {
                               if (emailController.text.isEmpty) {
@@ -200,13 +209,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context: context,
                                     text: "Please Enter Your Email!",
                                     clr: const Color.fromARGB(255, 92, 1, 1));
-                              }
-                              else{
+                              } else {
                                 Navigator.pushNamed(
-                                context,
-                                OtpVerification.otp,
-                                arguments: {"email": emailController.text.toString()},
-                              );
+                                  context,
+                                  OtpVerification.otp,
+                                  arguments: {
+                                    "email": emailController.text.toString()
+                                  },
+                                );
                               }
                             },
                             child: Text(
@@ -219,7 +229,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                        
                         ],
                       ),
                       Row(
@@ -239,8 +248,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Text(
                               'Register',
-                              style: Styles.textStyle14
-                                  .copyWith(color: mainColor),
+                              style:
+                                  Styles.textStyle14.copyWith(color: mainColor),
                             ),
                           )
                         ],
