@@ -22,6 +22,7 @@ class AppRegisterCubit extends Cubit<AppRegisterState> {
     required String phone,
     required String city,
     required String region,
+    required String IdCard,
   }) async {
     var request = http.MultipartRequest('POST', Uri.parse("$url/$Register"));
 
@@ -31,6 +32,7 @@ class AppRegisterCubit extends Cubit<AppRegisterState> {
     request.fields['City'] = city;
     request.fields['Region'] = region;
     request.fields['PhoneNumber'] = phone;
+    request.fields['IdCard'] = IdCard;
 
     if (pickedImage != null) {
       request.files.add(

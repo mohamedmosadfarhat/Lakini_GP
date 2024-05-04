@@ -22,6 +22,7 @@ class RegisterScreen extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController regionController = TextEditingController();
     final TextEditingController phoneController = TextEditingController();
+    final TextEditingController idController = TextEditingController();
 
     final TextEditingController passwordController = TextEditingController();
 
@@ -182,6 +183,16 @@ class RegisterScreen extends StatelessWidget {
                               inputType: TextInputType.phone,
                               textController: phoneController),
                           Text(
+                            'Your ID Card Number',
+                            style: Styles.textStyle18,
+                          ),
+                          CustomTextFormField(
+                            icon: Icons.insert_drive_file,
+                            hintText: 'Enter your ID Number',
+                            inputType: TextInputType.phone,
+                            textController: idController,
+                          ),
+                          Text(
                             'Password',
                             style: Styles.textStyle18,
                           ),
@@ -227,6 +238,13 @@ class RegisterScreen extends StatelessWidget {
                                       buildSnackBar(
                                           context: context,
                                           text: "Invalid email address",
+                                          clr: const Color.fromARGB(
+                                              255, 92, 1, 1));
+                                    } else if (!idController.text.isValidID ||
+                                        idController.text.isEmpty) {
+                                      buildSnackBar(
+                                          context: context,
+                                          text: "Invalid Id Card Number",
                                           clr: const Color.fromARGB(
                                               255, 92, 1, 1));
                                     } else if (regionController.text.isEmpty ||
@@ -279,7 +297,8 @@ class RegisterScreen extends StatelessWidget {
                                           email: emailController.text,
                                           password: passwordController.text,
                                           region: regionController.text,
-                                          phone: phoneController.text);
+                                          phone: phoneController.text,
+                                          IdCard: idController.text);
                                     }
                                   }),
                         ],
