@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:lakini_gp/core/utils/styles.dart';
 import 'package:lakini_gp/features/chat/presentation/views/chat_screen.dart';
 import 'package:lakini_gp/features/home/presentation/views/wedgits/buttom_navigation_button.dart';
 import 'package:lakini_gp/features/home/presentation/views/wedgits/home_body.dart';
@@ -29,14 +31,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    //var width = MediaQuery.of(context).size.width;
+    var width = MediaQuery.of(context).size.width;
     return BlocProvider(
       create: (context) => AppCubit()
         ..getCategory()
-        ..getProfile(),
+        ..getProfile()
+        ..getAllUsers()
+        ,
       child: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {},
         builder: (context, state) {
+          var cubit = AppCubit.get(context);
           return Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -55,87 +60,61 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Scaffold(
               extendBody: true,
               backgroundColor: Colors.transparent,
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-              bottomNavigationBar: Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(color: Color(0xff0075FF), width: 1.0),
-                  ),
-                ),
-                child: BottomAppBar(
-                  height: height * .09,
-                  elevation: 0,
-                  color: const Color.fromRGBO(1, 23, 48, 1),
-                  shape: const CircularNotchedRectangle(),
-                  notchMargin: 5,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          ButtomNavigationButton(
-                            onPressed: () {
-                              setState(() {
-                                cIndex = 0;
-                                //print(cIndex);
-                              });
-                            },
-                            icon: Icons.home,
-                            hint: "Home",
-                            color: cIndex == 0
-                                ? Colors.white
-                                : const Color(0xff555557),
-                          ),
-                          ButtomNavigationButton(
-                            onPressed: () {
-                              setState(() {
-                                cIndex = 1;
-                              });
-                            },
-                            icon: Icons.chat,
-                            hint: "Chat",
-                            color: cIndex == 1
-                                ? Colors.white
-                                : const Color(0xff555557),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ButtomNavigationButton(
-                            onPressed: () {
-                              setState(
-                                () {
-                                  cIndex = 2;
-                                  // print(cIndex);
-                                },
-                              );
-                            },
-                            icon: Icons.notifications,
-                            hint: "Notifications",
-                            color: cIndex == 2
-                                ? Colors.white
-                                : const Color(0xff555557),
-                          ),
-                          ButtomNavigationButton(
-                            onPressed: () {
-                              setState(() {
-                                cIndex = 3;
-                                print(cIndex);
-                              });
-                            },
-                            icon: Icons.person,
-                            hint: "Profile",
-                            color: cIndex == 3
-                                ? Colors.white
-                                : const Color(0xff555557),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+              /*  floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked, */
+              bottomNavigationBar: SafeArea(
+                child: GNav(
+                  backgroundColor: Colors.black,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 
+                  onTabChange: (newIndex) {
+                    setState(() {
+                      cIndex = newIndex;
+                    });
+                  },
+                  color: Colors.white,
+                  tabShadow: const <BoxShadow>[BoxShadow(blurRadius: 5)],
+                  tabActiveBorder: Border.all(color: mainColor),
+                  duration: const Duration(milliseconds: 800),
+                  tabBorderRadius: 10,
+                  tabBackgroundColor:
+                      Theme.of(context).canvasColor.withOpacity(0.1),
+                  iconSize: 22,
+                  curve: Curves.bounceInOut,
+                  gap: 8,
+                  tabs: <GButton>[
+                    GButton(
+                      icon: cIndex == 0 ? Icons.home : Icons.home_outlined,
+                      text: "Home",
+                      padding: const EdgeInsets.all(8),
+                      textStyle: Styles.textStyle14,
+                      gap: 5,
+                    ),
+                    GButton(
+                      //  margin: EdgeInsets.all(),
+                      icon: cIndex == 1 ? Icons.chat : Icons.chat_outlined,
+                      text: "Chat",
+                      padding: const EdgeInsets.all(8),
+                      textStyle: Styles.textStyle14,
+                      gap: 5,
+                    ),
+                    GButton(
+                      icon: cIndex == 2
+                          ? Icons.notifications
+                          : Icons.notifications_active_outlined,
+                      text: "Notifications",
+                      padding: const EdgeInsets.all(8),
+                      textStyle: Styles.textStyle14,
+                      gap: 5,
+                    ),
+                    GButton(
+                      icon: cIndex == 3 ? Icons.person : Icons.person_outlined,
+                      text: "Profile",
+                      padding: const EdgeInsets.all(8),
+                      textStyle: Styles.textStyle14,
+                      gap: 5,
+                    ),
+                  ],
                 ),
               ),
               floatingActionButton: FloatingActionButton(
@@ -149,7 +128,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 30,
                 ),
               ),
-              body: screens[cIndex],
+              body: cubit.profile == null || cubit.category == null || cubit.users == null
+                  ? Center(
+                      child: Image.asset(
+                        "assets/loadinBall.gif",
+                        height: height * 0.13,
+                        width: width * 0.13,
+                      ),
+                    )
+                  : screens[cIndex],
             ),
           );
         },
@@ -157,6 +144,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
-

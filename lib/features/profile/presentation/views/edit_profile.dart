@@ -1,15 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:lakini_gp/core/utils/assets.dart';
+
 import 'package:lakini_gp/core/utils/styles.dart';
+import 'package:lakini_gp/features/home/presentation/views/home_screen.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_state.dart';
-import 'package:lakini_gp/features/profile/presentation/views/profile_menu.dart';
+
 import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
-import 'package:lakini_gp/features/register/validation.dart';
+
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
 import 'package:lakini_gp/features/register/widgets/custom_text_form_field.dart';
 
@@ -43,16 +41,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               context: context,
               text: "your account has been updated",
               clr: const Color(0xff011730));
-          Navigator.pop(context);
+          Navigator.pushReplacementNamed(context, HomeScreen.id);
         }
       },
       builder: (context, state) {
         var cubit = AppCubit.get(context);
-        usernameController.text = cubit.profile.userName;
-        emailController.text = cubit.profile.email;
-        cityController.text = cubit.profile.city;
-        regionController.text = cubit.profile.region;
-        phoneController.text = cubit.profile.phone;
+        var width = MediaQuery.of(context).size.width;
+        var height = MediaQuery.of(context).size.height;
+        usernameController.text = cubit.profile!.userName;
+        emailController.text = cubit.profile!.email;
+        cityController.text = cubit.profile!.city;
+        regionController.text = cubit.profile!.region;
+        phoneController.text = cubit.profile!.phone;
         return Scaffold(
           appBar: AppBar(
             elevation: 2,
@@ -90,13 +90,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       child: Center(
                         child: Stack(
                           children: [
-                           cubit.profileImage != null?
-                           CircleAvatar(radius: 66,backgroundImage: FileImage(cubit.profileImage!),)
-                            :CircleAvatar(
-                              radius: 66,
-                              backgroundImage: NetworkImage(
-                                      "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile.accountPhoto}"),
-                            ),
+                            cubit.profileImage != null
+                                ? CircleAvatar(
+                                    radius: 66,
+                                    backgroundImage:
+                                        FileImage(cubit.profileImage!),
+                                  )
+                                : CircleAvatar(
+                                    radius: 66,
+                                    backgroundImage: NetworkImage(
+                                        "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile!.accountPhoto}"),
+                                  ),
                             Positioned(
                               bottom: 0,
                               right: 0,
@@ -124,9 +128,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     CustomTextFormField(
                       icon: Icons.person,
-                      hintText: cubit.profile.userName,
+                      hintText: cubit.profile!.userName,
                       textController: usernameController,
-                      validator: (String? value) {},
                     ),
                     Text(
                       'Email',
@@ -135,8 +138,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     CustomTextFormField(
                       icon: Icons.email_outlined,
                       textController: emailController,
-                      hintText: cubit.profile.email,
-                      validator: (String? value) {},
+                      hintText: cubit.profile!.email,
                     ),
                     Text(
                       'City',
@@ -144,8 +146,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     CustomTextFormField(
                       icon: Icons.location_on_outlined,
-                      hintText: cubit.profile.city,
-                      validator: (String? value) {},
+                      hintText: cubit.profile!.city,
                       textController: cityController,
                     ),
                     Text(
@@ -154,8 +155,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     CustomTextFormField(
                       icon: Icons.location_on_outlined,
-                      hintText: cubit.profile.region,
-                      validator: (String? value) {},
+                      hintText: cubit.profile!.region,
                       textController: regionController,
                     ),
                     Text(
@@ -164,22 +164,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     CustomTextFormField(
                       icon: Icons.phone,
-                      hintText: cubit.profile.phone,
-                      
+                      hintText: cubit.profile!.phone,
                       textController: phoneController,
-                      validator: (String? value) {},
                     ),
-                    
                     const SizedBox(
                       height: 40,
                     ),
                     state is GetProfileLoadingState ||
                             state is UpdateProfileLoadingState
-                        ? const Center(
-                          child: CircularProgressIndicator(
-                              color: mainColor,
+                        ? Center(
+                            child: Image.asset(
+                              "assets/loadinBall.gif",
+                              height: height * 0.13,
+                              width: width * 0.13,
                             ),
-                        )
+                          )
                         : CustomRegisterButton(
                             text: 'Save',
                             onPressed: () {

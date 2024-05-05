@@ -13,6 +13,7 @@ import 'package:lakini_gp/features/register/presentation/views/login_screen.dart
 import '../../../notifications/presentation/widgets/separator.dart';
 import '../../../register/helper/cache_helper.dart';
 import '../../../register/presentation/views/forget_password_screen.dart';
+import 'ativites_screen.dart';
 
 class ProfileMenu extends StatefulWidget {
   const ProfileMenu({super.key});
@@ -83,7 +84,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
                       backgroundColor: mainColor,
                       radius: 66,
                       backgroundImage: NetworkImage(
-                          "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile.accountPhoto}"),
+                          "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile!.accountPhoto}"),
                     ),
                     const CircleAvatar(
                       backgroundColor: Color.fromRGBO(0, 34, 71, 1),
@@ -97,12 +98,12 @@ class _ProfileMenuState extends State<ProfileMenu> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    cubit.profile.userName,
+                    cubit.profile!.userName,
                     style: Styles.textStyle20.copyWith(color: Colors.white),
                   ),
                 ),
                 Text(
-                  cubit.profile.email,
+                  cubit.profile!.email,
                   style: Styles.textStyle14.copyWith(color: Colors.grey),
                 ),
                 Row(
@@ -113,7 +114,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
                       color: mainColor,
                     ),
                     Text(
-                      "${cubit.profile.city},${cubit.profile.region}",
+                      "${cubit.profile!.city},${cubit.profile!.region}",
                       style: Styles.textStyle14.copyWith(
                           color: const Color(0xffF3F3F3),
                           decoration: TextDecoration.underline),
@@ -144,7 +145,9 @@ class _ProfileMenuState extends State<ProfileMenu> {
                       prefixIcon: Icons.person_search_outlined,
                       postIcon: Icons.arrow_forward_ios,
                       prefixIconColor: const Color.fromARGB(255, 57, 69, 114),
-                      onTab: () {},
+                      onTab: () {
+                        Navigator.pushNamed(context, ActivitesScreen.id);
+                      },
                     ),
                     CustomMenuItem(
                       title: 'Help',

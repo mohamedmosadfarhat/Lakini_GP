@@ -10,10 +10,11 @@ import 'package:lakini_gp/features/home/data/models/location_model.dart';
 import 'package:lakini_gp/features/home/presentation/views/map_screen.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_state.dart';
-import 'package:lakini_gp/features/posts/presentation/views/choose_location.dart';
+import 'package:lakini_gp/features/posts/presentation/views/generate_image.dart';
 import 'package:lakini_gp/features/posts/presentation/views/post_added.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/custom_text_field.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/found_reward.dart';
+import 'package:lakini_gp/features/posts/presentation/widgets/generate_image_container.dart';
 import 'package:lakini_gp/features/posts/presentation/widgets/snackBar_error_widget.dart';
 import 'package:lakini_gp/features/register/presentation/views/login_screen.dart';
 import 'package:lakini_gp/features/register/widgets/custom_auth_button.dart';
@@ -21,7 +22,10 @@ import 'package:location/location.dart';
 
 import 'add_image_container.dart';
 
+String? generatedData;
+
 class PostBodyWidget extends StatefulWidget {
+  static const String id = 'PostBodyWidget';
   const PostBodyWidget({
     super.key,
     required this.type,
@@ -32,12 +36,14 @@ class PostBodyWidget extends StatefulWidget {
   final String type;
   final String locationType;
   final String dropDownHintText;
+
   @override
   State<PostBodyWidget> createState() => _PostBodyWidgetState();
 }
 
 class _PostBodyWidgetState extends State<PostBodyWidget> {
   PlaceLocation? _pickedLocation;
+
   bool _isLoading = false;
 
   String get locationImage {
@@ -133,8 +139,6 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
 
   String value = 'reward';
 
-  //List<String> imagePaths = [];
-
   bool isLoading = false;
   List<String> items = ['Item ', 'cat', 'people', 'Item 4', 'Item 5', 'string'];
 
@@ -155,305 +159,334 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
     );
 
     return BlocConsumer<AppCubit, AppState>(listener: (context, state) {
-            if (state is AddItemSuccess) {
-    buildSnackBar(
-        context: context,
-        text: "Item Added Successfully",
-        clr: const Color(0xff011730));
-    Navigator.pushReplacementNamed(context, PostAddedSuccessScreen.id);
-            } else if (state is AddItemFailure) {
-    showSnackBarMessage(context, "Failed To Add Item");
-            }
-          }, builder: (context, state) {
-            var cubit = AppCubit.get(context);
-            return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        "Category*",
-        style: Styles.textStyle18,
-      ),
-      GestureDetector(
-        onTap: () {
-          showDialog(
+      if (state is AddItemSuccess) {
+        buildSnackBar(
             context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                backgroundColor: const Color(0xff011730),
-                title: Text(
-                  "What Are You ${widget.type}",
-                  style: Styles.textStyle18,
-                ),
-                content: SingleChildScrollView(
-                  child: Column(
-                    children: cubit.category.category.map((category) {
-                      return ListTile(
-                        title: Text(
-                          category.categoryName,
-                          style: Styles.textStyle16,
-                        ),
-                        onTap: () {
-                          typeController.text = category.categoryName;
-                          Navigator.of(context).pop();
-                        },
-                      );
-                    }).toList(),
-                  ),
-                ),
+            text: "Item Added Successfully",
+            clr: const Color(0xff011730));
+        Navigator.pushReplacementNamed(context, PostAddedSuccessScreen.id);
+      } else if (state is AddItemFailure) {
+        showSnackBarMessage(context, "Failed To Add Item");
+      }
+    }, builder: (context, state) {
+      var cubit = AppCubit.get(context);
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Category*",
+            style: Styles.textStyle18,
+          ),
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    backgroundColor: const Color(0xff011730),
+                    title: Text(
+                      "What Are You ${widget.type}",
+                      style: Styles.textStyle18,
+                    ),
+                    content: SingleChildScrollView(
+                      child: Column(
+                        children: cubit.category!.category.map((category) {
+                          return ListTile(
+                            title: Text(
+                              category.categoryName,
+                              style: Styles.textStyle16,
+                            ),
+                            onTap: () {
+                              typeController.text = category.categoryName;
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
-        child: CustomTextFieldPost(
-          hintText: 'Enter your ${widget.type} Type',
-          textEditingController: typeController,
-          enable: false,
-          widget: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.white,
+            child: CustomTextFieldPost(
+              hintText: 'Enter your ${widget.type} Type',
+              textEditingController: typeController,
+              enable: false,
+              widget: const Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.white,
+              ),
+            ),
           ),
-        ),
-      ),
-      Text(
-        'Add photo',
-        style: Styles.textStyle18,
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GestureDetector(
-          onTap: cubit.fetchImage,
-          child: cubit.pickedImage == null
-              ? const UploadImg()
-              : ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Image.file(cubit.pickedImage!,
-                      fit: BoxFit.cover, height: 220, width: 220),
+          Row(
+            children: [
+              const Icon(
+                Icons.error_outline,
+                color: Color(0xffB5A300),
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              Text(
+                'If you do not have an image of the missing '
+                '\n item, you must manually create its image when\n you click generate image.',
+                softWrap: true,
+                style: Styles.textStyle14,
+              ),
+            ],
+          ),
+          Text(
+            'Add photo',
+            style: Styles.textStyle18,
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: GestureDetector(
+                  onTap: cubit.fetchImage,
+                  child: generatedData != null
+                      ? Image.network(
+                          generatedData!,
+                          width: 96,
+                          height: 96,
+                          fit: BoxFit.cover,
+                        )
+                      : generatedData == null
+                          ? const UploadImg()
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Image.file(cubit.pickedImage!,
+                                  fit: BoxFit.cover, height: 220, width: 220),
+                            ),
                 ),
-        ),
-      ),
-      Text(
-        'Add title',
-        style: Styles.textStyle18,
-      ),
-      CustomTextFieldPost(
-        hintText: 'Add Title',
-        textEditingController: nameController,
-      ),
-      Text(
-        'Add caption',
-        style: Styles.textStyle18.copyWith(color: Colors.white),
-      ),
-      CustomTextFieldPost(
-        hintText: 'Add caption',
-        textEditingController: descController,
-        max: 5,
-      ),
-      Text(
-        'Your phone',
-        style: Styles.textStyle18,
-      ),
-      CustomTextFieldPost(
-        hintText: '+20 01 789 9348',
-        icon: Icons.phone_outlined,
-        textEditingController: phoneController,
-        type: TextInputType.number,
-      ),
-      Text(
-        'Location of ${widget.locationType}*',
-        style: Styles.textStyle18,
-      ),
-      GestureDetector(
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                backgroundColor: const Color(0xff011730),
-                title: Text(
-                  "Please Choose The Location",
-                  style: Styles.textStyle18,
-                ),
-                content: SizedBox(
-                  height: height * 0.25,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(
-                      3,
-                      (index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton.icon(
-                          onPressed: () async {
-                            Navigator.pop(context);
-                            if (index == 0) {
-                              _getCurrentLocation();
-                            } else if (index == 1) {
-                              _selectOnMap();
-                            } else {
-                              Navigator.pushNamed(
-                                context,
-                                ChooseLocation.locationId,
-                                arguments: {
-                                  "type": widget.type,
-                                  "controller":
-                                      locationOfLostFoundController
-                                },
-                              );
-                            }
-                          },
-                          icon: index == 0
-                              ? const Icon(
-                                  Icons.location_searching,
-                                  color: mainColor,
-                                )
-                              : index == 1
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, GenerateImageScreen.id);
+                },
+                child: const GenerateImageContainer(),
+              ),
+            ],
+          ),
+          Text(
+            'Add title',
+            style: Styles.textStyle18,
+          ),
+          CustomTextFieldPost(
+            hintText: 'Add Title',
+            textEditingController: nameController,
+          ),
+          Text(
+            'Add caption',
+            style: Styles.textStyle18.copyWith(color: Colors.white),
+          ),
+          CustomTextFieldPost(
+            hintText: 'Add caption',
+            textEditingController: descController,
+            max: 5,
+          ),
+          Text(
+            'Your phone',
+            style: Styles.textStyle18,
+          ),
+          CustomTextFieldPost(
+            hintText: '+20 01 789 9348',
+            icon: Icons.phone_outlined,
+            textEditingController: phoneController,
+            type: TextInputType.number,
+          ),
+          Text(
+            'Location of ${widget.locationType}*',
+            style: Styles.textStyle18,
+          ),
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    backgroundColor: const Color(0xff011730),
+                    title: Text(
+                      "Please Choose The Location",
+                      style: Styles.textStyle18,
+                    ),
+                    content: SizedBox(
+                      height: height * 0.25,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: List.generate(
+                          2,
+                          (index) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton.icon(
+                              onPressed: () async {
+                                Navigator.pop(context);
+                                if (index == 0) {
+                                  _getCurrentLocation();
+                                } else if (index == 1) {
+                                  _selectOnMap();
+                                }
+                              },
+                              icon: index == 0
                                   ? const Icon(
-                                      Icons.map,
+                                      Icons.location_searching,
                                       color: mainColor,
                                     )
                                   : const Icon(
-                                      Icons.edit_outlined,
+                                      Icons.map,
                                       color: mainColor,
                                     ),
-                          label: Text(
-                            index == 0
-                                ? "Current Location"
-                                : index == 1
-                                    ? "Set On Map"
-                                    : "Enter Location",
-                            style: Styles.textStyle16,
+                              label: Text(
+                                index == 0 ? "Current Location" : "Set On Map",
+                                style: Styles.textStyle16,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               );
             },
-          );
-        },
-        child: previewContent,
-      ),
-      if (_pickedLocation != null)
-        Image.network(
-          locationImage,
-          fit: BoxFit.cover,
-          height: 170,
-          width: double.infinity,
-        ),
-      if (_isLoading)
-        const Center(
-          child: CircularProgressIndicator(
-            color: mainColor,
+            child: previewContent,
           ),
-        ),
-      SizedBox(
-        height: height * 0.02,
-      ),
-      Visibility(
-        visible: widget.locationType.toLowerCase() == 'lost',
-        /*This for Found tab*/
-        replacement: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Add a price if no owner is found',
-              style: Styles.textStyle18,
+          if (_pickedLocation != null)
+            Image.network(
+              locationImage,
+              fit: BoxFit.cover,
+              height: 170,
+              width: double.infinity,
             ),
-            FoundReward(
-              textEditingController: foundRewardController,
-            ),
-          ],
-        ),
-    
-        /*This for lost tab*/
-        child: Row(
-          children: [
-            Material(
-              type: MaterialType.transparency,
-              child: Radio(
-                activeColor: mainColor,
-                value: 'Add a reward',
-                groupValue: value,
-                onChanged: (val) {
-                  setState(() {
-                    value = val!;
-                  });
-                },
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          if (_isLoading)
+            Center(
+              child: Image.asset(
+                "assets/loadinBall.gif",
+                height: height * 0.13,
+                width: width * 0.13,
               ),
             ),
-            Text(
-              'Add a reward',
-              style: Styles.textStyle16,
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Visibility(
+            visible: widget.locationType.toLowerCase() == 'lost',
+            /*This for Found tab*/
+            replacement: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Add a price if no owner is found',
+                  style: Styles.textStyle18,
+                ),
+                FoundReward(
+                  textEditingController: foundRewardController,
+                ),
+              ],
             ),
-            const Spacer(),
-            Container(
-              padding: const EdgeInsets.all(8),
-              height: height * 0.06,
-              width: width * 0.3,
-              decoration: BoxDecoration(
-                color: const Color(0xff0E1823),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: rewardController,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(7),
-                          border: InputBorder.none,
-                          hintText: '0000',
-                          hintStyle: Styles.textStyle18
-                              .copyWith(color: const Color(0xff555557))),
-                    ),
+
+            /*This for lost tab*/
+            child: Row(
+              children: [
+                Material(
+                  type: MaterialType.transparency,
+                  child: Radio(
+                    activeColor: mainColor,
+                    value: 'Add a reward',
+                    groupValue: value,
+                    onChanged: (val) {
+                      setState(() {
+                        value = val!;
+                      });
+                    },
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  Text(
-                    'EGP',
-                    style: Styles.textStyle18,
+                ),
+                Text(
+                  'Add a reward',
+                  style: Styles.textStyle16,
+                ),
+                const Spacer(),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  height: height * 0.06,
+                  width: width * 0.3,
+                  decoration: BoxDecoration(
+                    color: const Color(0xff0E1823),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ],
-              ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: rewardController,
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(7),
+                              border: InputBorder.none,
+                              hintText: '0000',
+                              hintStyle: Styles.textStyle18
+                                  .copyWith(color: const Color(0xff555557))),
+                        ),
+                      ),
+                      Text(
+                        'EGP',
+                        style: Styles.textStyle18,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-      const SizedBox(
-        height: 20,
-      ),
-      state is AddItemLoading?
-      const Center(child: CircularProgressIndicator(),):
-      CustomRegisterButton(
-          text: 'Add',
-          onPressed: () {
-            if (locationOfLostFoundController.text.isEmpty ||
-                _pickedLocation?.address == null ||
-                typeController.text.isEmpty ||
-                nameController.text.isEmpty ||
-                descController.text.isEmpty ||
-                phoneController.text.isEmpty) {
-              buildSnackBar(
-                  context: context,
-                  text: "Please Fill All Fields!",
-                  clr: const Color.fromARGB(255, 92, 1, 1));
-            }
-            else {cubit.submit(
-              lostType: typeController.text,
-              title: nameController.text,
-              caption: descController.text,
-              phoneNumber: phoneController.text.toString(),
-              location: _pickedLocation?.address.toString() ??
-                  locationOfLostFoundController.text,
-              status: widget.type,
-              reward: rewardController.text.toString(),
-              lat: _pickedLocation?.latitude,
-              lng: _pickedLocation?.longitude,
-            );}
-          }),
-    ],
-            );
-          });
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          state is AddItemLoading
+              ? Center(
+                  child: Image.asset(
+                    "assets/loadinBall.gif",
+                    height: height * 0.13,
+                    width: width * 0.13,
+                  ),
+                )
+              : CustomRegisterButton(
+                  text: 'Add',
+                  onPressed: () {
+                    if (locationOfLostFoundController.text.isEmpty ||
+                        _pickedLocation == null ||
+                        typeController.text.isEmpty ||
+                        nameController.text.isEmpty ||
+                        descController.text.isEmpty ||
+                        phoneController.text.isEmpty) {
+                      buildSnackBar(
+                          context: context,
+                          text: "Please Fill All Fields!",
+                          clr: const Color.fromARGB(255, 92, 1, 1));
+                    } else if (cubit.pickedImage == null) {
+                      buildSnackBar(
+                          context: context,
+                          text: "Please Upload The Image",
+                          clr: const Color.fromARGB(255, 92, 1, 1));
+                    } else {
+                      cubit.submit(
+                        lostType: typeController.text,
+                        title: nameController.text,
+                        caption: descController.text,
+                        phoneNumber: phoneController.text.toString(),
+                        location: _pickedLocation?.address.toString() ??
+                            locationOfLostFoundController.text,
+                        status: widget.type,
+                        reward: rewardController.text.toString(),
+                        lat: _pickedLocation?.latitude,
+                        lng: _pickedLocation?.longitude,
+                      );
+                    }
+                  }),
+        ],
+      );
+    });
   }
 }

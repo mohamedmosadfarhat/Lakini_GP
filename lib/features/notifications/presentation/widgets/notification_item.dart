@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 import '../../../../core/utils/styles.dart';
 
@@ -13,11 +11,11 @@ class NotificationItem extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: width * 0.05,
+          width: width * 0.03,
         ),
         const CircleAvatar(
           backgroundImage: AssetImage("assets/profile.jpg"),
-          radius: 24,
+          radius: 30,
         ),
         SizedBox(
           width: width * 0.03,
@@ -27,19 +25,28 @@ class NotificationItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                "Ali Mohamed: ",
-                style: Styles.textStyle16
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
               Expanded(
-                child: Text(
-                  "Added a post for a lost cat Dorem ipsum dolor sit.",
-                  style: Styles.textStyle16
-                      .copyWith(fontSize: 12, fontWeight: FontWeight.w300),
-                  overflow: TextOverflow.fade,
+                child: RichText(
+                  text: TextSpan(
+                    style: Styles.textStyle16.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
+                    ),
+                    children: const [
+                      TextSpan(
+                        text: 'Ali Mohamed:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            ' Added a post for a lost cat Dorem ipsum dolor sit.',
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -60,7 +67,8 @@ class NotificationItem extends StatelessWidget {
                           children: [
                             Center(
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Container(
                                   height: 4,
                                   width: width * 0.1,

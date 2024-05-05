@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:lakini_gp/core/utils/styles.dart';
 import 'package:lakini_gp/features/home/data/models/item_model.dart';
 import 'package:lakini_gp/features/home/presentation/views/wedgits/capitalize_extension.dart';
@@ -65,8 +65,8 @@ class CustomItem extends StatelessWidget {
                     ),
                     Text(
                       "${itemModel.itemName}".capitalize(),
-                      style: Styles.textStyle20.copyWith(
-                          fontWeight: FontWeight.w700, fontFamily: "inter"),
+                      style: Styles.textStyle20
+                          .copyWith(fontWeight: FontWeight.w700),
                     ),
                     Text(
                       "${itemModel.description}".capitalize(),
@@ -97,18 +97,14 @@ class CustomItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: height * .006,
-                    ),
+                    const Spacer(),
                     Row(
                       children: [
                         const Icon(
-                          Icons.calendar_view_month_rounded,
+                          Icons.calendar_month,
                           size: 20,
                         ),
-                        SizedBox(
-                          width: width * .02,
-                        ),
+                        const Spacer(),
                         Text(
                           "${itemModel.foundDate}".capitalize(),
                           overflow: TextOverflow.ellipsis,
@@ -118,7 +114,7 @@ class CustomItem extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
-                      height: 2,
+                      height: 10,
                     )
                   ],
                 ),

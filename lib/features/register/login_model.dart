@@ -22,10 +22,9 @@ class UserData {
   }
 
   UserData(
-      {
-        required this.status,
-        required this.message,
-        required this.userName,
+      {required this.status,
+      required this.message,
+      required this.userName,
       required this.email,
       required this.phoneNumber,
       required this.city,

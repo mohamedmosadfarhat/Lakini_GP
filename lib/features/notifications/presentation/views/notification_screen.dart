@@ -3,7 +3,6 @@ import 'package:lakini_gp/features/home/presentation/views/wedgits/menue.dart';
 
 import '../widgets/custom_container.dart';
 import '../widgets/notification_item.dart';
-import '../widgets/separator.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -53,16 +52,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
               child: generateList(),
             ),
             Expanded(
-                child: ListView.separated(
+                child: ListView.builder(
               physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) => const NotificationItem(),
+              itemBuilder: (context, index) => const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: NotificationItem(),
+              ),
               itemCount: 20,
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Seprator(),
             ))
           ],
         ),

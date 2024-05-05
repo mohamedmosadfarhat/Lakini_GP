@@ -1,5 +1,3 @@
-
-
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
@@ -13,7 +11,7 @@ class Place {
     String? id,
     required this.title,
     required this.location,
-  }) : id = id?? uuid.v4();
+  }) : id = id ?? uuid.v4();
 }
 
 class PlaceLocation {

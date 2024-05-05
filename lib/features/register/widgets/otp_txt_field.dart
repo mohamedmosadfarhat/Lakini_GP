@@ -7,22 +7,21 @@ class OtpTextFormField extends StatelessWidget {
   const OtpTextFormField({
     super.key,
     required this.controller,
-    required this.validator,
   });
 
   final TextEditingController controller;
-  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return SizedBox(
-      width: 48,
-      height: 48,
+      width: width * 0.12,
+      height: height * 0.09,
       child: TextFormField(
         inputFormatters: [LengthLimitingTextInputFormatter(1)],
         controller: controller,
         keyboardType: TextInputType.number,
-        validator: validator,
         style: Styles.textStyle60.copyWith(fontSize: 16),
         cursorColor: const Color.fromRGBO(0, 117, 255, 1),
         textAlign: TextAlign.center,
@@ -47,10 +46,8 @@ class OtpTextFormField extends StatelessWidget {
 }
 
 class OtpVerificationRow extends StatelessWidget {
-  const OtpVerificationRow(
-      {required this.txtController, required this.validator, super.key});
+  const OtpVerificationRow({required this.txtController, super.key});
   final List<TextEditingController> txtController;
-  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +56,9 @@ class OtpVerificationRow extends StatelessWidget {
       children: List.generate(
         6,
         (index) => Padding(
-          padding: const EdgeInsets.only(left: 4.0),
+          padding: const EdgeInsets.only(left: 5.0, right: 4),
           child: OtpTextFormField(
             controller: txtController[index],
-            validator: validator,
           ),
         ),
       ),

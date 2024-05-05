@@ -97,7 +97,7 @@ class _AddPostScreenState extends State<AddPostScreen>
                             child: CircleAvatar(
                               radius: 22,
                               backgroundImage: NetworkImage(
-                                  "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile.accountPhoto}"),
+                                  "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile!.accountPhoto}"),
                             ),
                           ),
                           DropdownButton<String>(

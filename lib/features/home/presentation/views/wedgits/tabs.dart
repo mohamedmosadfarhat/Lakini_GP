@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lakini_gp/constant.dart';
+import 'package:lakini_gp/core/utils/styles.dart';
 
 List<Tab> tabs = [
   Tab(
@@ -42,6 +43,11 @@ List<Tab> tabs = [
       CategoryName: Kdother,
     ),
   ),
+  Tab(
+    child: TabWedgit(
+      CategoryName: Kdother,
+    ),
+  ),
 ];
 
 class TabWedgit extends StatelessWidget {
@@ -60,10 +66,10 @@ class TabWedgit extends StatelessWidget {
       child: Align(
         alignment: Alignment.center,
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 30),
+          margin: const EdgeInsets.symmetric(horizontal: 30),
           child: Text(
             CategoryName,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: Styles.textStyle16,
           ),
         ),
       ),

@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 
-
 class UploadImg extends StatelessWidget {
-  const UploadImg({super.key});
-
+  const UploadImg({super.key, this.imagePath});
+  final String? imagePath;
   @override
   Widget build(BuildContext context) {
     //double height = MediaQuery.of(context).size.height;

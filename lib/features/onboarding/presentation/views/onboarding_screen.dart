@@ -19,10 +19,10 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-   int _currentIndex = 0;
+  int _currentIndex = 0;
   final PageController _controller = PageController(initialPage: 0);
 
- late Timer _timer;
+  late Timer _timer;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   void dispose() {
-    _timer.cancel(); // Cancel the timer when the widget is disposed
+    _timer.cancel();
     _controller.dispose();
     super.dispose();
   }

@@ -14,6 +14,18 @@ final class DisplayItemsFailur extends DisplayItemsState {
 }
 
 final class DisplayItemsSuccess extends DisplayItemsState {
-  List<ItemModel> items ;
+  List<ItemModel> items;
   DisplayItemsSuccess(this.items);
 }
+
+/* class GetCategoryLoadingState extends DisplayItemsState {}
+
+class GetCategorySuccessState extends DisplayItemsState {}
+
+class GetCategoryErrorState extends DisplayItemsState {}
+
+class GetProfileLoadingState extends AppState {}
+
+class GetProfileSuccessState extends AppState {}
+
+class GetProfileErrorState extends AppState {} */

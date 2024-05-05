@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
 
-void buildDialog({required BuildContext context,required String title,required String message,required void Function() function,required String order}) {
+void buildDialog(
+    {required BuildContext context,
+    required String title,
+    required String message,
+    required void Function() function,
+    required String order}) {
   double width = MediaQuery.of(context).size.width;
   double height = MediaQuery.of(context).size.height;
   final AlertDialog alert = AlertDialog(
@@ -20,7 +25,10 @@ void buildDialog({required BuildContext context,required String title,required S
           const Divider(
             color: Colors.grey,
           ),
-           Text(message,style: Styles.textStyle16,),
+          Text(
+            message,
+            style: Styles.textStyle16,
+          ),
           const Spacer(),
           Row(
             children: [
@@ -38,7 +46,8 @@ void buildDialog({required BuildContext context,required String title,required S
                     onPressed: function,
                     child: Text(
                       order,
-                      style: GoogleFonts.lato(color: Colors.white),
+                      style: TextStyle(color: Colors.white),
+                      /*  style: GoogleFonts.lato(color: Colors.white), */
                     )),
               ),
               SizedBox(
@@ -47,8 +56,8 @@ void buildDialog({required BuildContext context,required String title,required S
               Expanded(
                 child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                          mainColor.withOpacity(0.6)),
+                      backgroundColor:
+                          MaterialStatePropertyAll(mainColor.withOpacity(0.6)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -60,7 +69,9 @@ void buildDialog({required BuildContext context,required String title,required S
                     },
                     child: Text(
                       "Cancel",
-                      style: GoogleFonts.lato(color: Colors.white),
+                      style:
+                          TextStyle(fontFamily: 'Raleway', color: Colors.white),
+                      /* style: GoogleFonts.lato(color: Colors.white), */
                     )),
               ),
             ],

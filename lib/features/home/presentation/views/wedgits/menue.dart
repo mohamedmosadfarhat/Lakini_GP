@@ -26,6 +26,8 @@ class _MenueState extends State<Menue> {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = AppCubit.get(context);
+        var width = MediaQuery.of(context).size.width;
+        var height = MediaQuery.of(context).size.height;
         return Drawer(
           child: Container(
             decoration: const BoxDecoration(
@@ -66,18 +68,17 @@ class _MenueState extends State<Menue> {
                     height: 30,
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical:12),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                     color: const Color(0xff182533),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16.0),
                       child: Row(
-                     
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CircleAvatar(
                               radius: 30,
                               backgroundImage: NetworkImage(
-                                  "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile.accountPhoto}"),
+                                  "https://wdw888lb-7075.uks1.devtunnels.ms/resources/${cubit.profile!.accountPhoto}"),
                             ),
                             const SizedBox(
                               width: 32,
@@ -86,7 +87,7 @@ class _MenueState extends State<Menue> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  cubit.profile.userName,
+                                  cubit.profile!.userName,
                                   style: Styles.textStyle20
                                       .copyWith(color: Colors.white),
                                 ),
@@ -97,7 +98,7 @@ class _MenueState extends State<Menue> {
                                       color: Color(0xffF3F3F3),
                                     ),
                                     Text(
-                                      "${cubit.profile.city},${cubit.profile.region}",
+                                      "${cubit.profile!.city},${cubit.profile!.region}",
                                       style: Styles.textStyle14
                                           .copyWith(color: Colors.grey),
                                     ),
@@ -143,28 +144,28 @@ class _MenueState extends State<Menue> {
                     onTab: () {},
                   ),
                   CustomMenuItem(
-                      title: 'Dark mode',
-                      prefixIcon: Icons.dark_mode_outlined,
-                      prefixIconColor: const Color.fromRGBO(32, 22, 88, 1),
-                      trailingWidget: Switch(
-                        value: themeValue,
-                        activeColor: Colors.white,
-                        inactiveTrackColor: darkGreenColor,
-                        trackOutlineColor: MaterialStateProperty.all<Color>(
-                            Colors.transparent),
-                        inactiveThumbColor: Colors.white,
-                        onChanged: (bool val) {
-                          setState(() {
-                            themeValue = val;
-                          });
-                        },
-                      ),
-                      onTab: () {},
+                    title: 'Dark mode',
+                    prefixIcon: Icons.dark_mode_outlined,
+                    prefixIconColor: const Color.fromRGBO(32, 22, 88, 1),
+                    trailingWidget: Switch(
+                      value: themeValue,
+                      activeColor: Colors.white,
+                      inactiveTrackColor: darkGreenColor,
+                      trackOutlineColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
+                      inactiveThumbColor: Colors.white,
+                      onChanged: (bool val) {
+                        setState(() {
+                          themeValue = val;
+                        });
+                      },
                     ),
+                    onTab: () {},
+                  ),
                   const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomMenuItem(
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomMenuItem(
                       title: 'Logout',
                       prefixIcon: Icons.logout_outlined,
                       prefixIconColor: const Color(0xffEA4335),
@@ -181,8 +182,11 @@ class _MenueState extends State<Menue> {
                             });
                           },
                           order: 'Logout'),
-                                        ),
                     ),
+                  ),
+                  SizedBox(
+                    height: height * 0.09,
+                  )
                 ],
               ),
             ),
