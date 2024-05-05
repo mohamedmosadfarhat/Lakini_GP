@@ -162,6 +162,9 @@ class _GenerateImageBodyState extends State<GenerateImageBody> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 24,
+            ),
             Visibility(visible: _showSlider, child: const ImageSlider()),
           ],
         ),

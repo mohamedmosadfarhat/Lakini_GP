@@ -2,15 +2,21 @@ import 'package:dio/dio.dart';
 
 class APIServices {
   final _baseurl = 'https://8a63-34-83-170-245.ngrok-free.app';
+  final _baseTextUrl = '';
   final Dio dio;
 
   APIServices(this.dio);
-  Future<Map<String, dynamic>> get({required String endPoint}) async {
+  Future<Map<String, dynamic>> getImageLink({required String endPoint}) async {
     var response = await dio.get('$_baseurl$endPoint');
     return response.data;
   }
-}
 
+  Future<Map<String, dynamic>> getDescription(
+      {required String endPoint}) async {
+    var response = await dio.get('$_baseTextUrl$endPoint');
+    return response.data;
+  }
+}
 
 // // import 'dart:convert';
 // //

@@ -218,6 +218,23 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
               ),
             ),
           ),
+          Row(
+            children: [
+              const Icon(
+                Icons.error_outline,
+                color: Color(0xffB5A300),
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              Text(
+                'If you do not have an image of the missing '
+                '\n item, you must manually create its image when\n you click generate image.',
+                softWrap: true,
+                style: Styles.textStyle14,
+              ),
+            ],
+          ),
           Text(
             'Add photo',
             style: Styles.textStyle18,
@@ -235,7 +252,7 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                           height: 96,
                           fit: BoxFit.cover,
                         )
-                      : cubit.pickedImage == null
+                      : generatedData == null
                           ? const UploadImg()
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(30),
