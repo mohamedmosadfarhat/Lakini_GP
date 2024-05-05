@@ -23,6 +23,11 @@ abstract class Styles {
     fontWeight: FontWeight.w900,
     letterSpacing: 1.2,
   );
+  static var textStylen = GoogleFonts.poppins(
+    fontSize: 20,
+    // fontWeight: FontWeight.w500,
+    letterSpacing: 1.2,
+  );
   static const textStyle$20 = TextStyle(
     fontSize: 20,
     //fontWeight: FontWeight.w900,

@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakini_gp/constant.dart';
 import 'package:lakini_gp/core/utils/api_sevices.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
+import 'package:lakini_gp/features/ai/presentation/views/ai_home.dart';
+import 'package:lakini_gp/features/ai/presentation/views/search_by_camera_or_photo.dart';
 import 'package:lakini_gp/features/home/data/models/item_model.dart';
 import 'package:lakini_gp/features/home/data/repos/home_repo_impl.dart';
 import 'package:lakini_gp/features/home/presentation/manager/cubit/display_items_cubit.dart';
@@ -114,7 +116,13 @@ class _HomeBodeState extends State<HomeBodey> {
                                       color: basicColor,
                                       borderRadius: BorderRadius.circular(15)),
                                   child: IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      // Navigator.pushNamed(
+                                      //     context, SearchingWithAi.id);
+                                      Navigator.pushNamed(
+                                          context, AiHome.aihome);
+                                      //AiHome
+                                    },
                                     icon: const Icon(
                                       Icons.tune,
                                       size: 30,

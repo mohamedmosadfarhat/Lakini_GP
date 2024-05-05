@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakini_gp/features/ai/presentation/views/ai_home.dart';
+import 'package:lakini_gp/features/ai/presentation/views/search_by_camera_or_photo.dart';
+import 'package:lakini_gp/features/ai/presentation/views/search_by_description.dart';
 import 'package:lakini_gp/features/home/presentation/views/home_screen.dart';
 import 'package:lakini_gp/features/home/presentation/views/item_details_screen.dart';
 import 'package:lakini_gp/features/onboarding/presentation/views/onboarding_screen.dart';
@@ -75,7 +78,6 @@ class Lakini extends StatelessWidget {
                     navigator: startWidget!,
                   )
                 : startWidget,
-          //home: HomeScreen(),
             routes: {
               ForgetPasswordScreen.fpId: (_) => ForgetPasswordScreen(),
               OtpVerification.otp: (_) => OtpVerification(),
@@ -92,11 +94,15 @@ class Lakini extends StatelessWidget {
               TermsAndConditionScreen.id: (_) =>
                   const TermsAndConditionScreen(),
               ChatContent.id: (context) => const ChatContent(),
-              //SearchingWithAi.id: (context) => SearchingWithAi(),
+              SearchByCameraOrPhoto.id: (context) =>
+                  const SearchByCameraOrPhoto(),
               ItemDetails.itemId: (_) => const ItemDetails(),
               AddPostScreen.id: (_) => const AddPostScreen(),
               PostAddedSuccessScreen.id: (_) => const PostAddedSuccessScreen(),
               ChooseLocation.locationId: (_) => const ChooseLocation(),
+              AiHome.aihome: (_) => const AiHome(),
+              SearchByDescription.id: (_) => SearchByDescription(),
+              // ResultItems.id: (_) =>  ResultItems(),
             },
           );
         },

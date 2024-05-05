@@ -1,9 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
-import 'package:lakini_gp/core/utils/api_sevices.dart';
-import 'package:lakini_gp/features/home/data/repos/home_repo_impl.dart';
 import 'package:lakini_gp/features/home/presentation/manager/cubit/display_items_cubit.dart';
 import 'package:lakini_gp/features/home/presentation/views/wedgits/custom_error_wedgit.dart';
 import 'package:lakini_gp/features/home/presentation/views/wedgits/custom_item.dart';
