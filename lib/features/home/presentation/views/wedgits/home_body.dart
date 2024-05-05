@@ -76,7 +76,7 @@ class _HomeBodeState extends State<HomeBodey> {
         ),
         child: BlocProvider(
           create: (context) =>
-              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))..fetchItems(),
+              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))..fetchItems("get-Item-User-Details"),
           child: Scaffold(
             //
             appBar: AppBar(
@@ -173,7 +173,7 @@ class _HomeBodeState extends State<HomeBodey> {
                                     onTap: () {
                                       BlocProvider.of<DisplayItemsCubit>(
                                               context)
-                                          .getStatus(index);
+                                          .getStatus(index,"get-Item-User-Details");
                                       currentcategorytype =
                                           BlocProvider.of<DisplayItemsCubit>(
                                                   context)

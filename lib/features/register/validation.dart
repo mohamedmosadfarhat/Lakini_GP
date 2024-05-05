@@ -9,4 +9,9 @@ extension ExtString on String {
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\>\<*~]).{8,}$');
     return passwordRegExp.hasMatch(this);
   }
+  bool get isValidID {
+    final  egyptianNationalIDRegex = RegExp(r'^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$');
+
+    return egyptianNationalIDRegex.hasMatch(this);
+  }
 }

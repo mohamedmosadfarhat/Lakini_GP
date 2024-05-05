@@ -6,10 +6,13 @@ class Category {
   factory Category.fromJson(json) {
     List<CategoryItem> category = [];
 
-    category = List<CategoryItem>.from(
-      json.map((banner) => CategoryItem.fromJson(banner)),
-    );
-    return Category(category: category);
+
+
+      category = List<CategoryItem>.from(
+        json.map((cat) => CategoryItem.fromJson(cat)),
+      );
+return Category(category: category);
+
   }
 }
 

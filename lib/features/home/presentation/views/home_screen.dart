@@ -35,7 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocProvider(
       create: (context) => AppCubit()
         ..getCategory()
-        ..getProfile(),
+        ..getProfile()
+        ..getAllUsers()
+        ,
       child: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -60,63 +62,59 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.transparent,
               /*  floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked, */
-              bottomNavigationBar: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SafeArea(
-                  child: GNav(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    /* padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15), */
-                    onTabChange: (newIndex) {
-                      setState(() {
-                        cIndex = newIndex;
-                      });
-                    },
-                    color: Colors.white,
-                    tabShadow: const <BoxShadow>[BoxShadow(blurRadius: 5)],
-                    tabActiveBorder: Border.all(color: mainColor),
-                    duration: const Duration(milliseconds: 800),
-                    tabBorderRadius: 10,
-                    tabBackgroundColor:
-                        Theme.of(context).canvasColor.withOpacity(0.1),
-                    iconSize: 22,
-                    curve: Curves.bounceInOut,
-                    gap: 8,
-                    tabs: <GButton>[
-                      GButton(
-                        icon: cIndex == 0 ? Icons.home : Icons.home_outlined,
-                        text: "Home",
-                        padding: const EdgeInsets.all(8),
-                        textStyle: Styles.textStyle14,
-                        gap: 5,
-                      ),
-                      GButton(
-                        //  margin: EdgeInsets.all(),
-                        icon: cIndex == 1 ? Icons.chat : Icons.chat_outlined,
-                        text: "Chat",
-                        padding: const EdgeInsets.all(8),
-                        textStyle: Styles.textStyle14,
-                        gap: 5,
-                      ),
-                      GButton(
-                        icon: cIndex == 2
-                            ? Icons.notifications
-                            : Icons.notifications_active_outlined,
-                        text: "Notifications",
-                        padding: const EdgeInsets.all(8),
-                        textStyle: Styles.textStyle14,
-                        gap: 5,
-                      ),
-                      GButton(
-                        icon:
-                            cIndex == 3 ? Icons.person : Icons.person_outlined,
-                        text: "Profile",
-                        padding: const EdgeInsets.all(8),
-                        textStyle: Styles.textStyle14,
-                        gap: 5,
-                      ),
-                    ],
-                  ),
+              bottomNavigationBar: SafeArea(
+                child: GNav(
+                  backgroundColor: Colors.black,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 
+                  onTabChange: (newIndex) {
+                    setState(() {
+                      cIndex = newIndex;
+                    });
+                  },
+                  color: Colors.white,
+                  tabShadow: const <BoxShadow>[BoxShadow(blurRadius: 5)],
+                  tabActiveBorder: Border.all(color: mainColor),
+                  duration: const Duration(milliseconds: 800),
+                  tabBorderRadius: 10,
+                  tabBackgroundColor:
+                      Theme.of(context).canvasColor.withOpacity(0.1),
+                  iconSize: 22,
+                  curve: Curves.bounceInOut,
+                  gap: 8,
+                  tabs: <GButton>[
+                    GButton(
+                      icon: cIndex == 0 ? Icons.home : Icons.home_outlined,
+                      text: "Home",
+                      padding: const EdgeInsets.all(8),
+                      textStyle: Styles.textStyle14,
+                      gap: 5,
+                    ),
+                    GButton(
+                      //  margin: EdgeInsets.all(),
+                      icon: cIndex == 1 ? Icons.chat : Icons.chat_outlined,
+                      text: "Chat",
+                      padding: const EdgeInsets.all(8),
+                      textStyle: Styles.textStyle14,
+                      gap: 5,
+                    ),
+                    GButton(
+                      icon: cIndex == 2
+                          ? Icons.notifications
+                          : Icons.notifications_active_outlined,
+                      text: "Notifications",
+                      padding: const EdgeInsets.all(8),
+                      textStyle: Styles.textStyle14,
+                      gap: 5,
+                    ),
+                    GButton(
+                      icon: cIndex == 3 ? Icons.person : Icons.person_outlined,
+                      text: "Profile",
+                      padding: const EdgeInsets.all(8),
+                      textStyle: Styles.textStyle14,
+                      gap: 5,
+                    ),
+                  ],
                 ),
               ),
               floatingActionButton: FloatingActionButton(
@@ -130,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 30,
                 ),
               ),
-              body: cubit.profile == null || cubit.category == null
+              body: cubit.profile == null || cubit.category == null || cubit.users == null
                   ? Center(
                       child: Image.asset(
                         "assets/loadinBall.gif",

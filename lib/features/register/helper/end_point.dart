@@ -12,3 +12,7 @@ const GetCategory = "/api/Category/GetAll";
 const GetProfile = "/api/Account/Get-Account";
 const DeleteAccount = "/api/Account/Delete";
 const UpdateAccount = "api/Account/Update-account";
+const GetAllUsers = "/api/Admin/Get-All-Users";
+const AddChat = "api/Chat/add-Message-Chat";
+const DeleteChat = "/api/Chat/delete-chat";
+const GetLastChat = "/api/Chat/Get-last-chat";

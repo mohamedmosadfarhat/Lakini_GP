@@ -13,6 +13,7 @@ import 'package:lakini_gp/features/register/presentation/views/login_screen.dart
 import '../../../notifications/presentation/widgets/separator.dart';
 import '../../../register/helper/cache_helper.dart';
 import '../../../register/presentation/views/forget_password_screen.dart';
+import 'ativites_screen.dart';
 
 class ProfileMenu extends StatefulWidget {
   const ProfileMenu({super.key});
@@ -144,7 +145,9 @@ class _ProfileMenuState extends State<ProfileMenu> {
                       prefixIcon: Icons.person_search_outlined,
                       postIcon: Icons.arrow_forward_ios,
                       prefixIconColor: const Color.fromARGB(255, 57, 69, 114),
-                      onTab: () {},
+                      onTab: () {
+                        Navigator.pushNamed(context, ActivitesScreen.id);
+                      },
                     ),
                     CustomMenuItem(
                       title: 'Help',
