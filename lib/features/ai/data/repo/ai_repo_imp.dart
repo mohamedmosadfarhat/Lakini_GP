@@ -22,7 +22,7 @@ class AiRepoImpl extends AiRepo {
   ) async {
     try {
       var data = await apiService.get(
-          endPoint: 'Item/get-similar-image-ML?imgurl=$imageName&choice=${1}');
+          endPoint: 'Item/get-similar-image-ML?imgurl=$imageName&choice=${0}');
       List<ItemModel> items = [];
       for (var item in data) {
         try {

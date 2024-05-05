@@ -11,7 +11,7 @@ class SearchByDescription extends StatefulWidget {
 
 class _SearchByDescriptionState extends State<SearchByDescription> {
   final _form = GlobalKey<FormState>();
-  
+
   late String description;
 
   @override
@@ -39,136 +39,137 @@ class _SearchByDescriptionState extends State<SearchByDescription> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: height * .17),
-              child: SizedBox(
-                child: Image.asset(
-                  alignment: Alignment.center,
-                  "assets/location (2) 2.png",
-                  fit: BoxFit.fill,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: height * .17),
+                child: SizedBox(
+                  child: Image.asset(
+                    alignment: Alignment.center,
+                    "assets/location (2) 2.png",
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-            ),
-            //
+              //
 
-            Container(
-              
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.vertical(top: Radius.elliptical(width, 100.0)),
-                border:
-                    const Border(top: BorderSide(color: Colors.blue, width: 1)),
-              ),
-              child: Form(
-                key: _form,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: height * .14,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Add description",
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                      top: Radius.elliptical(width, 100.0)),
+                  border: const Border(
+                      top: BorderSide(color: Colors.blue, width: 1)),
+                ),
+                child: Form(
+                  key: _form,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: height * .14,
                           ),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "Add description",
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const Text(
+                            "(30/450)",
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            setState(() {
+                              description = value;
+                            });
+                          },
+                          validator: (value) {
+                            if (value!.length < 30) {
+                              return "Enter valid description of more then 30 characters!";
+                            }
+                          },
+                          maxLines: 3,
+                          maxLength: 450,
+                          //keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(width: 5, color: Colors.black),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              hintText: "Add description..."),
                         ),
-                        const Text(
-                          "(30/450)",
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        onChanged: (value) {
-                          setState(() {
-                            description = value;
-                          });
-                        },
-                        validator: (value) {
-                          if (value!.length < 30) {
-                            return "Enter valid description of more then 30 characters!";
+                      ),
+                      //
+                      InkWell(
+                        onTap: () {
+                          if (_form.currentState!.validate()) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ResultByDescription(
+                                  description: description);
+                            }));
                           }
                         },
-                        maxLines: 3,
-                        maxLength: 450,
-                        //keyboardType: TextInputType.text,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 5, color: Colors.black),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: width * .4,
+                          height: height * .05,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xff06D83EA),
+                                Color(0xff08B5FF),
+                              ],
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
                             ),
-                            hintText: "Add description..."),
-                      ),
-                    ),
-                    //
-                    InkWell(
-                      onTap: () {
-                        if (_form.currentState!.validate()) {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return ResultByDescription(
-                                description: description);
-                          }));
-                        }
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: width * .4,
-                        height: height * .05,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xff06D83EA),
-                              Color(0xff08B5FF),
-                            ],
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
+                            border: Border.all(width: 3, color: Colors.white),
                           ),
-                          border: Border.all(width: 3, color: Colors.white),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.search),
-                            Text(
-                              "Search",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.search),
+                              Text(
+                                "Search",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: height * .03,
-                    ),
-                    //
-                  ],
+                      SizedBox(
+                        height: height * .03,
+                      ),
+                      //
+                    ],
+                  ),
                 ),
               ),
-            ),
 
-            //
-          ],
+              //
+            ],
+          ),
         ),
       ),
     );

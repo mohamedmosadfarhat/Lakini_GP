@@ -93,18 +93,12 @@ class Lakini extends StatelessWidget {
             theme: ThemeData.dark(),
             debugShowCheckedModeBanner: false,
 
-            // home: state is GetCategoryLoadingState ||
-            //         state is GetProfileLoadingState
-            //     ? SplashScreen(
-            //         navigator: startWidget!,
-            //       )
-            //     : startWidget,
+            
 
-            // home: SplashScreen(
-            //   navigator: startWidget!,
-            // ),
-            home: HomeScreen(),
-            routes: {
+            home: SplashScreen(
+               navigator: startWidget!,
+             ),
+                  routes: {
               ForgetPasswordScreen.fpId: (_) => ForgetPasswordScreen(),
               OtpVerification.otp: (_) => OtpVerification(),
               CreatePasswordScreen.cpId: (_) => CreatePasswordScreen(),
