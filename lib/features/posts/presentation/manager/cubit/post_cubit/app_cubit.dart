@@ -109,7 +109,6 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-
   AllUsers? users;
   List<String?> lastM = [];
   List<String?> lastT = [];
@@ -121,9 +120,9 @@ class AppCubit extends Cubit<AppState> {
       print(value);
       for (var user in users!.user) {
         print(user.userName);
-       
+
         getLastChat(user.userId);
-         print(user.userId);
+        print(user.userId);
       }
 
       print(lastM);
@@ -134,7 +133,6 @@ class AppCubit extends Cubit<AppState> {
       print(error.toString());
     });
   }
-
 
   ProfileModet? profile;
 
@@ -282,8 +280,6 @@ class AppCubit extends Cubit<AppState> {
       lastM.add(lastChat?.content);
       lastT.add(lastChat?.time);
       print(lastM);
-
-     
     }).catchError((error) {
       emit(GetLastChatErrorState());
       print(error.toString());

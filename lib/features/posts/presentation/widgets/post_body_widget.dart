@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,9 @@ import 'package:http/http.dart' as http;
 import 'package:lakini_gp/core/utils/styles.dart';
 import 'package:lakini_gp/features/home/data/models/location_model.dart';
 import 'package:lakini_gp/features/home/presentation/views/map_screen.dart';
+import 'package:lakini_gp/features/posts/data/models/generate_desc.dart';
+import 'package:lakini_gp/features/posts/data/repos/add_post_repo.dart';
+import 'package:lakini_gp/features/posts/presentation/manager/cubit/cubit/generate_descp_cubit/generate_description_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_state.dart';
 import 'package:lakini_gp/features/posts/presentation/views/generate_image.dart';
@@ -170,6 +174,7 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
       }
     }, builder: (context, state) {
       var cubit = AppCubit.get(context);
+      final GenerateDesc generateDesc;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -244,7 +249,13 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: GestureDetector(
-                  onTap: cubit.fetchImage,
+                  onTap: () {
+                    if (generatedData != null) {
+                      cubit.pickedImage = File(generatedData!);
+                    } else {
+                      cubit.fetchImage();
+                    }
+                  },
                   child: generatedData != null
                       ? Image.network(
                           generatedData!,
@@ -268,6 +279,21 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                 child: const GenerateImageContainer(),
               ),
             ],
+          ),
+          ElevatedButton(
+            onPressed: () {
+              BlocProvider.of<GenerateDescriptionCubit>(context)
+                  .fetchDescription(text: cubit.pickedImage!.toString());
+              final generateDescriptionCubit =
+                  BlocProvider.of<GenerateDescriptionCubit>(context);
+
+              final currentState = generateDescriptionCubit.state;
+              setState(() {});
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xff0075FF),
+            ),
+            child: const Text('Generate\nDescription'),
           ),
           Text(
             'Add title',

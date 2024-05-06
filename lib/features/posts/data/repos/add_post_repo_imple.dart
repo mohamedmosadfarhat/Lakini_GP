@@ -32,8 +32,8 @@ class ImageGenerate implements GenerateImageRepo {
   Future<Either<Failure, List<GenerateDesc>>> fetchDescription(
       {required String text}) async {
     try {
-      var data =
-          await apiServices.getDescription(endPoint: '/create_img?text=$text');
+      var data = await apiServices.getDescription(
+          endPoint: '/descibe_img_fake?image_path_url=$text');
       List<GenerateDesc> dataList = [];
       dataList.add(GenerateDesc.fromJson(data));
 

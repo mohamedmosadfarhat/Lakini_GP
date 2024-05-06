@@ -11,9 +11,6 @@ import 'package:lakini_gp/features/posts/presentation/views/choose_location.dart
 import 'package:lakini_gp/features/posts/presentation/views/generate_image.dart';
 import 'package:lakini_gp/features/posts/presentation/views/post_added.dart';
 import 'package:lakini_gp/features/posts/presentation/views/post_screen.dart';
-import 'package:lakini_gp/features/posts/presentation/widgets/generate_image_body.dart';
-import 'package:lakini_gp/features/posts/presentation/widgets/generate_image_container.dart';
-import 'package:lakini_gp/features/posts/presentation/widgets/post_body_widget.dart';
 import 'package:lakini_gp/features/posts/services/services_locator.dart';
 import 'package:lakini_gp/features/profile/presentation/views/edit_profile.dart';
 import 'package:lakini_gp/features/profile/presentation/views/profile_menu.dart';
@@ -70,18 +67,16 @@ class Lakini extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-
-        BlocProvider( create: (context) =>
-              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))..fetchItems("get-Item-User-Details"),),
-
-       
-
+        BlocProvider(
+          create: (context) =>
+              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))
+                ..fetchItems("get-Item-User-Details"),
+        ),
         BlocProvider(
           create: (context) => AppCubit()
             ..getCategory()
             ..getProfile()
-            ..getAllUsers()
-                      ,
+            ..getAllUsers(),
         ),
         BlocProvider(create: (context) => AppLoginCubit()),
       ],
@@ -110,7 +105,7 @@ class Lakini extends StatelessWidget {
               ProfileMenu.id: (_) => const ProfileMenu(),
               TermsAndConditionScreen.id: (_) =>
                   const TermsAndConditionScreen(),
-            
+
               //SearchingWithAi.id: (context) => SearchingWithAi(),
               ItemDetails.itemId: (_) => const ItemDetails(),
               AddPostScreen.id: (_) => const AddPostScreen(),

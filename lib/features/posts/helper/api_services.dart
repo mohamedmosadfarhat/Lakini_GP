@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 
 class APIServices {
-  final _baseurl = 'https://8a63-34-83-170-245.ngrok-free.app';
-  final _baseTextUrl = '';
+  final _baseurl = 'https://0b75-34-91-62-252.ngrok-free.app';
+  final _baseTextUrl = 'https://5a93-34-83-1-3.ngrok-free.app';
   final Dio dio;
 
   APIServices(this.dio);

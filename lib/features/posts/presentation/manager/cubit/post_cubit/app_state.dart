@@ -17,6 +17,7 @@ class AddItemFailure extends AppState {
 class AddImageLoading extends AppState {}
 
 class AddImageSuccess extends AppState {}
+
 class AddChatImageLoading extends AppState {}
 
 class AddChatImageSuccess extends AppState {}
@@ -60,6 +61,7 @@ class DeleteProfileSuccessState extends AppState {
 
   DeleteProfileSuccessState({required this.delete});
 }
+
 class DeleteProfileErrorState extends AppState {}
 
 class DeleteChatLoadingState extends AppState {}
@@ -68,18 +70,12 @@ class DeleteChatSuccessState extends AppState {
   final AppModel delete;
 
   DeleteChatSuccessState({required this.delete});
-  
 }
 
 class DeleteChatErrorState extends AppState {}
 
-
-
 class SendMessageLoadingState extends AppState {}
 
-class SendMessageSuccessState extends AppState {
-  
-  
-}
+class SendMessageSuccessState extends AppState {}
 
 class SendMessageErrorState extends AppState {}
