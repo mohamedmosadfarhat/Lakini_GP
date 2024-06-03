@@ -10,9 +10,15 @@ Future<void> fetchChats(
     required String receiverEmail,
     required streamController}) async {
   final response = await http.get(Uri.parse(
-      '$url/api/Chat/Get-All-Chat?senderEmail=$senderEmail&receiverEmail=$receiverEmail'));
+      '$url/api/Chat/Get-All-Chat?senderEmail=$senderEmail&receiverEmail=$receiverEmail'),
+       headers: {
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+      'Content-Type': 'application/json',
+    },);
   print('Response status code: ${response.statusCode}');
   print('Response body: ${response.body}');
+  print(senderEmail);
+  print(receiverEmail);
 
   if (response.statusCode == 200) {
     final dynamic responseBody = json.decode(response.body);

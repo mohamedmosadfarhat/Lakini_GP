@@ -40,7 +40,7 @@ abstract class Styles {
     // letterSpacing: 1.2,
   );
   static const textStyle50 = TextStyle(
-    fontSize: 50,
+    fontSize: 40,
     fontWeight: FontWeight.w200,
     letterSpacing: 1.2,
     fontFamily: 'RobotoCondensed',
