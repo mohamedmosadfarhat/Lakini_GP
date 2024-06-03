@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,8 +9,6 @@ import 'package:lakini_gp/core/utils/styles.dart';
 import 'package:lakini_gp/features/home/data/models/location_model.dart';
 import 'package:lakini_gp/features/home/presentation/views/map_screen.dart';
 import 'package:lakini_gp/features/posts/data/models/generate_desc.dart';
-import 'package:lakini_gp/features/posts/data/repos/add_post_repo.dart';
-import 'package:lakini_gp/features/posts/presentation/manager/cubit/cubit/generate_descp_cubit/generate_description_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_cubit.dart';
 import 'package:lakini_gp/features/posts/presentation/manager/cubit/post_cubit/app_state.dart';
 import 'package:lakini_gp/features/posts/presentation/views/generate_image.dart';
@@ -141,12 +138,50 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController rewardController = TextEditingController();
 
+  String capitalizeFirstLetter(String input) {
+    if (input.isEmpty) return input;
+    return input.substring(0, 1).toUpperCase() + input.substring(1);
+  }
+
+  Future<void> postData(File imageFile, AppCubit cubit) async {
+    final String apiUrl =
+        'https://803a-34-105-6-240.ngrok-free.app/descibe_img';
+
+    var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
+    request.files
+        .add(await http.MultipartFile.fromPath('file', imageFile.path));
+    request.headers['accept'] = 'application/json';
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        Map<String, dynamic> jsonResponse = jsonDecode(responseBody);
+
+        String description = jsonResponse['description'];
+        String type = capitalizeFirstLetter(jsonResponse['type'][0]);
+        setState(() {
+          descController.text = description;
+          print(descController.text);
+
+          if (cubit.category!.category
+              .any((categoryItem) => categoryItem.categoryName == type)) {
+            typeController.text = type;
+          } else {
+            typeController.text = 'Other';
+          }
+        });
+        print('Data posted successfully');
+      } else {
+        print('Failed to post data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error posting data: $e');
+    }
+  }
+
   String value = 'reward';
-
   bool isLoading = false;
-  List<String> items = ['Item ', 'cat', 'people', 'Item 4', 'Item 5', 'string'];
-
-  //AddPostRepo? addPostRepo;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +209,6 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
       }
     }, builder: (context, state) {
       var cubit = AppCubit.get(context);
-      final GenerateDesc generateDesc;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -249,13 +283,7 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: GestureDetector(
-                  onTap: () {
-                    if (generatedData != null) {
-                      cubit.pickedImage = File(generatedData!);
-                    } else {
-                      cubit.fetchImage();
-                    }
-                  },
+                  onTap: cubit.fetchImage,
                   child: generatedData != null
                       ? Image.network(
                           generatedData!,
@@ -263,13 +291,17 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
                           height: 96,
                           fit: BoxFit.cover,
                         )
-                      : generatedData == null
-                          ? const UploadImg()
-                          : ClipRRect(
+                      : cubit.pickedImage != null
+                          ? ClipRRect(
                               borderRadius: BorderRadius.circular(30),
-                              child: Image.file(cubit.pickedImage!,
-                                  fit: BoxFit.cover, height: 220, width: 220),
-                            ),
+                              child: Image.file(
+                                cubit.pickedImage!,
+                                fit: BoxFit.cover,
+                                height: 220,
+                                width: 220,
+                              ),
+                            )
+                          : const UploadImg(),
                 ),
               ),
               GestureDetector(
@@ -280,23 +312,29 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
               ),
             ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              BlocProvider.of<GenerateDescriptionCubit>(context)
-                  .fetchDescription(text: cubit.pickedImage!.toString());
-              final generateDescriptionCubit =
-                  BlocProvider.of<GenerateDescriptionCubit>(context);
-
-              final currentState = generateDescriptionCubit.state;
-              setState(() {});
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xff0075FF),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                if (cubit.pickedImage != null) {
+                  postData(cubit.pickedImage!, cubit);
+                } else {
+                  print('No image picked');
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                backgroundColor: const Color(0xff0075FF),
+                foregroundColor: Colors.white,
+              ),
+              child: const Text(
+                'Generate\nDescription',
+                textAlign: TextAlign.center,
+              ),
             ),
-            child: const Text('Generate\nDescription'),
           ),
           Text(
-            'Add title',
+            'Add Title',
             style: Styles.textStyle18,
           ),
           CustomTextFieldPost(

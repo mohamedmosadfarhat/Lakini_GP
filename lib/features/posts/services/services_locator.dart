@@ -11,8 +11,8 @@ void setupServiceLocator() {
       Dio(),
     ),
   );
-  getIt.registerSingleton<ImageGenerate>(
-    ImageGenerate(
+  getIt.registerSingleton<ImageGenerateImple>(
+    ImageGenerateImple(
       getIt.get<APIServices>(),
     ),
   );

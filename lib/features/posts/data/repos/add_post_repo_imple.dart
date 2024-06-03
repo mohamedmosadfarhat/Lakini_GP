@@ -6,10 +6,10 @@ import 'package:lakini_gp/features/posts/data/models/image.dart';
 import 'package:lakini_gp/features/posts/data/repos/add_post_repo.dart';
 import 'package:lakini_gp/features/posts/helper/api_services.dart';
 
-class ImageGenerate implements GenerateImageRepo {
+class ImageGenerateImple implements GenerateImageRepo {
   final APIServices apiServices;
 
-  ImageGenerate(this.apiServices);
+  ImageGenerateImple(this.apiServices);
 
   @override
   Future<Either<Failure, List<String>>> fetchImages(
@@ -35,7 +35,7 @@ class ImageGenerate implements GenerateImageRepo {
       var data = await apiServices.getDescription(
           endPoint: '/descibe_img_fake?image_path_url=$text');
       List<GenerateDesc> dataList = [];
-      dataList.add(GenerateDesc.fromJson(data));
+      dataList.add(GenerateDesc.fromJson(data as Map<String, dynamic>));
 
       return right(dataList);
     } catch (e) {

@@ -294,4 +294,16 @@ class AppCubit extends Cubit<AppState> {
       print(error.toString());
     });
   }
+
+  //generate Description
+// final GenerateImageRepo generateImageRepo;
+//   Future<void> fetchDescription({required String text}) async {
+//     emit(GenerateDescriptionLoading());
+//     var result = await generateImageRepo.fetchDescription(text: text);
+//     result.fold((failure) {
+//       emit(GenerateDescriptionFailure(failure.errMessage));
+//     }, (descrptionData) {
+//       emit(GenerateDescriptionSuccess(data: descrptionData));
+//     });
+//   }
 }

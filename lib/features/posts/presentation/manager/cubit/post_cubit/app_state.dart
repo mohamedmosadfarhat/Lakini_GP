@@ -1,3 +1,5 @@
+import 'package:lakini_gp/features/posts/data/models/generate_desc.dart';
+
 import '../../../../../register/app_model.dart';
 
 class AppState {}
@@ -79,3 +81,19 @@ class SendMessageLoadingState extends AppState {}
 class SendMessageSuccessState extends AppState {}
 
 class SendMessageErrorState extends AppState {}
+
+// //generate description
+// final class GenerateDescriptionInitial extends AppState {}
+
+// final class GenerateDescriptionLoading extends AppState {}
+
+// final class GenerateDescriptionSuccess extends AppState {
+//   final List<GenerateDesc> data;
+//   GenerateDescriptionSuccess({required this.data});
+// }
+
+// final class GenerateDescriptionFailure extends AppState {
+//   final String errorMessage;
+
+//   GenerateDescriptionFailure(this.errorMessage);
+// }

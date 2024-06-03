@@ -36,8 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       create: (context) => AppCubit()
         ..getCategory()
         ..getProfile()
-        ..getAllUsers()
-        ,
+        ..getAllUsers(),
       child: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -66,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: GNav(
                   backgroundColor: Colors.black,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 
                   onTabChange: (newIndex) {
                     setState(() {
                       cIndex = newIndex;
@@ -128,7 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 30,
                 ),
               ),
-              body: cubit.profile == null || cubit.category == null || cubit.users == null
+              body: cubit.profile == null ||
+                      cubit.category == null ||
+                      cubit.users == null
                   ? Center(
                       child: Image.asset(
                         "assets/loadinBall.gif",

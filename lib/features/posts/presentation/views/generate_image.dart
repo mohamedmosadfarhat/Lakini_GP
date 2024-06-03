@@ -15,7 +15,7 @@ class GenerateImageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => GenerateImageCubit(
-        getIt.get<ImageGenerate>(),
+        getIt.get<ImageGenerateImple>(),
       ),
       child: Container(
         height: MediaQuery.of(context).size.height,

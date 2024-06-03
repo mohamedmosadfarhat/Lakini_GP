@@ -19,3 +19,18 @@ final class GenerateImageFailure extends GenerateImageState {
 
   const GenerateImageFailure(this.errorMessage);
 }
+
+final class GenerateDescriptionInitial extends GenerateImageState {}
+
+final class GenerateDescriptionLoading extends GenerateImageState {}
+
+final class GenerateDescriptionSuccess extends GenerateImageState {
+  final List<GenerateDesc> data;
+  const GenerateDescriptionSuccess({required this.data});
+}
+
+final class GenerateDescriptionFailure extends GenerateImageState {
+  final String errorMessage;
+
+  const GenerateDescriptionFailure(this.errorMessage);
+}
