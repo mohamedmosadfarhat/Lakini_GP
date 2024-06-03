@@ -45,9 +45,9 @@ class AppRegisterCubit extends Cubit<AppRegisterState> {
       print('Register Done successfully');
 
       var responseBody = await response.stream.bytesToString();
-      // Parse the JSON string into a Map
+      
       var responseJson = json.decode(responseBody);
-      // Access the "message" field from the Map
+      
       var message = responseJson["message"];
       var status = responseJson["status"];
       print('Register Done successfully');

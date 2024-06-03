@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
    <application
-        android:label="lakini_gp"
+        android:label="Lakini"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDWYIwIwT2Cx7maujw2kxbcvbFKhIGhLOE"/>
         <activity
