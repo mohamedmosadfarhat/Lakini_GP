@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lakini_gp/features/ai/presentation/views/ai_home.dart';
+import 'package:lakini_gp/features/ai/presentation/views/search_by_camera_or_photo.dart';
+import 'package:lakini_gp/features/ai/presentation/views/search_by_description.dart';
 import 'package:lakini_gp/features/home/presentation/views/home_screen.dart';
 import 'package:lakini_gp/features/home/presentation/views/item_details_screen.dart';
 import 'package:lakini_gp/features/onboarding/presentation/views/onboarding_screen.dart';
@@ -70,18 +73,16 @@ class Lakini extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-
-        BlocProvider( create: (context) =>
-              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))..fetchItems("get-Item-User-Details"),),
-
-       
-
+        BlocProvider(
+          create: (context) =>
+              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))
+                ..fetchItems("get-Item-User-Details"),
+        ),
         BlocProvider(
           create: (context) => AppCubit()
             ..getCategory()
             ..getProfile()
-            ..getAllUsers()
-                      ,
+            ..getAllUsers(),
         ),
         BlocProvider(create: (context) => AppLoginCubit()),
       ],
@@ -91,11 +92,13 @@ class Lakini extends StatelessWidget {
           return MaterialApp(
             theme: ThemeData.dark(),
             debugShowCheckedModeBanner: false,
+
+            
+
             home: SplashScreen(
-              navigator: startWidget!,
-            ),
-            //home: HomeScreen(),
-            routes: {
+               navigator: startWidget!,
+             ),
+                  routes: {
               ForgetPasswordScreen.fpId: (_) => ForgetPasswordScreen(),
               OtpVerification.otp: (_) => OtpVerification(),
               CreatePasswordScreen.cpId: (_) => CreatePasswordScreen(),
@@ -110,7 +113,18 @@ class Lakini extends StatelessWidget {
               ProfileMenu.id: (_) => const ProfileMenu(),
               TermsAndConditionScreen.id: (_) =>
                   const TermsAndConditionScreen(),
-            
+
+              //ChatContent.id: (context) => const ChatContent(),
+              SearchByCameraOrPhoto.id: (context) =>
+                  const SearchByCameraOrPhoto(),
+              ItemDetails.itemId: (_) => const ItemDetails(),
+              AddPostScreen.id: (_) => const AddPostScreen(),
+              PostAddedSuccessScreen.id: (_) => const PostAddedSuccessScreen(),
+              // ChooseLocation.locationId: (_) => const ChooseLocation(),
+              AiHome.aihome: (_) => const AiHome(),
+              SearchByDescription.id: (_) => SearchByDescription(),
+              // ResultItems.id: (_) =>  ResultItems(),
+
               //SearchingWithAi.id: (context) => SearchingWithAi(),
               ItemDetails.itemId: (_) => const ItemDetails(),
               AddPostScreen.id: (_) => const AddPostScreen(),

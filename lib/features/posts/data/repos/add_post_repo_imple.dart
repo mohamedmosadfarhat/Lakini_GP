@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:lakini_gp/core/erros/failure.dart';
+import 'package:lakini_gp/features/posts/data/models/generate_desc.dart';
 import 'package:lakini_gp/features/posts/data/models/image.dart';
 import 'package:lakini_gp/features/posts/data/repos/add_post_repo.dart';
 import 'package:lakini_gp/features/posts/helper/api_services.dart';
@@ -14,10 +15,29 @@ class ImageGenerate implements GenerateImageRepo {
   Future<Either<Failure, List<String>>> fetchImages(
       {required String text}) async {
     try {
-      var data = await apiServices.get(endPoint: '/create_img?text=$text');
+      var data =
+          await apiServices.getImageLink(endPoint: '/create_img?text=$text');
       List<String> imageLinks = List<String>.from(data['images_links']);
 
       return right(imageLinks);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<GenerateDesc>>> fetchDescription(
+      {required String text}) async {
+    try {
+      var data =
+          await apiServices.getDescription(endPoint: '/create_img?text=$text');
+      List<GenerateDesc> dataList = [];
+      dataList.add(GenerateDesc.fromJson(data));
+
+      return right(dataList);
     } catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioError(e));

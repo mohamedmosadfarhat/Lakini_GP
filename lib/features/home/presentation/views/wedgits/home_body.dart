@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakini_gp/constant.dart';
 import 'package:lakini_gp/core/utils/api_sevices.dart';
 import 'package:lakini_gp/core/utils/styles.dart';
+import 'package:lakini_gp/features/ai/presentation/views/ai_home.dart';
 import 'package:lakini_gp/features/home/data/models/item_model.dart';
 import 'package:lakini_gp/features/home/data/repos/home_repo_impl.dart';
 import 'package:lakini_gp/features/home/presentation/manager/cubit/display_items_cubit.dart';
@@ -76,7 +77,8 @@ class _HomeBodeState extends State<HomeBodey> {
         ),
         child: BlocProvider(
           create: (context) =>
-              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))..fetchItems("get-Item-User-Details"),
+              DisplayItemsCubit(HomeRepoImpl(ApiService(Dio())))
+                ..fetchItems("get-Item-User-Details"),
           child: Scaffold(
             //
             appBar: AppBar(
@@ -134,13 +136,20 @@ class _HomeBodeState extends State<HomeBodey> {
                                 "what are you looking for ?",
                                 style: Styles.textStyle$20,
                               ),
-                              Container(
-                                  width: width * 0.2,
-                                  height: height * 0.05,
-                                  decoration: BoxDecoration(
-                                      color: basicColor,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Image.asset("assets/search.png")),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed(AiHome.aihome);
+                                },
+                                child: Container(
+                                    width: width * 0.2,
+                                    height: height * 0.05,
+                                    decoration: BoxDecoration(
+                                        color: basicColor,
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: Image.asset("assets/search.png")),
+                              ),
                             ],
                           ),
                         ],
@@ -173,7 +182,8 @@ class _HomeBodeState extends State<HomeBodey> {
                                     onTap: () {
                                       BlocProvider.of<DisplayItemsCubit>(
                                               context)
-                                          .getStatus(index,"get-Item-User-Details");
+                                          .getStatus(
+                                              index, "get-Item-User-Details");
                                       currentcategorytype =
                                           BlocProvider.of<DisplayItemsCubit>(
                                                   context)
