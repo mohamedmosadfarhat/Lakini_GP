@@ -64,6 +64,7 @@ class AppCubit extends Cubit<AppState> {
     double? lng,
   }) async {
     var request = http.MultipartRequest('POST', Uri.parse("$url/$AddItem"));
+
     request.headers['Authorization'] = 'Bearer $token';
     request.fields['Name'] = title;
     request.fields['Description'] = caption;
@@ -158,11 +159,19 @@ class AppCubit extends Cubit<AppState> {
   }) async {
     var request =
         http.MultipartRequest('PUT', Uri.parse("$url/$UpdateAccount"));
+
+    // print(profile.userName);
+    // print(profile.email);
+    // print(profile.phone);
+    // print(profile.city);
+    // print(profile.region);
+
     print(profile!.userName);
     print(profile!.email);
     print(profile!.phone);
     print(profile!.city);
     print(profile!.region);
+
     request.headers['Authorization'] = 'Bearer $token';
     request.fields['UserName'] = UserName;
     request.fields['Email'] = Email;

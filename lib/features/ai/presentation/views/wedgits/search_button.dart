@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/styles.dart';
+import '../../../../../core/utils/styles.dart';
 
 class SearchButton extends StatelessWidget {
   //const SearchButton({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class SearchButton extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    return Flexible(
+    return Expanded(
       child: GestureDetector(
         onTap: onTap,
         child: Padding(
@@ -25,13 +25,13 @@ class SearchButton extends StatelessWidget {
               border: Border.all(color: Colors.white),
             ),
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 7),
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 7),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(icon),
                   SizedBox(
-                    width: width * .022,
+                    width: width * .033,
                   ),
                   Text(
                     hint,

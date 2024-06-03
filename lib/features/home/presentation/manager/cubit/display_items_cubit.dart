@@ -3,11 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lakini_gp/features/home/data/models/item_model.dart';
 import 'package:lakini_gp/features/home/data/repos/home_repo.dart';
 
-import '../../../../posts/data/models/category_model.dart';
-import '../../../../posts/presentation/manager/cubit/post_cubit/app_state.dart';
-import '../../../../profile/profile_model.dart';
-import '../../../../register/helper/dio_helper.dart';
-import '../../../../register/helper/end_point.dart';
 
 part 'display_items_state.dart';
 
