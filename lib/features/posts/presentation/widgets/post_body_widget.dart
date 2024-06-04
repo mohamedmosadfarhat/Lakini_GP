@@ -55,12 +55,12 @@ class _PostBodyWidgetState extends State<PostBodyWidget> {
     final lat = _pickedLocation!.latitude;
     final lng = _pickedLocation!.longitude;
 
-    return "https://maps.googleapis.com/maps/api/staticmap?center=${locationOfLostFoundController.text},egypt&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:Z%7C$lat,$lng&key=AIzaSyDWYIwIwT2Cx7maujw2kxbcvbFKhIGhLOE";
+    return "https://maps.googleapis.com/maps/api/staticmap?center=${locationOfLostFoundController.text},egypt&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:Z%7C$lat,$lng&key=AIzaSyBwj3AABMp5Sw9qpkfR1ByoBdrF1djZzFQ";
   }
 
   void _savePlace(double lat, double lng) async {
     final url = Uri.parse(
-        "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=AIzaSyDWYIwIwT2Cx7maujw2kxbcvbFKhIGhLOE");
+        "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=AIzaSyBwj3AABMp5Sw9qpkfR1ByoBdrF1djZzFQ");
     final res = await http.get(url);
     final resData = json.decode(res.body);
     final address = resData["results"][0]["formatted_address"];

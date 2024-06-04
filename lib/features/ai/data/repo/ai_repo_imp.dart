@@ -9,6 +9,7 @@ import 'package:lakini_gp/core/utils/api_sevices.dart';
 import 'package:lakini_gp/features/ai/data/repo/ai_repo.dart';
 import 'package:lakini_gp/features/home/data/models/item_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:lakini_gp/features/register/helper/end_point.dart';
 
 class AiRepoImpl extends AiRepo {
   AiRepoImpl(this.apiService);
@@ -155,6 +156,9 @@ class AiRepoImpl extends AiRepo {
     // Initialize Dio with options
     Dio dio = Dio(BaseOptions(
       baseUrl: 'https://wdw888lb-7075.uks1.devtunnels.ms/api',
+      headers: {
+        "Authorization":"Bearer $token"
+      }
     ));
 
     // Define the endpoint URL
@@ -171,6 +175,7 @@ class AiRepoImpl extends AiRepo {
       Response response = await dio.post(
         endpointUrl,
         data: request.toJson(),
+        
       );
 
       // Handle the response

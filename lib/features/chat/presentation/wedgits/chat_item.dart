@@ -21,10 +21,9 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     DateTime apiDateTime = DateTime.parse(time??"");
+    DateTime apiDateTime = DateTime.parse(time ?? "");
 
-    String formattedDateTime =
-        DateFormat.MMMMEEEEd().addPattern("'at' HH:mm").format(apiDateTime);
+    String formattedDateTime = DateFormat.MMMMEEEEd().format(apiDateTime);
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {
         // TODO: implement listener
@@ -63,7 +62,10 @@ class ChatItem extends StatelessWidget {
                           user.userName,
                           style: Styles.textStyle18,
                         ),
-                        Text(message ?? "",style: Styles.textStyle14,),
+                        Text(
+                          message ?? "",
+                          style: Styles.textStyle14,
+                        ),
                       ],
                     ),
                   ],
@@ -71,7 +73,6 @@ class ChatItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    
                     Text(
                       formattedDateTime,
                       style: Styles.textStyle14.copyWith(color: Colors.blue),

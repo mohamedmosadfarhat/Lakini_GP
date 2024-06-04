@@ -40,7 +40,7 @@ class _ItemDetailsState extends State<ItemDetails> {
     ItemModel itemModel =
         ModalRoute.of(context)!.settings.arguments as ItemModel;
     String locationImage =
-        "https://maps.googleapis.com/maps/api/staticmap?center=${itemModel.foundPlace},egypt&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:R%7C${itemModel.foundPlace},egypt&key=AIzaSyDWYIwIwT2Cx7maujw2kxbcvbFKhIGhLOE";
+        "https://maps.googleapis.com/maps/api/staticmap?center=${itemModel.foundPlace},egypt&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:R%7C${itemModel.foundPlace},egypt&key=AIzaSyBwj3AABMp5Sw9qpkfR1ByoBdrF1djZzFQ";
 
     Widget previewContent = Center(
       child: Text(
